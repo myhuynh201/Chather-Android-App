@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph.xml"
+    app:startDestination="@id/success">
+    <fragment
+        android:id="@+id/success"
+        android:name="edu.uw.tcss450.ui.SuccessFragment"
+        android:label="fragment_success"
+        tools:layout="@layout/fragment_success" />
+    <fragment
+        android:id="@+id/navigation_blogs"
+        android:name="edu.uw.tcss450.ui.blog.BlogListFragment"
+        android:label="@string/title_blogs"
+        tools:layout="@layout/fragment_blog_list" >
+        <action
+            android:id="@+id/action_navigation_blogs_to_blogPostFragment"
+            app:destination="@id/blogPostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/blogPostFragment"
+        android:name="edu.uw.tcss450.ui.blog.BlogPostFragment"
+        android:label="@string/title_blogs" >
+        <argument
+            android:name="blog"
+            app:argType="edu.uw.tcss450.ui.blog.BlogPost" />
+    </fragment>
+</navigation>
