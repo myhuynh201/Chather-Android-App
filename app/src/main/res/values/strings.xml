@@ -14,5 +14,6 @@
     <string name="hint_password">Password</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_register_short">Register</string>
-
+    <string name="hello_weather_fragment">It is sunny somewhere :D</string>
+    <string name="title_weather">Weather</string>
 </resources>

@@ -26,4 +26,9 @@
             android:name="blog"
             app:argType="edu.uw.tcss450.ui.blog.BlogPost" />
     </fragment>
+    <fragment
+        android:id="@+id/weatherFragment"
+        android:name="edu.uw.tcss450.ui.weather.WeatherFragment"
+        android:label="@string/title_weather"
+        tools:layout="@layout/fragment_weather" />
 </navigation>

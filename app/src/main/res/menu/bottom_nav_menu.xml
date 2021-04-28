@@ -12,4 +12,10 @@
     android:icon="@drawable/ic_blog_black_24dp"
     android:title="@string/title_blogs" />
 
+    <item
+        android:id="@+id/weatherFragment"
+        android:icon="@drawable/ic_weather_black_24dp"
+        android:title="@string/title_weather"/>
+
+
 </menu>
