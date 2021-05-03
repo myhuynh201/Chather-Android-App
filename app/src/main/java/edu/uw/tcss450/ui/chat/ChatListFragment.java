@@ -1,4 +1,4 @@
-package edu.uw.tcss450.ui.blog;
+package edu.uw.tcss450.ui.chat;
 
 import android.os.Bundle;
 
@@ -6,27 +6,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import edu.uw.tcss450.R;
-import edu.uw.tcss450.databinding.FragmentBlogListBinding;
-import edu.uw.tcss450.ui.model.UserInfoViewModel;
+import edu.uw.tcss450.databinding.FragmentChatListBinding;
 
 
-public class BlogListFragment extends Fragment {
+public class ChatListFragment extends Fragment {
 
-    private BlogListViewModel mModel;
+    private ChatListViewModel mModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mModel = new ViewModelProvider(getActivity()).get(BlogListViewModel.class);
+        mModel = new ViewModelProvider(getActivity()).get(ChatListViewModel.class);
         mModel.connectGet();
 
     }
@@ -35,7 +31,7 @@ public class BlogListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 //        // Inflate the layout for this fragment
-//        View view = inflater.inflate(R.layout.fragment_blog_list, container, false);
+//        View view = inflater.inflate(R.layout.fragment_chat_list, container, false);
 //        if (view instanceof RecyclerView) {
 //            //Try out a grid layout to achieve rows AND columns. Adjust the widths of the
 //            //cards on display
@@ -47,22 +43,22 @@ public class BlogListFragment extends Fragment {
 //            // ((LinearLayoutManager)((RecyclerView) view).getLayoutManager())
 //            // .setOrientation(LinearLayoutManager.HORIZONTAL);
 //            ((RecyclerView) view).setAdapter(
-//                    new BlogRecyclerViewAdapter(BlogGenerator.getBlogList()));
+//                    new ChatRecyclerViewAdapter(ChatGenerator.getChatList()));
 //        }
 //        return view;
 
-        return inflater.inflate(R.layout.fragment_blog_list,container,false);
+        return inflater.inflate(R.layout.fragment_chat_list,container,false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         super.onViewCreated(view, savedInstanceState);
-        FragmentBlogListBinding binding = FragmentBlogListBinding.bind(getView());
+        FragmentChatListBinding binding = FragmentChatListBinding.bind(getView());
 
-        mModel.addBlogListObserver(getViewLifecycleOwner(), blogList -> {
-            if (!blogList.isEmpty()) {
-                binding.listRoot.setAdapter( new BlogRecyclerViewAdapter(blogList)
+        mModel.addBlogListObserver(getViewLifecycleOwner(), chatRoomList -> {
+            if (!chatRoomList.isEmpty()) {
+                binding.listRoot.setAdapter( new ChatRecyclerViewAdapter(chatRoomList)
                 );
                 binding.layoutWait.setVisibility(View.GONE);
             }
