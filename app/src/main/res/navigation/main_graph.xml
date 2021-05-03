@@ -10,22 +10,27 @@
         android:label="fragment_success"
         tools:layout="@layout/fragment_success" />
     <fragment
-        android:id="@+id/navigation_blogs"
-        android:name="edu.uw.tcss450.ui.blog.BlogListFragment"
-        android:label="@string/title_blogs"
-        tools:layout="@layout/fragment_blog_list" >
+        android:id="@+id/navigation_chats"
+        android:name="edu.uw.tcss450.ui.chat.ChatListFragment"
+        android:label="@string/title_chats"
+        tools:layout="@layout/fragment_chat_list" >
         <action
-            android:id="@+id/action_navigation_blogs_to_blogPostFragment"
-            app:destination="@id/blogPostFragment" />
+            android:id="@+id/action_navigation_chats_to_chatRoomFragment"
+            app:destination="@id/chatRoomFragment" />
     </fragment>
     <fragment
-        android:id="@+id/blogPostFragment"
-        android:name="edu.uw.tcss450.ui.blog.BlogPostFragment"
-        android:label="@string/title_blogs" >
+        android:id="@+id/chatRoomFragment"
+        android:name="edu.uw.tcss450.ui.chat.ChatRoomFragment"
+        android:label="@string/title_chats" >
         <argument
-            android:name="blog"
-            app:argType="edu.uw.tcss450.ui.blog.BlogPost" />
+            android:name="chatRoom"
+            app:argType="edu.uw.tcss450.ui.chat.ChatRoom" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_connections"
+        android:name="edu.uw.tcss450.ui.connections.ConnectionFragment"
+        android:label="@string/title_connections"
+        tools:layout="@layout/fragment_connection_list" />
     <fragment
         android:id="@+id/weatherFragment"
         android:name="edu.uw.tcss450.ui.weather.WeatherFragment"

@@ -8,9 +8,14 @@
 
 
 <item
-    android:id="@+id/navigation_blogs"
-    android:icon="@drawable/ic_blog_black_24dp"
-    android:title="@string/title_blogs" />
+    android:id="@+id/navigation_chats"
+    android:icon="@drawable/ic_chat_black_24dp"
+    android:title="@string/title_chats" />
+
+<item
+    android:id="@+id/navigation_connections"
+    android:icon="@drawable/ic_connections_black_24dp"
+    android:title="@string/title_connections" />
 
     <item
         android:id="@+id/weatherFragment"
