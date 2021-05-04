@@ -1,4 +1,4 @@
-package edu.uw.tcss450.ui.blog;
+package edu.uw.tcss450.ui.chat;
 
 
 import android.graphics.drawable.Icon;
@@ -17,66 +17,66 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import edu.uw.tcss450.R;
-import edu.uw.tcss450.databinding.FragmentBlogCardBinding;
+import edu.uw.tcss450.databinding.FragmentChatCardBinding;
 
-public class BlogRecyclerViewAdapter extends RecyclerView.Adapter<BlogRecyclerViewAdapter.BlogViewHolder> {
+public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.ChatViewHolder> {
 
     //Store all the expanded state for each List item, true -> expanded, false -> not
-    private final Map<BlogPost, Boolean> mExpandedFlags;
-    //Store all of the blog to present
-    private final List<BlogPost> mBlogs;
-    public BlogRecyclerViewAdapter(List<BlogPost> items) {
-        this.mBlogs = items;
-        mExpandedFlags = mBlogs.stream()
+    private final Map<ChatRoom, Boolean> mExpandedFlags;
+    //Store all of the chat to present
+    private final List<ChatRoom> mChatRooms;
+    public ChatRecyclerViewAdapter(List<ChatRoom> items) {
+        this.mChatRooms = items;
+        mExpandedFlags = mChatRooms.stream()
                 .collect(Collectors.toMap(Function.identity(), blog -> false));
     }
 
     @NonNull
     @Override
-    public BlogViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new BlogViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_blog_card,parent,false));
+    public ChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ChatViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_chat_card,parent,false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BlogViewHolder holder, int position) {
-        holder.setBlog(mBlogs.get(position));
+    public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
+        holder.setChatRoom(mChatRooms.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mBlogs.size();
+        return mChatRooms.size();
     }
 
     /**
      * Objects from this class represent an Individual row View from the List
      * of rows in the Blog Recycler View.
      */
-    public class BlogViewHolder extends RecyclerView.ViewHolder {
+    public class ChatViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public FragmentBlogCardBinding binding;
-        private BlogPost mBlog;
-        public BlogViewHolder(View view) {
+        public FragmentChatCardBinding binding;
+        private ChatRoom mChatRoom;
+        public ChatViewHolder(View view) {
             super(view);
             mView = view;
-            binding = FragmentBlogCardBinding.bind(view);
+            binding = FragmentChatCardBinding.bind(view);
             binding.buittonMore.setOnClickListener(this::handleMoreOrLess);
         }
         /**
          * When the button is clicked in the more state, expand the card to display
-         * the blog preview and switch the icon to the less state. When the button
+         * the chat preview and switch the icon to the less state. When the button
          * is clicked in the less state, shrink the card and switch the icon to the
          * more state.
          * @param button the button that was clicked
          */
         private void handleMoreOrLess(final View button) {
-            mExpandedFlags.put(mBlog, !mExpandedFlags.get((mBlog)));
+            mExpandedFlags.put(mChatRoom, !mExpandedFlags.get((mChatRoom)));
             displayPreview();
         }
         /**
          * Helper used to determine if the preview should be displayed or not.
          */
         private void displayPreview() {
-            if (mExpandedFlags.get(mBlog)) {
+            if (mExpandedFlags.get(mChatRoom)) {
                 // if (binding.textPreview.getVisibility() == View.GONE) {
                 binding.textPreview.setVisibility(View.VISIBLE);
                 binding.buittonMore.setImageIcon(
@@ -92,18 +92,18 @@ public class BlogRecyclerViewAdapter extends RecyclerView.Adapter<BlogRecyclerVi
                                 R.drawable.ic_more_grey_24dp));
             }
         }
-        void setBlog(final BlogPost blog) {
-            mBlog = blog;
+        void setChatRoom(final ChatRoom chatRoom) {
+            mChatRoom = chatRoom;
             binding.buttonFullPost.setOnClickListener(view -> {
                 Navigation.findNavController(mView).navigate(
-                        BlogListFragmentDirections
-                                .actionNavigationBlogsToBlogPostFragment(blog));
+                        ChatListFragmentDirections
+                                .actionNavigationChatsToChatRoomFragment(chatRoom));
             });
-            binding.textTitle.setText(blog.getTitle());
-            binding.textPubdate.setText(blog.getPubDate());
+            binding.textTitle.setText(chatRoom.getTitle());
+            binding.textPubdate.setText(chatRoom.getPubDate());
             //Use methods in the HTML class to format the HTML found in the text
             final String preview = Html.fromHtml(
-                    blog.getTeaser(),
+                    chatRoom.getTeaser(),
                     Html.FROM_HTML_MODE_COMPACT)
                     .toString().substring(0,100) //just a preview of the teaser
                     + "...";

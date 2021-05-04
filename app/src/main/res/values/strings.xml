@@ -8,7 +8,8 @@
     <string name="password">Password </string>
     <string name="success">Success </string>
     <string name="title_home">Home</string>
-    <string name="title_blogs">Blogs</string>
+    <string name="title_chats">Chats</string>
+    <string name="title_connections">Connections</string>
     <string name="action_link">Full Post</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
@@ -17,4 +18,6 @@
     <string name="button_dark_mode">Dark Mode</string>
     <string name="button_light_mode">Light Mode</string>
     <string name="switch_color_mode">Switch Mode</string>
+    <string name="hello_weather_fragment">It is sunny somewhere :D</string>
+    <string name="title_weather">Weather</string>
 </resources>

@@ -1,4 +1,4 @@
-package edu.uw.tcss450.ui.blog;
+package edu.uw.tcss450.ui.chat;
 
 import android.app.Application;
 import android.util.Log;
@@ -28,19 +28,19 @@ import java.util.function.IntFunction;
 import edu.uw.tcss450.R;
 import edu.uw.tcss450.ui.model.UserInfoViewModel;
 
-public class BlogListViewModel extends AndroidViewModel {
+public class ChatListViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<BlogPost>> mBlogList;
+    private MutableLiveData<List<ChatRoom>> mChatList;
 
-    public BlogListViewModel(@NonNull Application application) {
+    public ChatListViewModel(@NonNull Application application) {
         super(application);
-        mBlogList = new MutableLiveData<>();
-        mBlogList.setValue(new ArrayList<>());
+        mChatList = new MutableLiveData<>();
+        mChatList.setValue(new ArrayList<>());
     }
 
     public void addBlogListObserver(@NonNull LifecycleOwner owner,
-                                    @NonNull Observer<? super List<BlogPost>> observer) {
-        mBlogList.observe(owner, observer);
+                                    @NonNull Observer<? super List<ChatRoom>> observer) {
+        mChatList.observe(owner, observer);
     }
 
     private void handleError(final VolleyError error) {
@@ -62,23 +62,23 @@ public class BlogListViewModel extends AndroidViewModel {
                     JSONArray data = response.getJSONArray(
                             getString.apply(R.string.keys_json_blogs_data));
                     for(int i = 0; i < data.length(); i++) {
-                        JSONObject jsonBlog = data.getJSONObject(i);
-                        BlogPost post = new BlogPost.Builder(
-                                jsonBlog.getString(
+                        JSONObject jsonChats = data.getJSONObject(i);
+                        ChatRoom post = new ChatRoom.Builder(
+                                jsonChats.getString(
                                         getString.apply(
                                                 R.string.keys_json_blogs_pubdate)),
-                                jsonBlog.getString(
+                                jsonChats.getString(
                                         getString.apply(
                                                 R.string.keys_json_blogs_title)))
-                                .addTeaser(jsonBlog.getString(
+                                .addTeaser(jsonChats.getString(
                                         getString.apply(
                                                 R.string.keys_json_blogs_teaser)))
-                                .addUrl(jsonBlog.getString(
+                                .addUrl(jsonChats.getString(
                                         getString.apply(
                                                 R.string.keys_json_blogs_url)))
                                 .build();
-                        if (!mBlogList.getValue().contains(post)) {
-                            mBlogList.getValue().add(post); }
+                        if (!mChatList.getValue().contains(post)) {
+                            mChatList.getValue().add(post); }
                     }
                 } else {
                     Log.e("ERROR!", "No data array");
@@ -90,7 +90,7 @@ public class BlogListViewModel extends AndroidViewModel {
             e.printStackTrace();
             Log.e("ERROR!", e.getMessage());
         }
-        mBlogList.setValue(mBlogList.getValue());
+        mChatList.setValue(mChatList.getValue());
     }
 
     public void connectGet() {

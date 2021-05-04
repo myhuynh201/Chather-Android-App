@@ -1,4 +1,4 @@
-package edu.uw.tcss450.ui.blog;
+package edu.uw.tcss450.ui.chat;
 
 import java.io.Serializable;
 
@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author Charles Bryan
  * @version 14 September 2018
  */
-public class BlogPost implements Serializable {
+public class ChatRoom implements Serializable {
 
     private final String mPubDate;
     private final String mTitle;
@@ -35,8 +35,8 @@ public class BlogPost implements Serializable {
         /**
          * Constructs a new Builder.
          *
-         * @param pubDate the published date of the blog post
-         * @param title the title of the blog post
+         * @param pubDate the published date of the chat post
+         * @param title the title of the chat post
          */
         public Builder(String pubDate, String title) {
             this.mPubDate = pubDate;
@@ -44,9 +44,9 @@ public class BlogPost implements Serializable {
         }
 
         /**
-         * Add an optional url for the full blog post.
-         * @param val an optional url for the full blog post
-         * @return the Builder of this BlogPost
+         * Add an optional url for the full chat post.
+         * @param val an optional url for the full chat post
+         * @return the Builder of this ChatRoom
          */
         public Builder addUrl(final String val) {
             mUrl = val;
@@ -54,9 +54,9 @@ public class BlogPost implements Serializable {
         }
 
         /**
-         * Add an optional teaser for the full blog post.
-         * @param val an optional url teaser for the full blog post.
-         * @return the Builder of this BlogPost
+         * Add an optional teaser for the full chat post.
+         * @param val an optional url teaser for the full chat post.
+         * @return the Builder of this ChatRoom
          */
         public Builder addTeaser(final String val) {
             mTeaser = val;
@@ -64,22 +64,22 @@ public class BlogPost implements Serializable {
         }
 
         /**
-         * Add an optional author of the blog post.
-         * @param val an optional author of the blog post.
-         * @return the Builder of this BlogPost
+         * Add an optional author of the chat post.
+         * @param val an optional author of the chat post.
+         * @return the Builder of this ChatRoom
          */
         public Builder addAuthor(final String val) {
             mAuthor = val;
             return this;
         }
 
-        public BlogPost build() {
-            return new BlogPost(this);
+        public ChatRoom build() {
+            return new ChatRoom(this);
         }
 
     }
 
-    private BlogPost(final Builder builder) {
+    private ChatRoom(final Builder builder) {
         this.mPubDate = builder.mPubDate;
         this.mTitle = builder.mTitle;
         this.mUrl = builder.mUrl;
