@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyLabAppduyn1999</string>
+    <string name="app_name">Chather</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="button_sign_in">Sign In </string>
@@ -15,8 +15,9 @@
     <string name="hint_password">Password</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_register_short">Register</string>
-
-
+    <string name="button_dark_mode">Dark Mode</string>
+    <string name="button_light_mode">Light Mode</string>
+    <string name="switch_color_mode">Switch Mode</string>
     <string name="hello_weather_fragment">It is sunny somewhere :D</string>
     <string name="title_weather">Weather</string>
 </resources>
