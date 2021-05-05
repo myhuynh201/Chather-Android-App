@@ -4,12 +4,19 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * This class is used to create Dummy Blogs. Use it for development.
- * In future labs, connect to an API to gain actual Blog Data.
+ * This class is used to create Dummy Chats
+ *
+ * @author alecmac
  */
 public final class ChatGenerator {
 
+    /**
+     * Array of chatrooms
+     */
     private static final ChatRoom[] CHAT_ROOMS;
+    /**
+     * Hard coded number of chatrooms
+     */
     public static final int COUNT = 5;
 
 
@@ -20,11 +27,15 @@ public final class ChatGenerator {
                     .Builder("2020-04-" + (12-i) + " 12:59 pm",
                     "John Doe #" + (i + 43))
                     .addTeaser(makeChat(i))
-                    .addUrl("http://phish.net/blog/1472930164/dicks1-when-mercury-comes-out-at-night")
                     .build();
         }
     }
 
+    /**
+     * Get dummy chatroom text for preview and viewing
+     * @param position index of the current chatroom being initialized
+     * @return chatroom text
+     */
     private static String makeChat(int position) {
         String[] dummyMessages = {
                 "What the heck did you just frickin’ say about me, you little whiner? I’ll have you know I graduated top of my class in the Navy Seals, and I’ve been involved in numerous secret raids on Al-Quaeda, and I have over 300 confirmed kills.",
@@ -36,12 +47,13 @@ public final class ChatGenerator {
         return dummyMessages[position];
     }
 
+
+    /**
+     * Get List of dummy chatrooms
+     * @return List of chatrooms
+     */
     public static List<ChatRoom> getChatList() {
         return Arrays.asList(CHAT_ROOMS);
-    }
-
-    public static ChatRoom[] getChatRooms() {
-        return Arrays.copyOf(CHAT_ROOMS, CHAT_ROOMS.length);
     }
 
     private ChatGenerator() { }

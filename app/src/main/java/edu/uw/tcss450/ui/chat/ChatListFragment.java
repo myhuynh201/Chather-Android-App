@@ -15,11 +15,21 @@ import android.view.ViewGroup;
 import edu.uw.tcss450.R;
 import edu.uw.tcss450.databinding.FragmentChatListBinding;
 
-
+/**
+ * This class is used to represent the list of chatrooms
+ *
+ * @author alecmac
+ */
 public class ChatListFragment extends Fragment {
-
+    /**
+     * View model for chat list
+     */
     private ChatListViewModel mModel;
 
+    /**
+     * When ChatListFragment is created, get the view model
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +38,14 @@ public class ChatListFragment extends Fragment {
 
     }
 
+
+    /**
+     * When view is created, create chats
+     * @param inflater inflates this view
+     * @param container holds this view
+     * @param savedInstanceState represents the saved state
+     * @return the view after being populated
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

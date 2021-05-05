@@ -18,8 +18,18 @@ import edu.uw.tcss450.R;
 import edu.uw.tcss450.databinding.FragmentChatRoomBinding;
 
 
+/**
+ * This Fragment is used for representing a ChatRoom
+ *
+ * @author alecmac
+ */
 public class ChatRoomFragment extends Fragment {
 
+    /**
+     * When view is created, initialize content
+     * @param view current view
+     * @param savedInstanceState current state of instance
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -37,6 +47,13 @@ public class ChatRoomFragment extends Fragment {
                 Log.d("CHAT MESSAGE", binding.chatMessageInput.getText().toString()));
     }
 
+    /**
+     * When View is created, inflate the view
+     * @param inflater used to inflate view
+     * @param container container in which view resides
+     * @param savedInstanceState current state of instance
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

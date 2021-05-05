@@ -6,23 +6,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Helper class for providing sample content for user interfaces created by
- * Android template wizards.
- * <p>
- * TODO: Replace all uses of this class before publishing your app.
+ * Helper class for providing sample content for connections
  */
 public class ConnectionContent {
 
     /**
-     * An array of sample (dummy) items.
+     * An array of sample connections.
      */
     public static final List<ConnectionItem> ITEMS = new ArrayList<ConnectionItem>();
 
     /**
-     * A map of sample (dummy) items, by ID.
+     * A map of sample connections, by ID.
      */
     public static final Map<String, ConnectionItem> ITEM_MAP = new HashMap<String, ConnectionItem>();
 
+    /**
+     * Count of connections
+     */
     private static final int COUNT = 17;
 
     static {
@@ -32,22 +32,41 @@ public class ConnectionContent {
         }
     }
 
+    /**
+     * puts connections into a map
+     * @param item connection
+     */
     private static void addItem(ConnectionItem item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.username, item);
     }
 
+    /**
+     * creates the dummy connection
+     * @param position the current index for the dummy
+     * @return the dummy connection
+     */
     private static ConnectionItem createDummyItem(int position) {
         return new ConnectionItem(String.valueOf(position), getName(position), makeDetails(position));
     }
 
 
+    /**
+     * Hard coded names for connections
+     * @param position index of the dummy connection
+     * @return the name of the connection for the given position
+     */
     private static String getName(int position) {
         String[] names = {"Odin", "Alcis", "Baldr", "Freya", "Freyr", "Heimdall", "Odr", "Tyr", "Ullr", "Mimir", "Njordr", "Frigg",
                 "Saxnot", "Vili", "Tuisto", "Sleipnir", "Idunn"};
         return names[position - 1];
     }
 
+    /**
+     * Create details
+     * @param position customize details based on position
+     * @return string details
+     */
     private static String makeDetails(int position) {
         StringBuilder builder = new StringBuilder();
         builder.append("Details about Item: ").append(position);
@@ -58,7 +77,7 @@ public class ConnectionContent {
     }
 
     /**
-     * A dummy item representing a piece of content.
+     * A dummy item representing a Connection.
      */
     public static class ConnectionItem {
         public final String username;

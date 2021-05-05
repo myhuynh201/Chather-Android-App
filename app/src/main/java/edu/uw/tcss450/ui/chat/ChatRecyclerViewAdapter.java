@@ -19,6 +19,11 @@ import java.util.stream.Collectors;
 import edu.uw.tcss450.R;
 import edu.uw.tcss450.databinding.FragmentChatCardBinding;
 
+/**
+ * Class to handle recycled views of Chats
+ *
+ * @author alecmac
+ */
 public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.ChatViewHolder> {
 
     //Store all the expanded state for each List item, true -> expanded, false -> not
@@ -26,23 +31,42 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
     //Store all of the chat to present
     private final List<ChatRoom> mChatRooms;
 
+    /**
+     * constructor for a chat recycler view adapter
+     * @param items list of chatrooms to create the recycled views
+     */
     public ChatRecyclerViewAdapter(List<ChatRoom> items) {
         this.mChatRooms = items;
         mExpandedFlags = mChatRooms.stream()
                 .collect(Collectors.toMap(Function.identity(), blog -> false));
     }
 
+    /**
+     * Creates a new Chat View Holder when created
+     * @param parent parent of this element
+     * @param viewType type of this view
+     * @return the inflated Chat View Holder
+     */
     @NonNull
     @Override
     public ChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ChatViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_chat_card, parent, false));
     }
 
+    /**
+     * Handles binding of view
+     * @param holder Chat View Holder
+     * @param position index of ChatRoom
+     */
     @Override
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
         holder.setChatRoom(mChatRooms.get(position));
     }
 
+    /**
+     * gets number of Chatrooms
+     * @return number of ChatRooms
+     */
     @Override
     public int getItemCount() {
         return mChatRooms.size();
@@ -64,7 +88,10 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         }
 
 
-
+        /**
+         * Sets chatroom to given ChatRoom
+         * @param chatRoom the Chat to be bound
+         */
         void setChatRoom(final ChatRoom chatRoom) {
             mChatRoom = chatRoom;
             binding.layoutInner.setOnClickListener(view -> {

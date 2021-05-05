@@ -73,9 +73,6 @@ public class ChatListViewModel extends AndroidViewModel {
                                 .addTeaser(jsonChats.getString(
                                         getString.apply(
                                                 R.string.keys_json_blogs_teaser)))
-                                .addUrl(jsonChats.getString(
-                                        getString.apply(
-                                                R.string.keys_json_blogs_url)))
                                 .build();
                         if (!mChatList.getValue().contains(post)) {
                             mChatList.getValue().add(post); }
