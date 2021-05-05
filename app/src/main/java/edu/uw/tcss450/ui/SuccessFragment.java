@@ -1,9 +1,5 @@
 package edu.uw.tcss450.ui;
-/**
- * Duy Nguyen
- * TCSS 450
- * Lab 1 Assignment
- */
+
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -31,15 +27,23 @@ import edu.uw.tcss450.ui.model.UserInfoViewModel;
 /**
  * The final fragment displayed once the register fragment or the sign in fragment advances successfully.
  * This fragment will simple show a simple text hello plus the user's email address.
+ * @author Charles Bryan, Duy Nguyen, Demarco Best, Alec Mac, Alejandro Olono, My Duyen Huynh
  */
 public class SuccessFragment extends Fragment {
 
+    /*
+    A binding for things in the success fragment.
+     */
     private FragmentSuccessBinding binding;
 
-    EditText edEmail;              // A text field for user's email address
-    Switch colorModeSwitch;
-    // TextView edSuccess;
+    /*
+    A test field for user's email address.
+     */
+    EditText edEmail;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,6 +52,9 @@ public class SuccessFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

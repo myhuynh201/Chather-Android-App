@@ -29,24 +29,43 @@ import edu.uw.tcss450.utils.PasswordValidator;
 
 /**
  * A simple {@link Fragment} subclass.
+ * @author Charles Bryan, Duy Nguyen, Demarco Best, Alec Mac, Alejandro Olono, My Duyen Huynh
  */
 public class SignInFragment extends Fragment {
 
+    /*
+    A binding for the sign in fragment.
+     */
     private FragmentSignInBinding binding;
+
+    /*
+    A view model to allow changes in the sign in fragment.
+     */
     private SignInViewModel mSignInModel;
 
+    /*
+    A validator to check the email field.
+     */
     private PasswordValidator mEmailValidator = checkPwdLength(2)
             .and(checkExcludeWhiteSpace())
             .and(checkPwdSpecialChar("@"));
 
+    /*
+    A validator to check the password field.
+     */
     private PasswordValidator mPassWordValidator = checkPwdLength(1)
             .and(checkExcludeWhiteSpace());
 
-
+    /**
+    An empty constructor of the sign in fragment.
+     */
     public SignInFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +73,9 @@ public class SignInFragment extends Fragment {
                 .get(SignInViewModel.class);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,6 +84,9 @@ public class SignInFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -83,10 +108,17 @@ public class SignInFragment extends Fragment {
         binding.editPassword.setText(args.getPassword().equals("default") ? "" : args.getPassword());
     }
 
+    /**
+     * Calls the validate email password.
+     * @param button
+     */
     private void attemptSignIn(final View button) {
         validateEmail();
     }
 
+    /**
+     * A private helper method to check for valid email.
+     */
     private void validateEmail() {
         mEmailValidator.processResult(
                 mEmailValidator.apply(binding.editEmail.getText().toString().trim()),
@@ -94,6 +126,10 @@ public class SignInFragment extends Fragment {
                 result -> binding.editPassword.setError("Please enter a valid Email address."));
     }
 
+
+    /**
+     * A private helper method to check for valid password.
+     */
     private void validatePassword() {
         mPassWordValidator.processResult(
                 mPassWordValidator.apply(binding.editPassword.getText().toString()),
@@ -101,6 +137,9 @@ public class SignInFragment extends Fragment {
                 result -> binding.editPassword.setError("Please enter a valid Password."));
     }
 
+    /**
+     * A private helper method to connect sign in with the server.
+     */
     private void verifyAuthWithServer() {
         mSignInModel.connect(
                 binding.editEmail.getText().toString(),
