@@ -11,19 +11,19 @@ import java.util.Map;
  * <p>
  * TODO: Replace all uses of this class before publishing your app.
  */
-public class DummyContent {
+public class ConnectionContent {
 
     /**
      * An array of sample (dummy) items.
      */
-    public static final List<DummyItem> ITEMS = new ArrayList<DummyItem>();
+    public static final List<ConnectionItem> ITEMS = new ArrayList<ConnectionItem>();
 
     /**
      * A map of sample (dummy) items, by ID.
      */
-    public static final Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
+    public static final Map<String, ConnectionItem> ITEM_MAP = new HashMap<String, ConnectionItem>();
 
-    private static final int COUNT = 25;
+    private static final int COUNT = 17;
 
     static {
         // Add some sample items.
@@ -32,13 +32,20 @@ public class DummyContent {
         }
     }
 
-    private static void addItem(DummyItem item) {
+    private static void addItem(ConnectionItem item) {
         ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
+        ITEM_MAP.put(item.username, item);
     }
 
-    private static DummyItem createDummyItem(int position) {
-        return new DummyItem(String.valueOf(position), "Item " + position, makeDetails(position));
+    private static ConnectionItem createDummyItem(int position) {
+        return new ConnectionItem(String.valueOf(position), getName(position), makeDetails(position));
+    }
+
+
+    private static String getName(int position) {
+        String[] names = {"Odin", "Alcis", "Baldr", "Freya", "Freyr", "Heimdall", "Odr", "Tyr", "Ullr", "Mimir", "Njordr", "Frigg",
+                "Saxnot", "Vili", "Tuisto", "Sleipnir", "Idunn"};
+        return names[position - 1];
     }
 
     private static String makeDetails(int position) {
@@ -53,13 +60,13 @@ public class DummyContent {
     /**
      * A dummy item representing a piece of content.
      */
-    public static class DummyItem {
-        public final String id;
+    public static class ConnectionItem {
+        public final String username;
         public final String content;
         public final String details;
 
-        public DummyItem(String id, String content, String details) {
-            this.id = id;
+        public ConnectionItem(String username, String content, String details) {
+            this.username = username;
             this.content = content;
             this.details = details;
         }

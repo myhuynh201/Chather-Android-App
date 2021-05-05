@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import edu.uw.tcss450.R;
-import edu.uw.tcss450.ui.connections.dummy.DummyContent;
+import edu.uw.tcss450.ui.connections.dummy.ConnectionContent;
 
 /**
  * A fragment representing a list of Items.
@@ -65,7 +65,7 @@ public class ConnectionFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyConnectionRecyclerViewAdapter(DummyContent.ITEMS));
+            recyclerView.setAdapter(new MyConnectionRecyclerViewAdapter(ConnectionContent.ITEMS));
         }
         return view;
     }

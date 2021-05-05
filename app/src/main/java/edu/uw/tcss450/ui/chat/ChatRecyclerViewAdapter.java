@@ -61,60 +61,27 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             super(view);
             mView = view;
             binding = FragmentChatCardBinding.bind(view);
-            binding.buttonMore.setOnClickListener(this::handleMoreOrLess);
         }
 
-        /**
-         * When the button is clicked in the more state, expand the card to display
-         * the chat preview and switch the icon to the less state. When the button
-         * is clicked in the less state, shrink the card and switch the icon to the
-         * more state.
-         *
-         * @param button the button that was clicked
-         */
-        private void handleMoreOrLess(final View button) {
-            mExpandedFlags.put(mChatRoom, !mExpandedFlags.get((mChatRoom)));
-            displayPreview();
-        }
 
-        /**
-         * Helper used to determine if the preview should be displayed or not.
-         */
-        private void displayPreview() {
-            if (mExpandedFlags.get(mChatRoom)) {
-                // if (binding.textPreview.getVisibility() == View.GONE) {
-                binding.textPreview.setVisibility(View.VISIBLE);
-                binding.buttonMore.setImageIcon(
-                        Icon.createWithResource(
-                                mView.getContext(),
-                                R.drawable.ic_less_grey_24dp));
-
-            } else {
-                binding.textPreview.setVisibility(View.GONE);
-                binding.buttonMore.setImageIcon(
-                        Icon.createWithResource(
-                                mView.getContext(),
-                                R.drawable.ic_more_grey_24dp));
-            }
-        }
 
         void setChatRoom(final ChatRoom chatRoom) {
             mChatRoom = chatRoom;
-            binding.buttonFullPost.setOnClickListener(view -> {
+            binding.layoutInner.setOnClickListener(view -> {
                 Navigation.findNavController(mView).navigate(
                         ChatListFragmentDirections
                                 .actionNavigationChatsToChatRoomFragment(chatRoom));
             });
-            binding.textTitle.setText(chatRoom.getTitle());
-            binding.textPubdate.setText(chatRoom.getPubDate());
+            binding.chatHeader.setText(chatRoom.getTitle());
+            binding.chatDateTime.setText(chatRoom.getPubDate());
             //Use methods in the HTML class to format the HTML found in the text
             final String preview = Html.fromHtml(
                     chatRoom.getTeaser(),
                     Html.FROM_HTML_MODE_COMPACT)
-                    .toString().substring(0, 100) //just a preview of the teaser
+                    .toString().substring(0, 40) //just a preview of the teaser
                     + "...";
-            binding.textPreview.setText(preview);
-            displayPreview();
+            binding.chatPreview.setText(preview);
+
         }
     }
 }

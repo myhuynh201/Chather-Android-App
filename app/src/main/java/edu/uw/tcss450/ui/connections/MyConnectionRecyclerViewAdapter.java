@@ -8,19 +8,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import edu.uw.tcss450.R;
-import edu.uw.tcss450.ui.connections.dummy.DummyContent.DummyItem;
+import edu.uw.tcss450.ui.connections.dummy.ConnectionContent.ConnectionItem;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
+ * {@link RecyclerView.Adapter} that can display a {@link ConnectionItem}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyConnectionRecyclerViewAdapter extends RecyclerView.Adapter<MyConnectionRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<ConnectionItem> mValues;
 
-    public MyConnectionRecyclerViewAdapter(List<DummyItem> items) {
+    public MyConnectionRecyclerViewAdapter(List<ConnectionItem> items) {
         mValues = items;
     }
 
@@ -34,7 +34,7 @@ public class MyConnectionRecyclerViewAdapter extends RecyclerView.Adapter<MyConn
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
+        holder.mIdView.setText(mValues.get(position).username);
         holder.mContentView.setText(mValues.get(position).content);
     }
 
@@ -47,7 +47,7 @@ public class MyConnectionRecyclerViewAdapter extends RecyclerView.Adapter<MyConn
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public ConnectionItem mItem;
 
         public ViewHolder(View view) {
             super(view);

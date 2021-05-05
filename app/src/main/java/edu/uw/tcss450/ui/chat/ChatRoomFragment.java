@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,17 +25,16 @@ public class ChatRoomFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ChatRoomFragmentArgs args = ChatRoomFragmentArgs.fromBundle(getArguments());
         FragmentChatRoomBinding binding = FragmentChatRoomBinding.bind(getView());
-        binding.textPubdate.setText(args.getChatRoom().getPubDate());
-        binding.textTitle.setText(args.getChatRoom().getTitle());
+        binding.chatHeader.setText(args.getChatRoom().getPubDate());
+        binding.chatPreview.setText(args.getChatRoom().getTitle());
         final String preview = Html.fromHtml(
                 args.getChatRoom().getTeaser(),
                 Html.FROM_HTML_MODE_COMPACT)
                 .toString();
         binding.textPreview.setText(preview);
         //Note we are using an Intent here to start the default system web browser
-        binding.buttonUrl.setOnClickListener(button ->
-                startActivity(new Intent(Intent.ACTION_VIEW,
-                        Uri.parse(args.getChatRoom().getUrl()))));
+        binding.buttonSendChat.setOnClickListener(button ->
+                Log.d("CHAT MESSAGE", binding.chatMessageInput.getText().toString()));
     }
 
     @Override

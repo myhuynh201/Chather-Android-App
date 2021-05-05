@@ -10,7 +10,7 @@
     <string name="title_home">Home</string>
     <string name="title_chats">Chats</string>
     <string name="title_connections">Connections</string>
-    <string name="action_link">Full Post</string>
+    <string name="action_send_chat">Send</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -20,4 +20,8 @@
     <string name="switch_color_mode">Switch Mode</string>
     <string name="hello_weather_fragment">It is sunny somewhere :D</string>
     <string name="title_weather">Weather</string>
+    <string name="text_chat_hint">Message</string>
+    <string name="button_message">Message</string>
+    <string name="button_details">Details</string>
+
 </resources>
