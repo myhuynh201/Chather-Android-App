@@ -1,5 +1,10 @@
 package edu.uw.tcss450;
-
+/**
+ * Duy Nguyen
+ * TCSS 450
+ * TCSS 450 Project
+ * Main activity that runs in the background of the app. Sets up our bottom navigation.
+ */
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
@@ -27,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnToggleDark;
 
+    /**Creates our bottom navigation menu from the menu elements we've given it before.
+     * See onCreate parent method for more implementation details.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

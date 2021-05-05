@@ -3,7 +3,7 @@ package edu.uw.tcss450.ui.register;
 /**
  * Duy Nguyen
  * TCSS 450
- * Lab 1 Assignment
+ * TCSS450 Main Project
  */
 
 import android.os.Bundle;
@@ -284,7 +284,12 @@ public class RegisterFragment extends Fragment {
         // Required empty public constructor
     }
 
-        private String generateJwt(final String email) {
+    /**Generates a JSON Web Token based on the entered email address.
+     *
+     * @param email the users email
+     * @return A JSON Web Token
+     */
+    private String generateJwt(final String email) {
         String token;
         try {
             Algorithm algorithm = Algorithm.HMAC256("secret key don't use a string literal in " +
@@ -326,6 +331,9 @@ public class RegisterFragment extends Fragment {
         validateFirst();
     }
 
+    /**
+     * Checks that the first name entered by the user is valid.
+     */
     private void validateFirst() {
         mNameValidator.processResult(
                 mNameValidator.apply(binding.FirstName.getText().toString().trim()),
@@ -333,6 +341,9 @@ public class RegisterFragment extends Fragment {
                 result -> binding.FirstName.setError("Please enter a first name."));
     }
 
+    /**
+     * The last name was
+     */
     private void validateLast() {
         mNameValidator.processResult(
                 mNameValidator.apply(binding.LastName.getText().toString().trim()),
