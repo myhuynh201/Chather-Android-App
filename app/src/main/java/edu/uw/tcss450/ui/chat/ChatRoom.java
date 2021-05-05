@@ -3,31 +3,27 @@ package edu.uw.tcss450.ui.chat;
 import java.io.Serializable;
 
 /**
- * Class to encapsulate a Phish.net Blog Post. Building an Object requires a publish date and title.
+ * Class to encapsulate a ChatRoom
  *
- * Optional fields include URL, teaser, and Author.
- *
- *
- * @author Charles Bryan
- * @version 14 September 2018
+ * @author alecmac (based on Charles Bryan code)
  */
 public class ChatRoom implements Serializable {
 
+    //TODO: Refactor these for chatroom
+
     private final String mPubDate;
     private final String mTitle;
-    private final String mUrl;
     private final String mTeaser;
     private final String mAuthor;
 
     /**
      * Helper class for building Credentials.
      *
-     * @author Charles Bryan
+     * @author alecmac (based on Charles Bryan code)
      */
     public static class Builder {
         private final String mPubDate;
         private final String mTitle;
-        private  String mUrl = "";
         private  String mTeaser = "";
         private  String mAuthor = "";
 
@@ -41,16 +37,6 @@ public class ChatRoom implements Serializable {
         public Builder(String pubDate, String title) {
             this.mPubDate = pubDate;
             this.mTitle = title;
-        }
-
-        /**
-         * Add an optional url for the full chat post.
-         * @param val an optional url for the full chat post
-         * @return the Builder of this ChatRoom
-         */
-        public Builder addUrl(final String val) {
-            mUrl = val;
-            return this;
         }
 
         /**
@@ -73,36 +59,52 @@ public class ChatRoom implements Serializable {
             return this;
         }
 
+        /**
+         * Builds chatroom
+         * @return a constructed ChatRoom
+         */
         public ChatRoom build() {
             return new ChatRoom(this);
         }
 
     }
 
+    /**
+     * Constructs Chatroom from builder
+     * @param builder used to construct a Chatroom
+     */
     private ChatRoom(final Builder builder) {
         this.mPubDate = builder.mPubDate;
         this.mTitle = builder.mTitle;
-        this.mUrl = builder.mUrl;
         this.mTeaser = builder.mTeaser;
         this.mAuthor = builder.mAuthor;
     }
 
+    /**
+     * @return publication / sent date
+     */
     public String getPubDate() {
         return mPubDate;
     }
 
+    /**
+     * @return Title or header
+     */
     public String getTitle() {
         return mTitle;
     }
 
-    public String getUrl() {
-        return mUrl;
-    }
 
+    /**
+     * @return chat message
+     */
     public String getTeaser() {
         return mTeaser;
     }
 
+    /**
+     * @return author or sender
+     */
     public String getAuthor() {
         return mAuthor;
     }

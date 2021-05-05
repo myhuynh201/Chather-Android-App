@@ -1,11 +1,4 @@
 package edu.uw.tcss450.ui.register;
-
-/**
- * Duy Nguyen
- * TCSS 450
- * TCSS450 Main Project
- */
-
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -256,22 +249,36 @@ import org.json.JSONObject;
 import edu.uw.tcss450.databinding.FragmentRegisterBinding;
 import edu.uw.tcss450.utils.PasswordValidator;
 
-
 /**
  * A simple {@link Fragment} subclass.
+ * @author Charles Bryan, Duy Nguyen, Demarco Best, Alec Mac, Alejandro Olono, My Duyen Huynh
  */
 public class RegisterFragment extends Fragment {
 
+    /*
+    Binding for the register fragment.
+     */
     private FragmentRegisterBinding binding;
 
+    /*
+    View model for the register fragment.
+     */
     private RegisterViewModel mRegisterModel;
 
+    /*
+    Password validator for the email field in register.
+     */
     private PasswordValidator mNameValidator = checkPwdLength(1);
 
+    /*
+    Password validator for the email field in register.
+    */
     private PasswordValidator mEmailValidator = checkPwdLength(2)
             .and(checkExcludeWhiteSpace())
             .and(checkPwdSpecialChar("@"));
-
+    /*
+    Password validator for the password field in register.
+     */
     private PasswordValidator mPassWordValidator =
             checkClientPredicate(pwd -> pwd.equals(binding.Password.getText().toString()))
                     .and(checkPwdLength(7))
@@ -280,14 +287,17 @@ public class RegisterFragment extends Fragment {
                     .and(checkPwdDigit())
                     .and(checkPwdLowerCase().or(checkPwdUpperCase()));
 
+    /**
+     * An empty constructor.
+     */
     public RegisterFragment() {
         // Required empty public constructor
     }
 
-    /**Generates a JSON Web Token based on the entered email address.
-     *
-     * @param email the users email
-     * @return A JSON Web Token
+    /**
+     * A private method to generate jwt.
+     * @param email The email.
+     * @return Returns a jwt token.
      */
     private String generateJwt(final String email) {
         String token;
@@ -304,6 +314,9 @@ public class RegisterFragment extends Fragment {
         return token;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -311,6 +324,9 @@ public class RegisterFragment extends Fragment {
                 .get(RegisterViewModel.class);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -318,6 +334,9 @@ public class RegisterFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -327,12 +346,16 @@ public class RegisterFragment extends Fragment {
                 this::observeResponse);
     }
 
+    /**
+     * Private helper method for validation in register.
+     * @param button
+     */
     private void attemptRegister(final View button) {
         validateFirst();
     }
 
     /**
-     * Checks that the first name entered by the user is valid.
+     * Private helper method for adding the first name in the first name field.
      */
     private void validateFirst() {
         mNameValidator.processResult(
@@ -342,7 +365,7 @@ public class RegisterFragment extends Fragment {
     }
 
     /**
-     * The last name was
+     * Private helper method for adding the last name in the last name field.
      */
     private void validateLast() {
         mNameValidator.processResult(
@@ -351,6 +374,9 @@ public class RegisterFragment extends Fragment {
                 result -> binding.LastName.setError("Please enter a last name."));
     }
 
+    /**
+     * Private helper method for adding email address in the email field.
+     */
     private void validateEmail() {
         mEmailValidator.processResult(
                 mEmailValidator.apply(binding.Email.getText().toString().trim()),
@@ -358,6 +384,9 @@ public class RegisterFragment extends Fragment {
                 result -> binding.Email.setError("Please enter a valid Email address."));
     }
 
+    /**
+     * Private helper method to check if the password matches the retyped password.
+     */
     private void validatePasswordsMatch() {
         PasswordValidator matchValidator =
                 checkClientPredicate(
@@ -369,6 +398,9 @@ public class RegisterFragment extends Fragment {
                 result -> binding.Password.setError("Passwords must match."));
     }
 
+    /**
+     * Private helper method for password validation.
+     */
     private void validatePassword() {
         mPassWordValidator.processResult(
                 mPassWordValidator.apply(binding.Password.getText().toString()),
@@ -376,6 +408,9 @@ public class RegisterFragment extends Fragment {
                 result -> binding.Password.setError("Please enter a valid Password."));
     }
 
+    /**
+     * Private helper method for verification of the register with the server.
+     */
     private void verifyAuthWithServer() {
         mRegisterModel.connect(
                 binding.FirstName.getText().toString(),
@@ -385,6 +420,9 @@ public class RegisterFragment extends Fragment {
         //result of connect().
     }
 
+    /**
+     * Private helper method for navigating to login if user registration is complete.
+     */
     private void navigateToLogin() {
         RegisterFragmentDirections.ActionRegisterFragmentToSignInFragment directions =
                 RegisterFragmentDirections.actionRegisterFragmentToSignInFragment();
@@ -395,8 +433,6 @@ public class RegisterFragment extends Fragment {
         Navigation.findNavController(getView()).navigate(directions);
 
     }
-
-
 
     /**
      * An observer on the HTTP Response from the web server. This observer should be

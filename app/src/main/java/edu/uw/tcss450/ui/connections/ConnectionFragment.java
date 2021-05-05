@@ -13,16 +13,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import edu.uw.tcss450.R;
-import edu.uw.tcss450.ui.connections.dummy.DummyContent;
+import edu.uw.tcss450.ui.connections.dummy.ConnectionContent;
 
 /**
- * A fragment representing a list of Items.
+ * A fragment representing a list of Connections.
  */
 public class ConnectionFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
+    /**
+     * Number of columns
+      */
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
 
     /**
@@ -32,8 +33,11 @@ public class ConnectionFragment extends Fragment {
     public ConnectionFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
+    /**
+     * Creates new instance of connection fragment
+     * @param columnCount initializes with count of columns
+     * @return returns new Connection Fragment
+     */
     public static ConnectionFragment newInstance(int columnCount) {
         ConnectionFragment fragment = new ConnectionFragment();
         Bundle args = new Bundle();
@@ -42,6 +46,10 @@ public class ConnectionFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * When this is created, set column count
+     * @param savedInstanceState saved instance state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +59,13 @@ public class ConnectionFragment extends Fragment {
         }
     }
 
+    /**
+     * Handle when view is created
+     * @param inflater inflates the view
+     * @param container container in which this view resides
+     * @param savedInstanceState saved instance state
+     * @return the inflated view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,7 +80,7 @@ public class ConnectionFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyConnectionRecyclerViewAdapter(DummyContent.ITEMS));
+            recyclerView.setAdapter(new MyConnectionRecyclerViewAdapter(ConnectionContent.ITEMS));
         }
         return view;
     }
