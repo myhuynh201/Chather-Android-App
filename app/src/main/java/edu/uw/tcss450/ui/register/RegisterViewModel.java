@@ -21,20 +21,41 @@ import org.json.JSONObject;
 import java.nio.charset.Charset;
 import java.util.Objects;
 
+/**
+ * A view model class of the register fragment that detects changes in data from sign in.
+ * @author Charles Bryan, Duy Nguyen, Demarco Best, Alec Mac, Alejandro Olono, My Duyen Huynh
+ */
 public class RegisterViewModel extends AndroidViewModel {
+
+    /*
+    A mutable live data that is able to change certain register properties from response.
+    */
     private MutableLiveData<JSONObject> mResponse;
 
+    /**
+     * Contructor for the register view model class.
+     * @param application The application.
+     */
     public RegisterViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>();
         mResponse.setValue(new JSONObject());
     }
 
+    /**
+     * Observes mutable live data.
+     * @param owner The owner.
+     * @param observer The observer.
+     */
     public void addResponseObserver(@NonNull LifecycleOwner owner,
                                     @NonNull Observer<? super JSONObject> observer) {
         mResponse.observe(owner, observer);
     }
 
+    /**
+     * Private helper method to handle server errors in register.
+     * @param error The error.
+     */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             try {
@@ -59,6 +80,13 @@ public class RegisterViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * Private helper method for connecting registration to the server from URL.
+     * @param first The first name.
+     * @param last The last name.
+     * @param email The email address.
+     * @param password The password.
+     */
     public void connect(final String first,
                         final String last,
                         final String email,
