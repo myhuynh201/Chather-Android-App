@@ -56,7 +56,7 @@ public class ConnectionContent {
      * @param position index of the dummy connection
      * @return the name of the connection for the given position
      */
-    private static String getName(int position) {
+    public static String getName(int position) {
         String[] names = {"Odin", "Alcis", "Baldr", "Freya", "Freyr", "Heimdall", "Odr", "Tyr", "Ullr", "Mimir", "Njordr", "Frigg",
                 "Saxnot", "Vili", "Tuisto", "Sleipnir", "Idunn"};
         return names[position - 1];
