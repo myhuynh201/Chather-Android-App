@@ -2,7 +2,8 @@ package edu.uw.tcss450;
 /**
  * Duy Nguyen
  * TCSS 450
- * Lab 1 Assignment
+ * TCSS 450 Project
+ * Auth Activity is the main activity for the sign in page on the front side of the application.
  */
 
 import androidx.appcompat.app.AppCompatActivity;
