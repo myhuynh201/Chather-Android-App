@@ -1,4 +1,4 @@
-package edu.uw.tcss450;
+package edu.uw.chather;
 
 import org.junit.Test;
 

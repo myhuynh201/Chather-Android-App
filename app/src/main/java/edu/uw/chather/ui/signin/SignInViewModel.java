@@ -24,25 +24,42 @@ import java.util.Objects;
 
 import edu.uw.chather.io.RequestQueueSingleton;
 
+/**
+ * A view model class of the sign in fragment that detects changes in data from sign in.
+ * @author Charles Bryan, Duy Nguyen, Demarco Best, Alec Mac, Alejandro Olono, My Duyen Huynh
+ */
 public class SignInViewModel extends AndroidViewModel {
 
+    /*
+    A mutable live data that is able to change certain sign in properties from response.
+     */
     private MutableLiveData<JSONObject> mResponse;
 
+    /**
+     * Constructor for the sign in view model.
+     * @param application The application.
+     */
     public SignInViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>();
         mResponse.setValue(new JSONObject());
     }
 
+    /**
+     * Observes mutable live data.
+     * @param owner The owner.
+     * @param observer The observer.
+     */
     public void addResponseObserver(@NonNull LifecycleOwner owner,
                                     @NonNull Observer<? super JSONObject> observer) {
         mResponse.observe(owner, observer);
     }
 
 
-
-
-
+    /**
+     * Handles the error from the server side.
+     * @param error The error.
+     */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             try {
@@ -67,9 +84,13 @@ public class SignInViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * Connects to the server from a url.
+     * @param email The email.
+     * @param password The password.
+     */
     public void connect(final String email, final String password) {
-        String url = "https://cfb3-tcss450-labs-2021sp.herokuapp.com/auth";
-        Request request = new JsonObjectRequest(
+        String url = "https://tcss450-android-app.herokuapp.com/auth"; Request request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
                 null, //no body for this get request

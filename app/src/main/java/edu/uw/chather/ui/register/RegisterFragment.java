@@ -1,11 +1,4 @@
 package edu.uw.chather.ui.register;
-
-/**
- * Duy Nguyen
- * TCSS 450
- * Lab 1 Assignment
- */
-
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -24,9 +17,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.uw.chather.utils.PasswordValidator;
-import edu.uw.chather.R;
-import edu.uw.chather.databinding.FragmentRegisterBinding;
-import edu.uw.chather.ui.register.RegisterFragmentDirections;
 
 ///**
 // * The register fragment class allows the user to register their login info.
@@ -229,39 +219,66 @@ import edu.uw.chather.ui.register.RegisterFragmentDirections;
 //}
 
 
+import static edu.uw.chather.utils.PasswordValidator.*;
+import static edu.uw.chather.utils.PasswordValidator.checkClientPredicate;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import edu.uw.chather.databinding.FragmentRegisterBinding;
 
 /**
  * A simple {@link Fragment} subclass.
+ * @author Charles Bryan, Duy Nguyen, Demarco Best, Alec Mac, Alejandro Olono, My Duyen Huynh
  */
 public class RegisterFragment extends Fragment {
 
+    /*
+    Binding for the register fragment.
+     */
     private FragmentRegisterBinding binding;
 
+    /*
+    View model for the register fragment.
+     */
     private RegisterViewModel mRegisterModel;
 
-    private PasswordValidator mNameValidator = PasswordValidator.checkPwdLength(1);
+    /*
+    Password validator for the email field in register.
+     */
+    private PasswordValidator mNameValidator = checkPwdLength(1);
 
-    private PasswordValidator mEmailValidator = PasswordValidator.checkPwdLength(2)
-            .and(PasswordValidator.checkExcludeWhiteSpace())
-            .and(PasswordValidator.checkPwdSpecialChar("@"));
-
+    /*
+    Password validator for the email field in register.
+    */
+    private PasswordValidator mEmailValidator = checkPwdLength(2)
+            .and(checkExcludeWhiteSpace())
+            .and(checkPwdSpecialChar("@"));
+    /*
+    Password validator for the password field in register.
+     */
     private PasswordValidator mPassWordValidator =
-            PasswordValidator.checkClientPredicate(pwd -> pwd.equals(binding.Password.getText().toString()))
-                    .and(PasswordValidator.checkPwdLength(7))
-                    .and(PasswordValidator.checkPwdSpecialChar())
-                    .and(PasswordValidator.checkExcludeWhiteSpace())
-                    .and(PasswordValidator.checkPwdDigit())
-                    .and(PasswordValidator.checkPwdLowerCase().or(PasswordValidator.checkPwdUpperCase()));
+            checkClientPredicate(pwd -> pwd.equals(binding.Password.getText().toString()))
+                    .and(checkPwdLength(7))
+                    .and(checkPwdSpecialChar())
+                    .and(checkExcludeWhiteSpace())
+                    .and(checkPwdDigit())
+                    .and(checkPwdLowerCase().or(checkPwdUpperCase()));
 
+    /**
+     * An empty constructor.
+     */
     public RegisterFragment() {
         // Required empty public constructor
     }
 
-        private String generateJwt(final String email) {
+    /**
+     * A private method to generate jwt.
+     * @param email The email.
+     * @return Returns a jwt token.
+     */
+    private String generateJwt(final String email) {
         String token;
         try {
             Algorithm algorithm = Algorithm.HMAC256("secret key don't use a string literal in " +
@@ -276,6 +293,9 @@ public class RegisterFragment extends Fragment {
         return token;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -283,6 +303,9 @@ public class RegisterFragment extends Fragment {
                 .get(RegisterViewModel.class);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -290,6 +313,9 @@ public class RegisterFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -299,10 +325,17 @@ public class RegisterFragment extends Fragment {
                 this::observeResponse);
     }
 
+    /**
+     * Private helper method for validation in register.
+     * @param button
+     */
     private void attemptRegister(final View button) {
         validateFirst();
     }
 
+    /**
+     * Private helper method for adding the first name in the first name field.
+     */
     private void validateFirst() {
         mNameValidator.processResult(
                 mNameValidator.apply(binding.FirstName.getText().toString().trim()),
@@ -310,6 +343,9 @@ public class RegisterFragment extends Fragment {
                 result -> binding.FirstName.setError("Please enter a first name."));
     }
 
+    /**
+     * Private helper method for adding the last name in the last name field.
+     */
     private void validateLast() {
         mNameValidator.processResult(
                 mNameValidator.apply(binding.LastName.getText().toString().trim()),
@@ -317,6 +353,9 @@ public class RegisterFragment extends Fragment {
                 result -> binding.LastName.setError("Please enter a last name."));
     }
 
+    /**
+     * Private helper method for adding email address in the email field.
+     */
     private void validateEmail() {
         mEmailValidator.processResult(
                 mEmailValidator.apply(binding.Email.getText().toString().trim()),
@@ -324,9 +363,12 @@ public class RegisterFragment extends Fragment {
                 result -> binding.Email.setError("Please enter a valid Email address."));
     }
 
+    /**
+     * Private helper method to check if the password matches the retyped password.
+     */
     private void validatePasswordsMatch() {
         PasswordValidator matchValidator =
-                PasswordValidator.checkClientPredicate(
+                checkClientPredicate(
                         pwd -> pwd.equals(binding.RetypePassword.getText().toString().trim()));
 
         mEmailValidator.processResult(
@@ -335,6 +377,9 @@ public class RegisterFragment extends Fragment {
                 result -> binding.Password.setError("Passwords must match."));
     }
 
+    /**
+     * Private helper method for password validation.
+     */
     private void validatePassword() {
         mPassWordValidator.processResult(
                 mPassWordValidator.apply(binding.Password.getText().toString()),
@@ -342,6 +387,9 @@ public class RegisterFragment extends Fragment {
                 result -> binding.Password.setError("Please enter a valid Password."));
     }
 
+    /**
+     * Private helper method for verification of the register with the server.
+     */
     private void verifyAuthWithServer() {
         mRegisterModel.connect(
                 binding.FirstName.getText().toString(),
@@ -351,6 +399,9 @@ public class RegisterFragment extends Fragment {
         //result of connect().
     }
 
+    /**
+     * Private helper method for navigating to login if user registration is complete.
+     */
     private void navigateToLogin() {
         RegisterFragmentDirections.ActionRegisterFragmentToSignInFragment directions =
                 RegisterFragmentDirections.actionRegisterFragmentToSignInFragment();
@@ -361,8 +412,6 @@ public class RegisterFragment extends Fragment {
         Navigation.findNavController(getView()).navigate(directions);
 
     }
-
-
 
     /**
      * An observer on the HTTP Response from the web server. This observer should be

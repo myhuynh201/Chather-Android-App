@@ -1,121 +1,6 @@
 package edu.uw.chather.ui.signin;
-//
-///**
-// * Duy Nguyen
-// * TCSS 450
-// * Lab 1 Assignment
-// */
-//
-//import android.os.Bundle;
-//
-//import androidx.activity.OnBackPressedCallback;
-//import androidx.fragment.app.Fragment;
-//import androidx.fragment.app.FragmentTransaction;
-//import androidx.navigation.Navigation;
-//import androidx.navigation.ui.NavigationUI;
-//
-//import android.text.TextUtils;
-//import android.view.LayoutInflater;
-//import android.view.View;
-//import android.view.ViewGroup;
-//import android.widget.Button;
-//import android.widget.EditText;
-//
-//import com.auth0.jwt.JWT;
-//import com.auth0.jwt.algorithms.Algorithm;
-//import com.auth0.jwt.exceptions.JWTCreationException;
-//
-//import edu.uw.tcss450.R;
-//import edu.uw.tcss450.databinding.FragmentSignInBinding;
-//
-///**
-// * The sign in fragment class is the the first fragment that we see once starting the app. This fragment
-// * will ask the user to login wih an email address and a password.
-// */
-//public class SignInFragment extends Fragment {
-//
-//
-//    private FragmentSignInBinding binding; // A binding created for this fragment.
-//
-//    Button buttonSignIn;        // A button for signing in.
-//    Button buttonRegister;      // A button for registering.
-//    EditText edEmail;           // A text field for the user's email address.
-//    EditText edPassword;        // A text field for the user's password info.
-//
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        binding = FragmentSignInBinding.inflate(inflater,container,false);
-//
-//        edEmail = binding.Email;
-//        edPassword = binding.Password;
-//        buttonSignIn = binding.SignIn;
-//        buttonRegister = binding.Register;
-//
-//        // Advance to the success fragment once the sign in button is clicked and the email check is valid.
-//        buttonSignIn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                checkValidEmail(edEmail);
-//            }
-//        });
-//
-//        // Advance to the register fragment once the register button is clicked.
-//        buttonRegister.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Navigation.findNavController(getView()).navigate(SignInFragmentDirections.actionSignInFragmentToRegisterFragment());
-//
-//            }
-//        });
-//
-//
-//        return binding.getRoot();
-//    }
-//
-//    /**
-//     * Private helper method to check if the login information is valid.
-//     * @param edEmail One of the two Safe Args, this is the user's email address.
-//     */
-//    public void checkValidEmail(EditText edEmail) {
-//        String emailLogin = edEmail.getText().toString();
-//        String passwordLogin = edPassword.getText().toString();
-//        if (TextUtils.isEmpty(emailLogin) || !emailLogin.contains("@")) {
-//            edEmail.setError("Please enter an appropriate email address");
-//        } else if (passwordLogin.isEmpty()) {
-//            edPassword.setError("This field cannot be empty");
-//        } else {
-//            //SignInFragmentDirections.ActionSignInFragmentToSuccessFragment directions = SignInFragmentDirections.actionSignInFragmentToSuccessFragment(emailLogin,"");
-//            //Navigation.findNavController(getView()).navigate(directions);
-//
-//            Navigation.findNavController(getView()).navigate(
-//                    SignInFragmentDirections
-//                            .actionSignInFragmentToMainActivity(
-//                                    generateJwt(edEmail.getText().toString())  // if doesnt work, use edEmail.getText().toString
-//                            ));
-//
-//            getActivity().finish();;
-//        }
-//    }
-//
-//    private String generateJwt(final String email) {
-//        String token;
-//        try {
-//            Algorithm algorithm = Algorithm.HMAC256("secret key don't use a string literal in " +
-//                    "production code!!!");
-//            token = JWT.create()
-//                    .withIssuer("auth0")
-//                    .withClaim("email", email)
-//                    .sign(algorithm);
-//        } catch (JWTCreationException exception){
-//            throw new RuntimeException("JWT Failed to Create.");
-//        }
-//        return token;
-//    }
-//
-//}
+
+import static edu.uw.chather.utils.PasswordValidator.*;
 
 import android.os.Bundle;
 
@@ -137,30 +22,48 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.uw.chather.utils.PasswordValidator;
 import edu.uw.chather.databinding.FragmentSignInBinding;
-import edu.uw.chather.ui.signin.SignInFragmentArgs;
-import edu.uw.chather.ui.signin.SignInFragmentDirections;
+import edu.uw.chather.utils.PasswordValidator;
 
 /**
  * A simple {@link Fragment} subclass.
+ * @author Charles Bryan, Duy Nguyen, Demarco Best, Alec Mac, Alejandro Olono, My Duyen Huynh
  */
 public class SignInFragment extends Fragment {
 
+    /*
+    A binding for the sign in fragment.
+     */
     private FragmentSignInBinding binding;
+
+    /*
+    A view model to allow changes in the sign in fragment.
+     */
     private SignInViewModel mSignInModel;
 
-    private PasswordValidator mEmailValidator = PasswordValidator.checkPwdLength(2)
-            .and(PasswordValidator.checkExcludeWhiteSpace())
-            .and(PasswordValidator.checkPwdSpecialChar("@"));
+    /*
+    A validator to check the email field.
+     */
+    private PasswordValidator mEmailValidator = checkPwdLength(2)
+            .and(checkExcludeWhiteSpace())
+            .and(checkPwdSpecialChar("@"));
 
-    private PasswordValidator mPassWordValidator = PasswordValidator.checkPwdLength(1)
-            .and(PasswordValidator.checkExcludeWhiteSpace());
+    /*
+    A validator to check the password field.
+     */
+    private PasswordValidator mPassWordValidator = checkPwdLength(1)
+            .and(checkExcludeWhiteSpace());
 
+    /**
+    An empty constructor of the sign in fragment.
+     */
     public SignInFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,6 +71,9 @@ public class SignInFragment extends Fragment {
                 .get(SignInViewModel.class);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -176,6 +82,9 @@ public class SignInFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -184,6 +93,7 @@ public class SignInFragment extends Fragment {
                 Navigation.findNavController(getView()).navigate(
                         SignInFragmentDirections.actionSignInFragmentToRegisterFragment()
                 ));
+
 
         binding.buttonSignIn.setOnClickListener(this::attemptSignIn);
 
@@ -196,10 +106,17 @@ public class SignInFragment extends Fragment {
         binding.editPassword.setText(args.getPassword().equals("default") ? "" : args.getPassword());
     }
 
+    /**
+     * Calls the validate email password.
+     * @param button
+     */
     private void attemptSignIn(final View button) {
         validateEmail();
     }
 
+    /**
+     * A private helper method to check for valid email.
+     */
     private void validateEmail() {
         mEmailValidator.processResult(
                 mEmailValidator.apply(binding.editEmail.getText().toString().trim()),
@@ -207,6 +124,10 @@ public class SignInFragment extends Fragment {
                 result -> binding.editPassword.setError("Please enter a valid Email address."));
     }
 
+
+    /**
+     * A private helper method to check for valid password.
+     */
     private void validatePassword() {
         mPassWordValidator.processResult(
                 mPassWordValidator.apply(binding.editPassword.getText().toString()),
@@ -214,6 +135,9 @@ public class SignInFragment extends Fragment {
                 result -> binding.editPassword.setError("Please enter a valid Password."));
     }
 
+    /**
+     * A private helper method to connect sign in with the server.
+     */
     private void verifyAuthWithServer() {
         mSignInModel.connect(
                 binding.editEmail.getText().toString(),

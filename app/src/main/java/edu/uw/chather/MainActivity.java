@@ -1,5 +1,10 @@
 package edu.uw.chather;
-
+/**
+ * Duy Nguyen
+ * TCSS 450
+ * TCSS 450 Project
+ * Main activity that runs in the background of the app. Sets up our bottom navigation.
+ */
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -8,10 +13,11 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
+import android.widget.Button;
+
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import edu.uw.chather.MainActivityArgs;
 import edu.uw.chather.ui.model.UserInfoViewModel;
 
 
@@ -19,6 +25,12 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
+    private Button btnToggleDark;
+
+    /**Creates our bottom navigation menu from the menu elements we've given it before.
+     * See onCreate parent method for more implementation details.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
         MainActivityArgs args = MainActivityArgs.fromBundle(getIntent().getExtras());
 
+
+        //  AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         //String email = args.getJwt();
         //Import com.auth0.android.jwt.JWT
         //JWT jwt = new JWT(args.getJwt());

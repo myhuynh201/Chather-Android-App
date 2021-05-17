@@ -1,4 +1,4 @@
-package edu.uw.tcss450;
+package edu.uw.chather;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("edu.uw.tcss450", appContext.getPackageName());
+        assertEquals("edu.uw.chather", appContext.getPackageName());
     }
 }

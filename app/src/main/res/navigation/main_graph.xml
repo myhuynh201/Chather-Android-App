@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/success"
         android:name="edu.uw.chather.ui.SuccessFragment"
-        android:label="fragment_success"
+        android:label="@string/title_home"
         tools:layout="@layout/fragment_success" />
     <fragment
         android:id="@+id/navigation_chats"
@@ -24,7 +24,7 @@
         android:label="@string/title_chats" >
         <argument
             android:name="chatRoom"
-            app:argType="edu.uw.tcss450.ui.chat.ChatRoom" />
+            app:argType="edu.uw.chather.ui.chat.ChatRoom" />
     </fragment>
     <fragment
         android:id="@+id/navigation_connections"
