@@ -25,6 +25,9 @@
             android:name="password"
             app:argType="string"
             android:defaultValue="default" />
+        <action
+            android:id="@+id/action_signInFragment_to_passwordResetFragment"
+            app:destination="@id/passwordResetFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -46,4 +49,9 @@
             android:name="jwt"
             app:argType="string" />
     </activity>
+    <fragment
+        android:id="@+id/passwordResetFragment"
+        android:name="edu.uw.tcss450.ui.passwordreset.PasswordResetFragment"
+        android:label="fragment_password_reset"
+        tools:layout="@layout/fragment_password_reset" />
 </navigation>

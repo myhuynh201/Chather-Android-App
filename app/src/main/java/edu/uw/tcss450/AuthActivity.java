@@ -1,8 +1,5 @@
 package edu.uw.tcss450;
 /**
- * Duy Nguyen
- * TCSS 450
- * TCSS 450 Project
  * Auth Activity is the main activity for the sign in page on the front side of the application.
  */
 

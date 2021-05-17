@@ -1,8 +1,5 @@
 package edu.uw.tcss450;
 /**
- * Duy Nguyen
- * TCSS 450
- * TCSS 450 Project
  * Main activity that runs in the background of the app. Sets up our bottom navigation.
  */
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,24 +10,26 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import edu.uw.tcss450.ui.model.UserInfoViewModel;
+import edu.uw.tcss450.ui.passwordreset.PasswordResetFragment;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
-    private Button btnToggleDark;
 
     /**Creates our bottom navigation menu from the menu elements we've given it before.
      * See onCreate parent method for more implementation details.
