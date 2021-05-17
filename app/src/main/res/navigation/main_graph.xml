@@ -6,12 +6,12 @@
     app:startDestination="@id/success">
     <fragment
         android:id="@+id/success"
-        android:name="edu.uw.tcss450.ui.SuccessFragment"
+        android:name="edu.uw.chather.ui.SuccessFragment"
         android:label="fragment_success"
         tools:layout="@layout/fragment_success" />
     <fragment
         android:id="@+id/navigation_chats"
-        android:name="edu.uw.tcss450.ui.chat.ChatListFragment"
+        android:name="edu.uw.chather.ui.chat.ChatListFragment"
         android:label="@string/title_chats"
         tools:layout="@layout/fragment_chat_list" >
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/chatRoomFragment"
-        android:name="edu.uw.tcss450.ui.chat.ChatRoomFragment"
+        android:name="edu.uw.chather.ui.chat.ChatRoomFragment"
         android:label="@string/title_chats" >
         <argument
             android:name="chatRoom"
@@ -28,12 +28,12 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_connections"
-        android:name="edu.uw.tcss450.ui.connections.ConnectionFragment"
+        android:name="edu.uw.chather.ui.connections.ConnectionFragment"
         android:label="@string/title_connections"
         tools:layout="@layout/fragment_connection_list" />
     <fragment
         android:id="@+id/weatherFragment"
-        android:name="edu.uw.tcss450.ui.weather.WeatherFragment"
+        android:name="edu.uw.chather.ui.weather.WeatherFragment"
         android:label="@string/title_weather"
         tools:layout="@layout/fragment_weather" />
 </navigation>

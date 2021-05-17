@@ -50,5 +50,17 @@ dependencies {
     implementation 'com.auth0:java-jwt:3.14.0'
     implementation 'com.android.volley:volley:1.2.0'
 
+    //Play services
+    implementation 'com.google.android.gms:play-services-location:11.8.0'
+    //Dexter
+    implementation 'com.karumi:dexter:5.0.0'
+    //Retrofit2
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    //RxJava
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.7'
 
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
