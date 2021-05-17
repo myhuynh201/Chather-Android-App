@@ -1,4 +1,4 @@
-package edu.uw.tcss450.ui.passwordreset;
+package edu.uw.chather.ui.passwordreset;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -21,15 +21,15 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.uw.tcss450.MainActivity;
-import edu.uw.tcss450.R;
-import edu.uw.tcss450.databinding.FragmentPasswordResetBinding;
-import edu.uw.tcss450.databinding.FragmentSignInBinding;
-import edu.uw.tcss450.ui.register.RegisterFragmentDirections;
-import edu.uw.tcss450.ui.register.RegisterViewModel;
-import edu.uw.tcss450.ui.signin.SignInFragmentArgs;
-import edu.uw.tcss450.ui.signin.SignInFragmentDirections;
-import edu.uw.tcss450.ui.signin.SignInViewModel;
+import edu.uw.chather.MainActivity;
+import edu.uw.chather.R;
+import edu.uw.chather.databinding.FragmentPasswordResetBinding;
+import edu.uw.chather.databinding.FragmentSignInBinding;
+import edu.uw.chather.ui.register.RegisterFragmentDirections;
+import edu.uw.chather.ui.register.RegisterViewModel;
+import edu.uw.chather.ui.signin.SignInFragmentArgs;
+import edu.uw.chather.ui.signin.SignInFragmentDirections;
+import edu.uw.chather.ui.signin.SignInViewModel;
 
 
 public class PasswordResetFragment extends Fragment {

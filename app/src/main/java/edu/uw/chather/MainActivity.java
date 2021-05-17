@@ -17,8 +17,8 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import edu.uw.tcss450.ui.model.UserInfoViewModel;
-import edu.uw.tcss450.ui.passwordreset.PasswordResetFragment;
+import edu.uw.chather.ui.model.UserInfoViewModel;
+import edu.uw.chather.ui.passwordreset.PasswordResetFragment;
 
 
 public class MainActivity extends AppCompatActivity {

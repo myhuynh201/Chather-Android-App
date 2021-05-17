@@ -1,4 +1,4 @@
-//package edu.uw.tcss450.ui.changepassword;
+//package edu.uw.chather.ui.changepassword;
 //
 //import android.os.Bundle;
 //
@@ -10,18 +10,18 @@
 //import android.widget.Button;
 //import android.widget.EditText;
 //
-//import edu.uw.tcss450.R;
-//import edu.uw.tcss450.databinding.FragmentChangePasswordBinding;
-//import edu.uw.tcss450.databinding.FragmentPasswordResetBinding;
-//import edu.uw.tcss450.utils.PasswordValidator;
+//import edu.uw.chather.R;
+//import edu.uw.chather.databinding.FragmentChangePasswordBinding;
+//import edu.uw.chather.databinding.FragmentPasswordResetBinding;
+//import edu.uw.chather.utils.PasswordValidator;
 //
-//import static edu.uw.tcss450.utils.PasswordValidator.checkClientPredicate;
-//import static edu.uw.tcss450.utils.PasswordValidator.checkExcludeWhiteSpace;
-//import static edu.uw.tcss450.utils.PasswordValidator.checkPwdDigit;
-//import static edu.uw.tcss450.utils.PasswordValidator.checkPwdLength;
-//import static edu.uw.tcss450.utils.PasswordValidator.checkPwdLowerCase;
-//import static edu.uw.tcss450.utils.PasswordValidator.checkPwdSpecialChar;
-//import static edu.uw.tcss450.utils.PasswordValidator.checkPwdUpperCase;
+//import static edu.uw.chather.utils.PasswordValidator.checkClientPredicate;
+//import static edu.uw.chather.utils.PasswordValidator.checkExcludeWhiteSpace;
+//import static edu.uw.chather.utils.PasswordValidator.checkPwdDigit;
+//import static edu.uw.chather.utils.PasswordValidator.checkPwdLength;
+//import static edu.uw.chather.utils.PasswordValidator.checkPwdLowerCase;
+//import static edu.uw.chather.utils.PasswordValidator.checkPwdSpecialChar;
+//import static edu.uw.chather.utils.PasswordValidator.checkPwdUpperCase;
 //
 //
 //public class ChangePasswordFragment extends Fragment {

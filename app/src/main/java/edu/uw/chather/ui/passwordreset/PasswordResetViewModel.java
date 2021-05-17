@@ -1,4 +1,4 @@
-package edu.uw.tcss450.ui.passwordreset;
+package edu.uw.chather.ui.passwordreset;
 
 import android.app.Application;
 import android.util.Base64;
@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import edu.uw.tcss450.io.RequestQueueSingleton;
+import edu.uw.chather.io.RequestQueueSingleton;
 
 /**
  * A view model class of the register fragment that detects changes in data from sign in.
