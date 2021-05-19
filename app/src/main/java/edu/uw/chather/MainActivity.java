@@ -19,6 +19,7 @@ import android.widget.Button;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import edu.uw.chather.ui.model.UserInfoViewModel;
+import edu.uw.chather.ui.weather.WeatherFragment;
 
 
 public class MainActivity extends AppCompatActivity {
