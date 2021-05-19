@@ -30,6 +30,9 @@
     <string name="confirm_new_password">Confirm Password</string>
     <string name="change_password">Change Password</string>
 
+    <string name="base_url">https://tcss450-android-app.herokuapp.com/</string>
+
+
 
 
 </resources>

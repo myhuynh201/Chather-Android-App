@@ -1,113 +1,140 @@
 package edu.uw.chather.ui.chat;
 
-
-import android.text.Html;
+import android.content.res.Resources;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
+import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.shape.CornerFamily;
+
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import edu.uw.chather.R;
-import edu.uw.chather.databinding.FragmentChatCardBinding;
+import edu.uw.chather.databinding.FragmentChatMessageBinding;
 
-/**
- * Class to handle recycled views of Chats
- *
- * @author alecmac
- */
-public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.ChatViewHolder> {
+public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.MessageViewHolder> {
 
-    //Store all the expanded state for each List item, true -> expanded, false -> not
-    private final Map<ChatRoom, Boolean> mExpandedFlags;
-    //Store all of the chat to present
-    private final List<ChatRoom> mChatRooms;
-
-    /**
-     * constructor for a chat recycler view adapter
-     * @param items list of chatrooms to create the recycled views
-     */
-    public ChatRecyclerViewAdapter(List<ChatRoom> items) {
-        this.mChatRooms = items;
-        mExpandedFlags = mChatRooms.stream()
-                .collect(Collectors.toMap(Function.identity(), blog -> false));
+    private final List<ChatMessage> mMessages;
+    private final String mEmail;
+    public ChatRecyclerViewAdapter(List<ChatMessage> messages, String email) {
+        this.mMessages = messages;
+        mEmail = email;
     }
 
-    /**
-     * Creates a new Chat View Holder when created
-     * @param parent parent of this element
-     * @param viewType type of this view
-     * @return the inflated Chat View Holder
-     */
+
     @NonNull
     @Override
-    public ChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ChatViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_chat_card, parent, false));
+    public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new MessageViewHolder(LayoutInflater
+                .from(parent.getContext())
+                .inflate(R.layout.fragment_chat_message, parent, false));
     }
 
-    /**
-     * Handles binding of view
-     * @param holder Chat View Holder
-     * @param position index of ChatRoom
-     */
     @Override
-    public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
-        holder.setChatRoom(mChatRooms.get(position));
+    public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
+        holder.setMessage(mMessages.get(position));
     }
 
-    /**
-     * gets number of Chatrooms
-     * @return number of ChatRooms
-     */
     @Override
     public int getItemCount() {
-        return mChatRooms.size();
+        return mMessages.size();
     }
 
-    /**
-     * Objects from this class represent an Individual row View from the List
-     * of rows in the Blog Recycler View.
-     */
-    public class ChatViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public FragmentChatCardBinding binding;
-        private ChatRoom mChatRoom;
+    class MessageViewHolder extends RecyclerView.ViewHolder {
+        private final View mView;
+        private FragmentChatMessageBinding binding;
 
-        public ChatViewHolder(View view) {
+        public MessageViewHolder(@NonNull View view) {
             super(view);
             mView = view;
-            binding = FragmentChatCardBinding.bind(view);
+            binding = FragmentChatMessageBinding.bind(view);
         }
 
+        void setMessage(final ChatMessage message) {
+            final Resources res = mView.getContext().getResources();
+            final MaterialCardView card = binding.cardRoot;
 
-        /**
-         * Sets chatroom to given ChatRoom
-         * @param chatRoom the Chat to be bound
-         */
-        void setChatRoom(final ChatRoom chatRoom) {
-            mChatRoom = chatRoom;
-            binding.layoutInner.setOnClickListener(view -> {
-                Navigation.findNavController(mView).navigate(
-                        ChatListFragmentDirections
-                                .actionNavigationChatsToChatRoomFragment(chatRoom));
-            });
-            binding.chatHeader.setText(chatRoom.getTitle());
-            binding.chatDateTime.setText(chatRoom.getPubDate());
-            //Use methods in the HTML class to format the HTML found in the text
-            final String preview = Html.fromHtml(
-                    chatRoom.getTeaser(),
-                    Html.FROM_HTML_MODE_COMPACT)
-                    .toString().substring(0, 40) //just a preview of the teaser
-                    + "...";
-            binding.chatPreview.setText(preview);
+            int standard = (int) res.getDimension(R.dimen.chat_margin);
+            int extended = (int) res.getDimension(R.dimen.chat_margin_sided);
 
+            if (mEmail.equals(message.getSender())) {
+                //This message is from the user. Format it as such
+                binding.textMessage.setText(message.getMessage());
+                ViewGroup.MarginLayoutParams layoutParams =
+                        (ViewGroup.MarginLayoutParams) card.getLayoutParams();
+                //Set the left margin
+                layoutParams.setMargins(extended, standard, standard, standard);
+                // Set this View to the right (end) side
+                ((FrameLayout.LayoutParams) card.getLayoutParams()).gravity =
+                        Gravity.END;
+
+                card.setCardBackgroundColor(
+                        ColorUtils.setAlphaComponent(
+                            res.getColor(R.color.colorPrimary, null),
+                            16));
+                binding.textMessage.setTextColor(
+                        res.getColor(R.color.colorAccent, null));
+
+                card.setStrokeWidth(standard / 5);
+                card.setStrokeColor(ColorUtils.setAlphaComponent(
+                        res.getColor(R.color.colorOffWhite, null),
+                        200));
+
+                //Round the corners on the left side
+                card.setShapeAppearanceModel(
+                        card.getShapeAppearanceModel()
+                                .toBuilder()
+                                .setTopLeftCorner(CornerFamily.ROUNDED,standard * 2)
+                                .setBottomLeftCorner(CornerFamily.ROUNDED,standard * 2)
+                                .setBottomRightCornerSize(0)
+                                .setTopRightCornerSize(0)
+                                .build());
+
+                card.requestLayout();
+            } else {
+                //This message is from another user. Format it as such
+                binding.textMessage.setText(message.getSender() +
+                        ": " + message.getMessage());
+                ViewGroup.MarginLayoutParams layoutParams =
+                        (ViewGroup.MarginLayoutParams) card.getLayoutParams();
+
+                //Set the right margin
+                layoutParams.setMargins(standard, standard, extended, standard);
+                // Set this View to the left (start) side
+                ((FrameLayout.LayoutParams) card.getLayoutParams()).gravity =
+                        Gravity.START;
+
+                card.setCardBackgroundColor(
+                        ColorUtils.setAlphaComponent(
+                                res.getColor(R.color.colorAccent, null),
+                                16));
+
+                card.setStrokeWidth(standard / 5);
+                card.setStrokeColor(ColorUtils.setAlphaComponent(
+                        res.getColor(R.color.colorAccent, null),
+                        200));
+
+                binding.textMessage.setTextColor(
+                        res.getColor(R.color.colorOffWhite, null));
+
+                //Round the corners on the right side
+                card.setShapeAppearanceModel(
+                        card.getShapeAppearanceModel()
+                                .toBuilder()
+                                .setTopRightCorner(CornerFamily.ROUNDED,standard * 2)
+                                .setBottomRightCorner(CornerFamily.ROUNDED,standard * 2)
+                                .setBottomLeftCornerSize(0)
+                                .setTopLeftCornerSize(0)
+                                .build());
+                card.requestLayout();
+            }
         }
     }
 }
