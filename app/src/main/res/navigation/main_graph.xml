@@ -8,7 +8,11 @@
         android:id="@+id/success"
         android:name="edu.uw.chather.ui.SuccessFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_success" />
+        tools:layout="@layout/fragment_success" >
+        <action
+            android:id="@+id/action_success_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_chats"
         android:name="edu.uw.chather.ui.chat.ChatListFragment"
@@ -36,4 +40,13 @@
         android:name="edu.uw.chather.ui.weather.WeatherFragment"
         android:label="@string/title_weather"
         tools:layout="@layout/fragment_weather" />
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="edu.uw.chather.ui.changepassword.ChangePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" >
+        <action
+            android:id="@+id/action_changePasswordFragment_to_success"
+            app:destination="@id/success" />
+    </fragment>
 </navigation>

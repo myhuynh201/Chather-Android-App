@@ -13,9 +13,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import edu.uw.chather.databinding.FragmentSuccessBinding;
 import edu.uw.chather.ui.model.UserInfoViewModel;
+import edu.uw.chather.ui.signin.SignInFragmentDirections;
 
 /**
  * The final fragment displayed once the register fragment or the sign in fragment advances successfully.
@@ -67,6 +69,10 @@ public class SuccessFragment extends Fragment {
 //            } else {
 //                Toast.makeText(getContext(), "Dark Mode Off", Toast.LENGTH_LONG);
 //                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        binding.btnChangeCurrentPassword.setOnClickListener(button ->
+                Navigation.findNavController(getView()).navigate(
+                        SuccessFragmentDirections.actionSuccessToChangePasswordFragment()
+                ));
 //            }
 //        });
 

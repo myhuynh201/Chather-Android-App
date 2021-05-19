@@ -108,6 +108,8 @@ public class SignInFragment extends Fragment {
         binding.btnForgotPassword.setOnClickListener(button ->
                 Navigation.findNavController(getView()).navigate(
                         SignInFragmentDirections.actionSignInFragmentToPasswordResetFragment()));
+
+
     }
 
     /**
