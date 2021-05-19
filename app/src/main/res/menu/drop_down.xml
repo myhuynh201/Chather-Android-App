@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/navigate_button_theme"
+        android:orderInCategory="100"
+        android:title="@string/button_change_theme"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/navigate_change_password"
+        android:orderInCategory="200"
+        android:title="@string/button_change_password"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/navigate_sign_out"
+        android:orderInCategory="300"
+        android:title="@string/button_sign_out"
+        app:showAsAction="never" />
+</menu>
