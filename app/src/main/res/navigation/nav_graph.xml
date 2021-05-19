@@ -53,5 +53,9 @@
         android:id="@+id/passwordResetFragment"
         android:name="edu.uw.chather.ui.passwordreset.PasswordResetFragment"
         android:label="fragment_password_reset"
-        tools:layout="@layout/fragment_password_reset" />
+        tools:layout="@layout/fragment_password_reset" >
+        <action
+            android:id="@+id/action_passwordResetFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
 </navigation>
