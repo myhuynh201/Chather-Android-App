@@ -79,7 +79,7 @@ public class WeatherViewModel extends AndroidViewModel {
     }
 
     /**
-     *
+     * Connects to the Web-Service
      */
     public void connect() {
         String url = "https://tcss450-android-app.herokuapp.com/weather/hardcoded";
