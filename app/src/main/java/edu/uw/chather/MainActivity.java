@@ -15,6 +15,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
@@ -33,6 +34,7 @@ import edu.uw.chather.services.PushReceiver;
 import edu.uw.chather.ui.chat.ChatMessage;
 import edu.uw.chather.ui.chat.ChatViewModel;
 import edu.uw.chather.ui.model.NewMessageCountViewModel;
+import edu.uw.chather.ui.model.PushyTokenViewModel;
 import edu.uw.chather.ui.model.UserInfoViewModel;
 import edu.uw.chather.ui.weather.WeatherFragment;
 import edu.uw.chather.ui.passwordreset.PasswordResetFragment;
@@ -149,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (id == R.id.navigate_sign_out) {
-            //TODO SIGN OUT
+            signOut();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -171,6 +173,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void signOut() {
+        SharedPreferences prefs =
+                getSharedPreferences(
+                        getString(R.string.keys_shared_prefs),
+                        Context.MODE_PRIVATE);
+        prefs.edit().remove(getString(R.string.keys_prefs_jwt)).apply();
+        //End the app completely
+//        finishAndRemoveTask();
+        PushyTokenViewModel model = new ViewModelProvider(this)
+                .get(PushyTokenViewModel.class);
+        //when we hear back from the web service quit
+        model.addResponseObserver(this, result -> finishAndRemoveTask());
+        model.deleteTokenFromWebservice(
+                new ViewModelProvider(this)
+                        .get(UserInfoViewModel.class)
+                        .getmJwt()
+        );
+    }
 
     /**
      * A BroadcastReceiver that listens fro messages sent from PushReceiver
