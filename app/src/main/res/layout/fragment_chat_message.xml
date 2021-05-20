@@ -36,6 +36,8 @@
             android:padding="8dp"
             android:textAppearance="?attr/textAppearanceListItem"
             android:textStyle="bold"
+            android:background="?colorPrimary"
+            android:alpha="0.4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
