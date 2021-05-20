@@ -9,7 +9,7 @@
     <string name="success">Success </string>
     <string name="title_home">Home</string>
     <string name="title_chats">Chats</string>
-    <string name="title_connections">Connections</string>
+    <string name="title_contact">Contacts</string>
     <string name="action_send_chat">Send</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
@@ -23,5 +23,9 @@
     <string name="text_chat_hint">Message</string>
     <string name="button_message">Message</string>
     <string name="button_details">Details</string>
+    <string name="contacts_add">Add</string>
+    <string name="contacts_add_hint">Enter a username or email address.</string>
+    <string name="title_add_contact">Add Contact</string>
+    <string name="title_add_contact_page">Add A Contact</string>
 
 </resources>

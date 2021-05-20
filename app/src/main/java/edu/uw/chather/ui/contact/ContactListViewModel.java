@@ -1,4 +1,4 @@
-package edu.uw.chather.ui.chat;
+package edu.uw.chather.ui.contact;
 
 import android.app.Application;
 import android.util.Log;
@@ -26,67 +26,61 @@ import java.util.Map;
 import java.util.function.IntFunction;
 
 import edu.uw.chather.R;
+import edu.uw.chather.ui.chat.ChatRoom;
 import edu.uw.chather.ui.model.UserInfoViewModel;
 
-public class ChatListViewModel extends AndroidViewModel {
+public class ContactListViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<ChatRoom>> mChatList;
+    private MutableLiveData<List<Contact>> mContactList;
 
-    public ChatListViewModel(@NonNull Application application) {
+    public ContactListViewModel(@NonNull Application application) {
         super(application);
-        mChatList = new MutableLiveData<>();
-        mChatList.setValue(new ArrayList<>());
+        mContactList = new MutableLiveData<>();
+        mContactList.setValue(new ArrayList<>());
     }
 
-    public void addChatListObserver(@NonNull LifecycleOwner owner,
-                                    @NonNull Observer<? super List<ChatRoom>> observer) {
-        mChatList.observe(owner, observer);
+    public void addContactListObserver(@NonNull LifecycleOwner owner,
+                                    @NonNull Observer<? super List<Contact>> observer) {
+        mContactList.observe(owner, observer);
     }
 
     private void handleError(final VolleyError error) {
         //you should add much better error handling in a production release.
         //i.e. YOUR PROJECT
-        Log.e("CONNECTION ERROR", error.getLocalizedMessage()); throw new IllegalStateException(error.getMessage());
+
+        Log.e("CONNECTION ERROR", error.getMessage());
+        error.getMessage();
     }
 
+    /**Dismantles the JSONObject into its parts and builds a contact object from them.
+     * Contact objects are placed in a list that is used elsewhere.
+     * @param result The json result set returned from the network query.
+     */
     private void handleResult(final JSONObject result) {
-        IntFunction<String> getString =
-                getApplication().getResources()::getString;
-        try {
-            JSONObject root = result;
-            if (root.has(getString.apply(R.string.keys_json_blogs_response))) {
-                JSONObject response =
-                        root.getJSONObject(getString.apply(
-                                R.string.keys_json_blogs_response));
-                if (response.has(getString.apply(R.string.keys_json_blogs_data))) {
-                    JSONArray data = response.getJSONArray(
-                            getString.apply(R.string.keys_json_blogs_data));
-                    for(int i = 0; i < data.length(); i++) {
-                        JSONObject jsonChats = data.getJSONObject(i);
-                        ChatRoom post = new ChatRoom.Builder(
-                                jsonChats.getString(getString.apply(R.string.keys_json_blogs_pubdate)),
-                                jsonChats.getString(getString.apply(R.string.keys_json_blogs_title)))
-                                .addTeaser(jsonChats.getString(getString.apply(R.string.keys_json_blogs_teaser)))
-                                .build();
-                        if (!mChatList.getValue().contains(post)) {
-                            mChatList.getValue().add(post); }
-                    }
-                } else {
-                    Log.e("ERROR!", "No data array");
-                }
-            } else {
-                Log.e("ERROR!", "No response");
+
+        try{
+            //Stops issue where the contact list would duplicate itself on load.
+            mContactList.getValue().clear();
+            //Extracts the SQL query results from the result set as a JSONArray
+            JSONArray jsonstring = result.getJSONArray("rows");
+            int length = jsonstring.length();
+            for(int x = 0; x < length; x++){
+                JSONObject subOb = (JSONObject) jsonstring.get(x);
+                //Add the important bits of this array into a Contact object and slap that onto the list.
+                mContactList.getValue().add(
+                        new Contact(subOb.getString("firstname"), subOb.getString("lastname"), subOb.getString("username"), subOb.getInt("memberid") ));
+
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.e("ERROR!", e.getMessage());
         }
-        mChatList.setValue(mChatList.getValue());
+        catch (Exception e){
+            Log.e("Error", e.getMessage());
+        }
+
     }
 
     public void connectGet() {
         String url =
-                "https://cfb3-tcss450-labs-2021sp.herokuapp.com/phish/blog/get";
+                "https://tcss450-android-app.herokuapp.com/contacts/get";
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
@@ -114,5 +108,7 @@ public class ChatListViewModel extends AndroidViewModel {
                 .add(request);
     }
 
-
+    public List<Contact> getContactList(){
+        return mContactList.getValue();
+    }
 }

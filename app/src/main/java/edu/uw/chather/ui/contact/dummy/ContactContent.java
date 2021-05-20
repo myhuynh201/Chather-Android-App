@@ -1,4 +1,4 @@
-package edu.uw.chather.ui.connections.dummy;
+package edu.uw.chather.ui.contact.dummy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Helper class for providing sample content for connections
  */
-public class ConnectionContent {
+public class ContactContent {
 
     /**
      * An array of sample connections.
