@@ -85,8 +85,8 @@ public class WeatherViewModel extends AndroidViewModel {
         String url = "https://tcss450-android-app.herokuapp.com/weather/hardcoded";
         JSONObject body = new JSONObject();
         try {
-            body.put("lat", latitude);
-            body.put("lon", longitude);
+//            body.put("lat", latitude);
+//            body.put("lon", longitude);
             body.put("exclude", new String("minutely, alerts"));
             body.put("units", new String("imperial"));
         } catch (JSONException e) {

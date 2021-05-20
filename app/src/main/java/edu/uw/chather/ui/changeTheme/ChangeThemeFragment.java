@@ -20,6 +20,9 @@ import edu.uw.chather.utils.Utils;
  */
 public class ChangeThemeFragment extends Fragment {
 
+    /**
+     * Binding for changing the theme.
+     */
     FragmentChangeThemeBinding binding;
 
     public ChangeThemeFragment() {
@@ -55,5 +58,6 @@ public class ChangeThemeFragment extends Fragment {
                 new SharedPreferencesManager(getContext()).retrieveInt("theme", Utils.PURPLE_THEME)));
         binding.darkThemeButton.setOnClickListener(button -> Utils.changeToTheme(getActivity(),
                 new SharedPreferencesManager(getContext()).retrieveInt("theme", Utils.DARK_THEME)));
-    }
+        binding.buttonDarkModeButton.setOnClickListener(button -> Utils.changeToTheme(getActivity(),
+                new SharedPreferencesManager(getContext()).retrieveInt("theme", Utils.DARK_MODE)));    }
 }

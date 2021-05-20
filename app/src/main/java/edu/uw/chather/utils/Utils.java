@@ -2,6 +2,8 @@ package edu.uw.chather.utils;
 
 import android.app.Activity;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import edu.uw.chather.MainActivity;
 import edu.uw.chather.R;
 
@@ -12,6 +14,7 @@ public class Utils {
     public final static int PINK_THEME  = 2;
     public final static int PURPLE_THEME  = 3;
     public final static int DARK_THEME  = 4;
+    public final static int DARK_MODE = 5;
 
     /**
      * Set the theme of the Activity, and restart it by creating a new Activity of the same type.
@@ -45,7 +48,12 @@ public class Utils {
                 activity.getTheme().applyStyle(R.style.PurpleTheme, true);
                 break;
             case DARK_THEME:
+               // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 activity.getTheme().applyStyle(R.style.DarkTheme, true);
+                break;
+            case DARK_MODE:
+                // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                activity.getTheme().applyStyle(R.style.DarkMode, true);
                 break;
         }
     }

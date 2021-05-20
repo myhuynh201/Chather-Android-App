@@ -29,12 +29,20 @@ import static edu.uw.chather.utils.PasswordValidator.checkPwdLowerCase;
 import static edu.uw.chather.utils.PasswordValidator.checkPwdSpecialChar;
 import static edu.uw.chather.utils.PasswordValidator.checkPwdUpperCase;
 
-
+/**
+ * A simple {@link Fragment} subclass.
+ * @author Charles Bryan, Duy Nguyen, Demarco Best, Alec Mac, Alejandro Olono, My Duyen Huynh
+ */
 public class ChangePasswordFragment extends Fragment {
 
+    /**
+     * A binding for the change password fragment.
+     */
     private FragmentChangePasswordBinding binding;
 
-
+    /**
+     * The change password view model.
+     */
     private ChangePasswordViewModel mChangePasswordViewModel;
 
     /**
@@ -57,6 +65,9 @@ public class ChangePasswordFragment extends Fragment {
                     .and(checkPwdDigit())
                     .and(checkPwdLowerCase().or(checkPwdUpperCase()));
 
+    /**
+     * The user's email.
+     */
     private String mEmail;
 
     /**
@@ -107,7 +118,9 @@ public class ChangePasswordFragment extends Fragment {
         validateOldPassword();
     }
 
-
+    /**
+     * Private helper method for checking current password.
+     */
     private void validateOldPassword() {
         mOldPasswordValidator.processResult(
                 mOldPasswordValidator.apply(binding.etCurrentPass.getText().toString()),
@@ -167,6 +180,9 @@ public class ChangePasswordFragment extends Fragment {
         }
     }
 
+    /**
+     * Private helper method for navigation to home once password is successfully changed.
+     */
     private void navigateToHome() {
         Navigation.findNavController(getView()).navigate(ChangePasswordFragmentDirections.actionChangePasswordFragmentToSuccess());
 
