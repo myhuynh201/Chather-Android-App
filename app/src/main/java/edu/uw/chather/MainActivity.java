@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private NavController navController;
     /**
      * Creates our bottom navigation menu from the menu elements we've given it before.
+     */
     private MainPushMessageReceiver mPushMessageReceiver;
     private NewMessageCountViewModel mNewMessageModel;
     private ActivityMainBinding binding;
@@ -60,11 +61,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Utils.onActivityCreateSetTheme(this);
-        setContentView(R.layout.activity_main);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         MainActivityArgs args = MainActivityArgs.fromBundle(getIntent().getExtras());
+
+
 
 
         //  AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -90,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.success, R.id.navigation_contact, R.id, R.id.tempChatFragment, R.id.weatherFragment)
+                R.id.success, R.id.navigation_contact, R.id.tempChatFragment, R.id.weatherFragment)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -138,6 +140,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        if (id == R.id.navigate_change_password) {
+            navController.navigate(R.id.changePasswordFragment);
+        }
+
+        if (id == R.id.navigate_button_theme) {
+            navController.navigate(R.id.changeThemeFragment);
+        }
+
+        if (id == R.id.navigate_sign_out) {
+            //TODO SIGN OUT
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -156,19 +171,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-        if (id == R.id.navigate_change_password) {
-            navController.navigate(R.id.changePasswordFragment);
-        }
 
-        if (id == R.id.navigate_button_theme) {
-            navController.navigate(R.id.changeThemeFragment);
-        }
-
-        if (id == R.id.navigate_sign_out) {
-            //TODO SIGN OUT
-        }
-        return super.onOptionsItemSelected(item);
-    }
     /**
      * A BroadcastReceiver that listens fro messages sent from PushReceiver
      */
