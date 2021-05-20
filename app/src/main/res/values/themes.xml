@@ -18,36 +18,31 @@
         <item name="colorPrimary">@color/colorPrimary_GREEN</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_GREEN</item>
         <item name="colorAccent">@color/colorAccent_GREEN</item>
+        <item name="android:windowBackground">@color/colorLightPrimary_GREEN</item>
     </style>
 
     <style name="PinkTheme">
         <item name="colorPrimary">@color/colorPrimary_PINK</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_PINK</item>
         <item name="colorAccent">@color/colorAccent_PINK</item>
+        <item name="android:windowBackground">@color/colorLightPrimary_PINK</item>
     </style>
 
     <style name="PurpleTheme">
         <item name="colorPrimary">@color/colorPrimary_PURPLE</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_PURPLE</item>
         <item name="colorAccent">@color/colorAccent_PURPLE</item>
+        <item name="android:windowBackground">@color/colorLightPrimary_PURPLE</item>
     </style>
 
     <style name="DarkTheme">
-        <item name="colorPrimary">@color/colorPrimary_DARK</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark_DARK</item>
+        <item name="colorPrimary">@color/colorPrimary_BLUE</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_BLUE</item>
         <item name="colorAccent">@color/colorAccent_DARK</item>
+        <item name="android:windowBackground">@color/colorLightPrimary_DARK</item>
+        <item name="android:tint">@color/colorTextIcon</item>
+<!--        <item name="android:textColor">@color/colorTextIcon</item>-->
     </style>
 
-    <style name="DarkMode">
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/dark_grey</item>
-        <item name="android:forceDarkAllowed" tools:ignore="NewApi">true</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-    </style>
+
 </resources>

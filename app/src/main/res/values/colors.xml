@@ -40,10 +40,10 @@
     <color name="colorLightPrimary_PURPLE">#E1BEE7</color>
 
     <!-- DARK THEME -->
-    <color name="colorPrimary_DARK">#212121</color>
+    <color name="colorPrimary_DARK">#000000</color>
     <color name="colorPrimaryDark_DARK">#000000</color>
     <color name="colorAccent_DARK">#03DAC5</color>
-    <color name="colorLightPrimary_DARK">#B3E5FC</color>
+    <color name="colorLightPrimary_DARK">#212121</color>
 
     <!-- TEXT COLORS -->
     <color name="colorPrimaryText">#212121</color>
