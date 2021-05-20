@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.function.IntFunction;
 
 import edu.uw.chather.R;
-import edu.uw.chather.ui.chat.ChatRoom;
 import edu.uw.chather.ui.model.UserInfoViewModel;
 
 public class ContactListViewModel extends AndroidViewModel {

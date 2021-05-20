@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-<item
-    android:id="@+id/success"
-    android:icon="@drawable/ic_home_black_24dp"
-    android:title="@string/title_home" />
+    <item
+        android:id="@+id/success"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_home" />
 
 
-<item
-    android:id="@+id/navigation_chats"
-    android:icon="@drawable/ic_chat_black_24dp"
-    android:title="@string/title_chats" />
+    <item
+        android:id="@+id/navigation_contact"
+        android:icon="@drawable/ic_connections_black_24dp"
+        android:title="@string/title_contact" />
 
-<item
-    android:id="@+id/navigation_contact"
-    android:icon="@drawable/ic_connections_black_24dp"
-    android:title="@string/title_contact" />
-<item
-    android:id="@+id/navigation_contact_add"
-    android:icon="@drawable/ic_contact_add_black"
-    android:title="@string/title_add_contact"/>
-<item
-    android:id="@+id/weatherFragment"
-    android:icon="@drawable/ic_weather_black_24dp"
-    android:title="@string/title_weather"/>
+    <item
+        android:id="@+id/navigation_contact_add"
+        android:icon="@drawable/ic_contact_add_black"
+        android:title="@string/title_add_contact"/>
+
+    <item
+        android:id="@+id/tempChatFragment"
+        android:icon="@drawable/ic_chat_black_24dp"
+        android:title="@string/title_chats" />
+
+    <item
+        android:id="@+id/weatherFragment"
+        android:icon="@drawable/ic_weather_black_24dp"
+        android:title="@string/title_weather" />
 
 
 </menu>

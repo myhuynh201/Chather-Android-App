@@ -4,9 +4,13 @@ package edu.uw.chather;
  */
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.util.Log;
+
+import edu.uw.chather.ui.model.PushyTokenViewModel;
+import me.pushy.sdk.Pushy;
 
 /**
  * This is where to start all the main activities.
@@ -19,7 +23,18 @@ public class AuthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
+
+        // if it is not already running, start the Pushy listening service
+        Pushy.listen(this);
+
+        initiatePushyTokenRequest();
+
     }
+
+    private void initiatePushyTokenRequest() {
+        new ViewModelProvider(this).get(PushyTokenViewModel.class).retrieveToken();
+    }
+
 
     @Override
     protected void onStart() {
