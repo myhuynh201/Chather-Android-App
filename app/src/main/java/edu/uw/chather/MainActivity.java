@@ -2,7 +2,7 @@ package edu.uw.chather;
 /**
  * Main activity that runs in the background of the app. Sets up our bottom navigation.
  */
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -16,6 +16,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.app.Activity;
+import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -30,12 +34,17 @@ import edu.uw.chather.ui.chat.ChatMessage;
 import edu.uw.chather.ui.chat.ChatViewModel;
 import edu.uw.chather.ui.model.NewMessageCountViewModel;
 import edu.uw.chather.ui.model.UserInfoViewModel;
+import edu.uw.chather.ui.weather.WeatherFragment;
 import edu.uw.chather.ui.passwordreset.PasswordResetFragment;
+import edu.uw.chather.utils.Utils;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private NavController navController;
+    /**
+     * Creates our bottom navigation menu from the menu elements we've given it before.
     private MainPushMessageReceiver mPushMessageReceiver;
     private NewMessageCountViewModel mNewMessageModel;
     private ActivityMainBinding binding;
@@ -50,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utils.onActivityCreateSetTheme(this);
+        setContentView(R.layout.activity_main);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -64,12 +75,12 @@ public class MainActivity extends AppCompatActivity {
         // Check to see if the web token is still valid or not. To make a JWT expire after a
         // longer or shorter time period, change the expiration time when the JWT is
         // created on the web service.
-//        if(!jwt.isExpired(0)) {
-//            new ViewModelProvider(this, new UserInfoViewModel.UserInfoViewModelFactory(email, jwt)).get(UserInfoViewModel.class);
-//        } else {
-////            In production code, add in your own error handling/flow for when the JWT is expired
-//            throw new IllegalStateException("JWT is expired!");
-//        }
+        // if(!jwt.isExpired(0)) {
+        //    new ViewModelProvider(this, new UserInfoViewModel.UserInfoViewModelFactory(jwt)).get(UserInfoViewModel.class);
+        //} else {
+        //In production code, add in your own error handling/flow for when the JWT is expired
+        //    throw new IllegalStateException("JWT is expired!");
+        //}
 
         new ViewModelProvider(this,
                 new UserInfoViewModel.UserInfoViewModelFactory(args.getEmail(), args.getJwt())
@@ -79,9 +90,9 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.success, R.id.navigation_connections, R.id.tempChatFragment, R.id.weatherFragment)
+                R.id.success, R.id.navigation_contact, R.id, R.id.tempChatFragment, R.id.weatherFragment)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
@@ -113,11 +124,20 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.drop_down, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
     @Override
     protected void onResume() {
         super.onResume();
@@ -136,6 +156,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+        if (id == R.id.navigate_change_password) {
+            navController.navigate(R.id.changePasswordFragment);
+        }
+
+        if (id == R.id.navigate_button_theme) {
+            navController.navigate(R.id.changeThemeFragment);
+        }
+
+        if (id == R.id.navigate_sign_out) {
+            //TODO SIGN OUT
+        }
+        return super.onOptionsItemSelected(item);
+    }
     /**
      * A BroadcastReceiver that listens fro messages sent from PushReceiver
      */

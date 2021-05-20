@@ -1,6 +1,6 @@
-package edu.uw.chather.ui.signin;
+package edu.uw.chather.ui.changepassword;
+
 import android.app.Application;
-import android.util.Base64;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -13,33 +13,29 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
-import edu.uw.chather.io.RequestQueueSingleton;
-
 /**
- * A view model class of the sign in fragment that detects changes in data from sign in.
+ * A view model class of the change password fragment that detects changes in data from sign in.
  * @author Charles Bryan, Duy Nguyen, Demarco Best, Alec Mac, Alejandro Olono, My Duyen Huynh
  */
-public class SignInViewModel extends AndroidViewModel {
-
-    /*
-    A mutable live data that is able to change certain sign in properties from response.
-     */
+public class ChangePasswordViewModel extends AndroidViewModel {
+    /**
+     A mutable live data that is able to change certain register properties from response.
+   */
     private MutableLiveData<JSONObject> mResponse;
 
     /**
-     * Constructor for the sign in view model.
+     * Contructor for the change password view model class.
      * @param application The application.
      */
-    public SignInViewModel(@NonNull Application application) {
+    public ChangePasswordViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>();
         mResponse.setValue(new JSONObject());
@@ -55,9 +51,8 @@ public class SignInViewModel extends AndroidViewModel {
         mResponse.observe(owner, observer);
     }
 
-
     /**
-     * Handles the error from the server side.
+     * Private helper method to handle server errors in register.
      * @param error The error.
      */
     private void handleError(final VolleyError error) {
@@ -85,37 +80,37 @@ public class SignInViewModel extends AndroidViewModel {
     }
 
     /**
-     * Connects to the server from a url.
-     * @param email The email.
-     * @param password The password.
+     *
+     * @param email The user's current email.
+     * @param oldPW The user's current password.
+     * @param newPW The user's new password.
+     * @param confirmPW New password confirmation.
      */
-    public void connect(final String email, final String password) {
-        String url = "https://tcss450-android-app.herokuapp.com/auth";
+    public void connect(final String email,
+                        final String oldPW,
+                        final String newPW,
+                        final String confirmPW) {
+        String url = "https://tcss450-android-app.herokuapp.com/changePassword"; JSONObject body = new JSONObject();
+        try {
+            body.put("email", email);
+            body.put("oldPW", oldPW);
+            body.put("newPW", newPW);
+            body.put("confirmPW", confirmPW);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         Request request = new JsonObjectRequest(
-                Request.Method.GET,
+                Request.Method.POST,
                 url,
-                null, //no body for this get request
+                body,
                 mResponse::setValue,
-                this::handleError) {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                // add headers <key,value>
-                String credentials = email + ":" + password;
-                String auth = "Basic "
-                        + Base64.encodeToString(credentials.getBytes(),
-                        Base64.NO_WRAP);
-                headers.put("Authorization", auth);
-                return headers;
-            }
-        };
+                this::handleError);
         request.setRetryPolicy(new DefaultRetryPolicy(
                 10_000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         //Instantiate the RequestQueue and add the request to the queue
-        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
-                .addToRequestQueue(request);
+        Volley.newRequestQueue(getApplication().getApplicationContext())
+                .add(request);
     }
-
 }

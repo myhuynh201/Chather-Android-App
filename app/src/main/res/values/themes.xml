@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MyLabAppduyn1999" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar.Bridge">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -11,7 +11,43 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
 
+        <!-- Customize your theme here. -->
+    </style>
+    <style name="GreenTheme">
+        <item name="colorPrimary">@color/colorPrimary_GREEN</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_GREEN</item>
+        <item name="colorAccent">@color/colorAccent_GREEN</item>
+    </style>
+
+    <style name="PinkTheme">
+        <item name="colorPrimary">@color/colorPrimary_PINK</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_PINK</item>
+        <item name="colorAccent">@color/colorAccent_PINK</item>
+    </style>
+
+    <style name="PurpleTheme">
+        <item name="colorPrimary">@color/colorPrimary_PURPLE</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_PURPLE</item>
+        <item name="colorAccent">@color/colorAccent_PURPLE</item>
+    </style>
+
+    <style name="DarkTheme">
+        <item name="colorPrimary">@color/colorPrimary_DARK</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_DARK</item>
+        <item name="colorAccent">@color/colorAccent_DARK</item>
+    </style>
+
+    <style name="DarkMode">
+        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/dark_grey</item>
+        <item name="android:forceDarkAllowed" tools:ignore="NewApi">true</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
 </resources>

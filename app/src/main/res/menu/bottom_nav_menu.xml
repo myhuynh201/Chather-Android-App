@@ -8,10 +8,14 @@
 
 
     <item
-        android:id="@+id/navigation_connections"
+        android:id="@+id/navigation_contact"
         android:icon="@drawable/ic_connections_black_24dp"
-        android:title="@string/title_connections" />
+        android:title="@string/title_contact" />
 
+    <item
+        android:id="@+id/navigation_contact_add"
+        android:icon="@drawable/ic_contact_add_black"
+        android:title="@string/title_add_contact"/>
 
     <item
         android:id="@+id/tempChatFragment"

@@ -1,6 +1,6 @@
-package edu.uw.chather.ui.signin;
+package edu.uw.chather.ui.weather;
+
 import android.app.Application;
-import android.util.Base64;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -13,6 +13,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,43 +24,36 @@ import java.util.Map;
 import java.util.Objects;
 
 import edu.uw.chather.io.RequestQueueSingleton;
+import edu.uw.chather.ui.model.UserInfoViewModel;
 
-/**
- * A view model class of the sign in fragment that detects changes in data from sign in.
- * @author Charles Bryan, Duy Nguyen, Demarco Best, Alec Mac, Alejandro Olono, My Duyen Huynh
- */
-public class SignInViewModel extends AndroidViewModel {
+public class WeatherViewModel extends AndroidViewModel {
 
-    /*
-    A mutable live data that is able to change certain sign in properties from response.
-     */
+    //Holds the result of the web call.
     private MutableLiveData<JSONObject> mResponse;
 
-    /**
-     * Constructor for the sign in view model.
-     * @param application The application.
-     */
-    public SignInViewModel(@NonNull Application application) {
+    //Instantiating the JSONObject with a temp value.
+    public WeatherViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>();
         mResponse.setValue(new JSONObject());
     }
 
-    /**
-     * Observes mutable live data.
-     * @param owner The owner.
-     * @param observer The observer.
-     */
+    //This should allow for observers to be added to the LiveData
     public void addResponseObserver(@NonNull LifecycleOwner owner,
                                     @NonNull Observer<? super JSONObject> observer) {
         mResponse.observe(owner, observer);
     }
 
+    private void handleResult(final JSONObject result) {
+        mResponse.setValue(result);
+        try {
+            Log.d("Checkup", result.getString("lat"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
-    /**
-     * Handles the error from the server side.
-     * @param error The error.
-     */
+    /*Should there be an error in the REQUEST, the code below will run. */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             try {
@@ -85,37 +79,46 @@ public class SignInViewModel extends AndroidViewModel {
     }
 
     /**
-     * Connects to the server from a url.
-     * @param email The email.
-     * @param password The password.
+     *
      */
-    public void connect(final String email, final String password) {
-        String url = "https://tcss450-android-app.herokuapp.com/auth";
+    public void connect() {
+        String url = "https://tcss450-android-app.herokuapp.com/weather/hardcoded";
+        JSONObject body = new JSONObject();
+        try {
+//            body.put("lat", latitude);
+//            body.put("lon", longitude);
+            body.put("exclude", new String("minutely, alerts"));
+            body.put("units", new String("imperial"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
-                null, //no body for this get request
-                mResponse::setValue,
+                body, //we require a few things of the API call.
+                this::handleResult, //mResponse::setValue
                 this::handleError) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                // add headers <key,value>
-                String credentials = email + ":" + password;
-                String auth = "Basic "
-                        + Base64.encodeToString(credentials.getBytes(),
-                        Base64.NO_WRAP);
-                headers.put("Authorization", auth);
+                headers.put("Authorization", UserInfoViewModel.getmJwt());
+                Log.d("Check JWT",UserInfoViewModel.getmJwt());
                 return headers;
             }
         };
+        try {
+            Log.d("Responsiveness", body.getString("lat"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         request.setRetryPolicy(new DefaultRetryPolicy(
                 10_000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         //Instantiate the RequestQueue and add the request to the queue
-        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
-                .addToRequestQueue(request);
+        Volley.newRequestQueue(getApplication().getApplicationContext())
+                .add(request);
     }
+
 
 }

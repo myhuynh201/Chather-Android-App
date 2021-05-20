@@ -85,7 +85,10 @@ public class PasswordResetViewModel extends AndroidViewModel {
         }
     }
 
-
+    /**
+     * Connect the URL
+     * @param email
+     */
     public void connect(final String email) {
         String url = "https://tcss450-android-app.herokuapp.com/forgot"; JSONObject body = new JSONObject();
         try {
