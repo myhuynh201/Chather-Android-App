@@ -36,6 +36,7 @@ public class ChatListViewModel extends AndroidViewModel {
     public ChatListViewModel(@NonNull Application application) {
         super(application);
         mChatrooms = new HashMap<>();
+
     }
 
     /**
@@ -134,16 +135,19 @@ public class ChatListViewModel extends AndroidViewModel {
 
     private void handleSuccess(final JSONObject response) {
         List<Chatroom> list;
-        if (!response.has("chatId")) {
+        if (!response.has("rows")) {
             throw new IllegalStateException("Unexpected response in ChatViewModel: " + response);
         }
+        Log.d("RESPONSE LOOKS LIKE", "handleSuccess: " + response);
         try {
+
             list = getChatroomListByMemberId(UserInfoViewModel.getmJwt());
             JSONArray chatrooms = response.getJSONArray("rows");
             for(int i = 0; i < chatrooms.length(); i++) {
                 JSONObject chatroom = chatrooms.getJSONObject(i);
                 Chatroom cChatroom = new Chatroom(
                         chatroom.getInt("chatid")
+
                 );
                 if (!list.contains(cChatroom)) {
                     // don't add a duplicate

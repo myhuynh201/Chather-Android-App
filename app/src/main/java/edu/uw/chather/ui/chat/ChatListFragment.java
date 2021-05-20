@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,8 +40,8 @@ public class ChatListFragment extends Fragment {
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserModel = provider.get(UserInfoViewModel.class);
         mChatListModel = provider.get(ChatListViewModel.class);
-        mChatListModel.getChatroomListByMemberId(UserInfoViewModel.getmJwt());
-
+        mChatListModel.getChatrooms(UserInfoViewModel.getmJwt());
+        Log.d("CHATLIST MODEL", "onCreate: " + mChatListModel);
     }
 
     @Override
@@ -56,8 +57,13 @@ public class ChatListFragment extends Fragment {
         String jwt = UserInfoViewModel.getmJwt();
         FragmentChatListBinding binding = FragmentChatListBinding.bind(getView());
 
-        final RecyclerView rv = binding.recyclerChatroom;
+        binding.swipeContainer.setRefreshing(true);
 
+
+
+
+        final RecyclerView rv = binding.recyclerChatroom;
+        Log.d("JWT HERE", "onViewCreated: " + jwt);
         rv.setAdapter(new ChatListRecyclerViewAdapter(
                 mChatListModel.getChatroomListByMemberId(jwt)
         ));
@@ -68,7 +74,7 @@ public class ChatListFragment extends Fragment {
 
         mChatListModel.addChatroomObserver(jwt, getViewLifecycleOwner(), list -> {
             rv.getAdapter().notifyDataSetChanged();
-            rv.scrollToPosition(rv.getAdapter().getItemCount() - 1);
+//            rv.scrollToPosition(rv.getAdapter().getItemCount() - 1);
             binding.swipeContainer.setRefreshing(false);
         });
     }

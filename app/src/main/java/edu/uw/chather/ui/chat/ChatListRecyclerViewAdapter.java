@@ -47,7 +47,7 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mChatrooms.size();
     }
 
     public class ChatroomViewHolder extends RecyclerView.ViewHolder {
@@ -78,7 +78,7 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
             int extended = (int) res.getDimension(R.dimen.chat_margin_sided);
 
 
-            binding.textMessage.setText(chatroom.getChatId() +
+            binding.textChatroom.setText(chatroom.getChatId() +
                     ": " + UserInfoViewModel.getmJwt());
             ViewGroup.MarginLayoutParams layoutParams =
                     (ViewGroup.MarginLayoutParams) card.getLayoutParams();
@@ -99,23 +99,23 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
                     res.getColor(R.color.colorPrimaryDark, null),
                     200));
 
-            binding.textMessage.setTextColor(
+            binding.textChatroom.setTextColor(
                     res.getColor(R.color.colorOffWhite, null));
 
             //Round the corners on the right side
             card.setShapeAppearanceModel(
                     card.getShapeAppearanceModel()
                             .toBuilder()
-                            .setTopRightCornerSize(0)
+                            .setTopLeftCorner(CornerFamily.ROUNDED,standard * 2)
+                            .setBottomLeftCorner(CornerFamily.ROUNDED,standard * 2)
                             .setBottomRightCornerSize(0)
-                            .setBottomLeftCornerSize(0)
-                            .setTopLeftCornerSize(0)
+                            .setTopRightCornerSize(0)
                             .build());
             card.requestLayout();
-            card.setOnClickListener((button) -> {
-                Log.d("YOOO CHATLIST", "setPreview: " + chatroom.getChatId());
-//                Navigation.findNavController()
-            });
+//            card.setOnClickListener((button) -> {
+//                Log.d("YOOO CHATLIST", "setPreview: " + chatroom.getChatId());
+////                Navigation.findNavController()
+//            });
         }
     }
 }

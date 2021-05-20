@@ -16,16 +16,6 @@
         android:label="@string/title_connections"
         tools:layout="@layout/fragment_connection_list" />
 
-    <fragment
-        android:id="@+id/navigation_chats"
-        android:name="edu.uw.chather.ui.chat.ChatFragment"
-        android:label="@string/title_chats"
-        tools:layout="@layout/fragment_chat" >
-        <argument
-            android:name="chatId"
-            app:argType="integer" />
-    </fragment>
-
 
     <fragment
         android:id="@+id/weatherFragment"
@@ -35,10 +25,6 @@
     <fragment
         android:id="@+id/chatListFragment"
         android:name="edu.uw.chather.ui.chat.ChatListFragment"
-        android:label="fragment_chat_list"
-        tools:layout="@layout/fragment_chat_list" >
-        <action
-            android:id="@+id/action_chatListFragment_to_navigation_chats"
-            app:destination="@id/navigation_chats" />
-    </fragment>
+        android:label="@string/title_chats"
+        tools:layout="@layout/fragment_chat_list" />
 </navigation>
