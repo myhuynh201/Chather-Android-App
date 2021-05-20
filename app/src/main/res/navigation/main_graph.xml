@@ -21,6 +21,9 @@
         android:name="edu.uw.chather.ui.chat.ChatFragment"
         android:label="@string/title_chats"
         tools:layout="@layout/fragment_chat" >
+        <argument
+            android:name="chatId"
+            app:argType="integer" />
     </fragment>
 
 
@@ -29,4 +32,13 @@
         android:name="edu.uw.chather.ui.weather.WeatherFragment"
         android:label="@string/title_weather"
         tools:layout="@layout/fragment_weather" />
+    <fragment
+        android:id="@+id/chatListFragment"
+        android:name="edu.uw.chather.ui.chat.ChatListFragment"
+        android:label="fragment_chat_list"
+        tools:layout="@layout/fragment_chat_list" >
+        <action
+            android:id="@+id/action_chatListFragment_to_navigation_chats"
+            app:destination="@id/navigation_chats" />
+    </fragment>
 </navigation>

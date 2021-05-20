@@ -2,6 +2,7 @@ package edu.uw.chather;
 /**
  * Main activity that runs in the background of the app. Sets up our bottom navigation.
  */
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -40,9 +41,10 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
 
-
-    /**Creates our bottom navigation menu from the menu elements we've given it before.
+    /**
+     * Creates our bottom navigation menu from the menu elements we've given it before.
      * See onCreate parent method for more implementation details.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -71,13 +73,13 @@ public class MainActivity extends AppCompatActivity {
 
         new ViewModelProvider(this,
                 new UserInfoViewModel.UserInfoViewModelFactory(args.getEmail(), args.getJwt())
-                    ).get(UserInfoViewModel.class);
+        ).get(UserInfoViewModel.class);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.success, R.id.navigation_chats, R.id.navigation_connections,  R.id.weatherFragment)
+                R.id.success, R.id.navigation_connections, R.id.chatListFragment, R.id.weatherFragment)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         mNewMessageModel = new ViewModelProvider(this).get(NewMessageCountViewModel.class);
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.navigation_chats) {
+            if (destination.getId() == R.id.chatListFragment) {
                 // When the user navigates to the chats page, reset the new message count.
                 // This will need some extra logic for your project as it should have
                 // multiple chatrooms.
@@ -95,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mNewMessageModel.addMessageCountObserver(this, count -> {
-            BadgeDrawable badge = binding.navView.getOrCreateBadge(R.id.navigation_chats);
+            BadgeDrawable badge = binding.navView.getOrCreateBadge(R.id.chatListFragment);
             badge.setMaxCharacterCount(2);
             if (count > 0) {
                 // new messages! update and show the notification badge.
@@ -151,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // If the user is not on the chat screen, update the
                 // NewMessageCountView Model
-                if (nd.getId() != R.id.navigation_chats) {
+                if (nd.getId() != R.id.chatListFragment) {
                     mNewMessageModel.increment();
                 }
 
