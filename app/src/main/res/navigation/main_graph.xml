@@ -27,10 +27,10 @@
             app:argType="edu.uw.chather.ui.chat.ChatRoom" />
     </fragment>
     <fragment
-        android:id="@+id/navigation_connections"
-        android:name="edu.uw.chather.ui.connections.ConnectionFragment"
-        android:label="@string/title_connections"
-        tools:layout="@layout/fragment_connection_list" />
+        android:id="@+id/navigation_contact"
+        android:name="edu.uw.chather.ui.contact.ContactFragment"
+        android:label="@string/title_contact"
+        tools:layout="@layout/fragment_contact_list" />
     <fragment
         android:id="@+id/weatherFragment"
         android:name="edu.uw.chather.ui.weather.WeatherFragment"

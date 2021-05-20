@@ -46,5 +46,9 @@
     <string name="confirm_new_password">Confirm Password</string>
     <string name="change_password">Change Password</string>
 
+    <string name="contacts_add">Add</string>
+    <string name="contacts_add_hint">Enter a username or email address.</string>
+    <string name="title_add_contact">Add Contact</string>
+    <string name="title_add_contact_page">Add A Contact</string>
 
 </resources>

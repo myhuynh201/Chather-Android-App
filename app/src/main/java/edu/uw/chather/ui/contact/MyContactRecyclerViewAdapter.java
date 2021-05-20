@@ -1,5 +1,6 @@
-package edu.uw.chather.ui.connections;
+package edu.uw.chather.ui.contact;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -8,26 +9,30 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import edu.uw.chather.R;
-import edu.uw.chather.ui.connections.dummy.ConnectionContent.ConnectionItem;
+import edu.uw.chather.ui.contact.dummy.ContactContent.ConnectionItem;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link ConnectionItem}.
  * Connection views are recycled
  */
-public class MyConnectionRecyclerViewAdapter extends RecyclerView.Adapter<MyConnectionRecyclerViewAdapter.ViewHolder> {
+public class MyContactRecyclerViewAdapter extends RecyclerView.Adapter<MyContactRecyclerViewAdapter.ViewHolder> {
 
     /**
      * List of connections
      */
-    private final List<ConnectionItem> mValues;
+    private final ArrayList<Contact> mValues;
+
+
 
     /**
      * Constructs the View Adapter for the connections
      * @param items list of Connections
      */
-    public MyConnectionRecyclerViewAdapter(List<ConnectionItem> items) {
+    public MyContactRecyclerViewAdapter(ArrayList<Contact> items) {
         mValues = items;
     }
 
@@ -40,7 +45,7 @@ public class MyConnectionRecyclerViewAdapter extends RecyclerView.Adapter<MyConn
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_connection, parent, false);
+                .inflate(R.layout.fragment_contact, parent, false);
         return new ViewHolder(view);
     }
 
@@ -52,8 +57,8 @@ public class MyConnectionRecyclerViewAdapter extends RecyclerView.Adapter<MyConn
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).username);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mContentView.setText(holder.mItem.getmUsername());
+
     }
 
     /**
@@ -74,7 +79,7 @@ public class MyConnectionRecyclerViewAdapter extends RecyclerView.Adapter<MyConn
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public ConnectionItem mItem;
+        public Contact mItem;
 
         /**
          * Constructor for view holder

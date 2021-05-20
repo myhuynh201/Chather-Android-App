@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import edu.uw.chather.ui.connections.dummy.ConnectionContent;
+import edu.uw.chather.ui.contact.dummy.ContactContent;
 
 /**
  * This class is used to create Dummy Chats
@@ -29,7 +29,7 @@ public final class ChatGenerator {
         for (int i = 0; i < CHAT_ROOMS.length; i++) {
             CHAT_ROOMS[i] = new ChatRoom
                     .Builder("2020-04-" + (12-i) + " 12:59 pm",
-                    ConnectionContent.getName(random.nextInt(17) +1 ))
+                    ContactContent.getName(random.nextInt(17) +1 ))
                     .addTeaser(makeChat(i))
                     .build();
         }

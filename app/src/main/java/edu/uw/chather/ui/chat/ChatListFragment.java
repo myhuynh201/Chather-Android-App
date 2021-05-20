@@ -25,6 +25,7 @@ public class ChatListFragment extends Fragment {
      */
     private ChatListViewModel mModel;
 
+
     /**
      * When ChatListFragment is created, get the view model
      * @param savedInstanceState
