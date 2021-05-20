@@ -48,6 +48,7 @@
 
     <string name="contacts_add">Add</string>
     <string name="contacts_add_hint">Enter a username or email address.</string>
+    <string name = "title_contact">Contacts</string>
     <string name="title_add_contact">Add Contact</string>
     <string name="title_add_contact_page">Add A Contact</string>
 
