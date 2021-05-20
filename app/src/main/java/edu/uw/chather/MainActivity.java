@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import edu.uw.chather.ui.model.UserInfoViewModel;
+import edu.uw.chather.ui.weather.WeatherFragment;
 import edu.uw.chather.ui.passwordreset.PasswordResetFragment;
 import edu.uw.chather.utils.Utils;
 
