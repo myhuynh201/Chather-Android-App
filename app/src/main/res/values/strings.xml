@@ -46,6 +46,11 @@
     <string name="confirm_new_password">Confirm Password</string>
     <string name="change_password">Change Password</string>
 
+    <!-- JWT auto sign in and sign out -->
+    <string name="switch_sign_in">Stay Signed in</string>
+    <string name="keys_shared_prefs">My Auth App Shared Prefs</string> <string name="keys_prefs_jwt">Sharded Prefs JWT</string>
+    <string name="action_sign_out">Sign Out</string>
+
     <string name="base_url">https://tcss450-android-app.herokuapp.com/</string>
 
     <string name="contacts_add">Add</string>
