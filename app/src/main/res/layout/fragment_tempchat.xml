@@ -20,6 +20,7 @@
         android:layout_margin="@dimen/text_margin"
         android:layout_marginRight="8dp"
         android:fontFamily="sans-serif"
+        android:textColor="?colorOnSecondary"
         android:text="evanfrost320@gmail.com, asdf@a.c, alec, dhuynh, alejandrocossio1@gmail.com"
         android:textAppearance="?attr/textAppearanceListItem" />
 
