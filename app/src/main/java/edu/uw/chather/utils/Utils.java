@@ -7,6 +7,10 @@ import androidx.appcompat.app.AppCompatDelegate;
 import edu.uw.chather.MainActivity;
 import edu.uw.chather.R;
 
+/**
+ * A class to set the them of the activity
+ * @author Duy Nguyen, Demarco Best, Alec Mac, Alejandro Olono, My Duyen Huynh
+ */
 public class Utils {
     private static int sTheme;
     public final static int BLUE_THEME = 0;
