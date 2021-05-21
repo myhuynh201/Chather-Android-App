@@ -17,6 +17,7 @@ import edu.uw.chather.utils.Utils;
 
 /**
  * A simple {@link Fragment} subclass.
+ * @author Charles Bryan, Duy Nguyen, Demarco Best, Alec Mac, Alejandro Olono, My Duyen Huynh
  */
 public class ChangeThemeFragment extends Fragment {
 
@@ -25,6 +26,9 @@ public class ChangeThemeFragment extends Fragment {
      */
     FragmentChangeThemeBinding binding;
 
+    /**
+     * An empty constructor.
+     */
     public ChangeThemeFragment() {
         // Required empty public constructor
     }
