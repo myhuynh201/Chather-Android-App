@@ -1,4 +1,11 @@
+/*
+  WeatherViewModel.java
+
+  TCSS 450 - Spring 2021
+  Chather Project
+ */
 package edu.uw.chather.ui.weather;
+
 
 import android.app.Application;
 import android.util.Log;
@@ -26,24 +33,41 @@ import java.util.Objects;
 import edu.uw.chather.io.RequestQueueSingleton;
 import edu.uw.chather.ui.model.UserInfoViewModel;
 
+/**
+ * The ViewModel for the Weather components.
+ * @author Alejandro Cossio Olono
+ */
 public class WeatherViewModel extends AndroidViewModel {
 
-    //Holds the result of the web call.
+    /**
+    A mutable live data that is able to change certain weather properties from response.
+     */
     private MutableLiveData<JSONObject> mResponse;
 
-    //Instantiating the JSONObject with a temp value.
+    /**
+     * Constructor for the weather view model.
+     * @param application The application.
+     */
     public WeatherViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>();
         mResponse.setValue(new JSONObject());
     }
 
-    //This should allow for observers to be added to the LiveData
+    /**
+     * Observes mutable live data.
+     * @param owner The owner.
+     * @param observer The observer.
+     */
     public void addResponseObserver(@NonNull LifecycleOwner owner,
                                     @NonNull Observer<? super JSONObject> observer) {
         mResponse.observe(owner, observer);
     }
 
+    /**
+     * In case of a successful response,
+     * @param result the response from the request made to web-service
+     */
     private void handleResult(final JSONObject result) {
         mResponse.setValue(result);
         try {
@@ -53,7 +77,10 @@ public class WeatherViewModel extends AndroidViewModel {
         }
     }
 
-    /*Should there be an error in the REQUEST, the code below will run. */
+    /**
+     * Handles the error from the server side.
+     * @param error The error.
+     */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             try {
@@ -79,7 +106,7 @@ public class WeatherViewModel extends AndroidViewModel {
     }
 
     /**
-     * Connects to the Web-Service
+     * Connects to the server from a url.
      */
     public void connect() {
         String url = "https://tcss450-android-app.herokuapp.com/weather/hardcoded";
@@ -95,8 +122,8 @@ public class WeatherViewModel extends AndroidViewModel {
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
-                body, //we require a few things of the API call.
-                this::handleResult, //mResponse::setValue
+                body,
+                this::handleResult,
                 this::handleError) {
             @Override
             public Map<String, String> getHeaders() {

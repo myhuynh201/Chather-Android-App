@@ -24,20 +24,45 @@ import edu.uw.chather.R;
 
 /**
  * The WeatherForecastAdapter the adapter for the RecyclerView.
+ * @author Alejandro Cossio Olono
  */
 public class WeatherForecastAdapter extends RecyclerView.Adapter<WeatherForecastAdapter.MyViewHolder> {
 
-
+    /**
+     * The context to be observed
+     */
     private Context context;
+
+    /**
+     * The API response
+     */
     private JSONObject response;
 
+    /**
+     * Constructor for the WeatherForecastAdapter
+     * @param context The context to be observed
+     * @param response The Web Service Response
+     */
     public WeatherForecastAdapter(Context context, JSONObject response) {
         this.context = context;
         this.response = response;
     }
 
+    /**
+     * An encompassing class for the object holding the cards
+     */
     public class MyViewHolder extends RecyclerView.ViewHolder{
+
+        /**
+         * The TextViews which will display relevant information
+         * regarding date, description, and temperature.
+         */
         TextView txt_date, txt_descriptions, txt_temperature;
+
+        /**
+         * Constructor for the MyViewHolder
+         * @param itemView The card item holding the Forecast weather information
+         */
         public MyViewHolder(View itemView){
             super(itemView);
             txt_date = (TextView) itemView.findViewById(R.id.txt_date);
@@ -46,6 +71,13 @@ public class WeatherForecastAdapter extends RecyclerView.Adapter<WeatherForecast
 
         }
     }
+
+    /**
+     * The oncreate method for the ViewHolder
+     * @param parent The ViewGroup that the ViewHolder is a part of.
+     * @param viewType The variety of the view.
+     * @return The view to reference.
+     */
     @NonNull
     @Override
     public WeatherForecastAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -53,6 +85,11 @@ public class WeatherForecastAdapter extends RecyclerView.Adapter<WeatherForecast
         return new MyViewHolder(itemView);
     }
 
+    /**
+     * Sets the TextViews with their relevant data.
+     * @param holder The ViewHolder
+     * @param position The current place in the Weather week list.
+     */
     @Override
     public void onBindViewHolder(@NonNull WeatherForecastAdapter.MyViewHolder holder, int position) {
         try {
@@ -70,6 +107,10 @@ public class WeatherForecastAdapter extends RecyclerView.Adapter<WeatherForecast
         }
     }
 
+    /**
+     * Retrieves the number of days in the week.
+     * @return The number of days of data.
+     */
     @Override
     public int getItemCount() {
         int itemCnt = 0;

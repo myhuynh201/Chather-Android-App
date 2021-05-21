@@ -31,10 +31,13 @@ import edu.uw.chather.databinding.FragmentWeatherBinding;
 
 /**
  * The Weatherfragment is where all of the weather components are housed and displayed
+ * @author Alejandro Cossio Olono
  */
 public class WeatherFragment extends Fragment {
 
-    //Creating a binding for the weather
+    /**
+     * The WeatherFragment binding.
+     */
     private FragmentWeatherBinding binding;
 
     /**
