@@ -1,3 +1,9 @@
+/*
+  WeatherForecastAdapter.java
+
+  TCSS 450 - Spring 2021
+  Chather Project
+ */
 package edu.uw.chather.ui.weather;
 
 import android.content.Context;
@@ -16,7 +22,11 @@ import java.util.Date;
 
 import edu.uw.chather.R;
 
+/**
+ * The WeatherForecastAdapter the adapter for the RecyclerView.
+ */
 public class WeatherForecastAdapter extends RecyclerView.Adapter<WeatherForecastAdapter.MyViewHolder> {
+
 
     private Context context;
     private JSONObject response;

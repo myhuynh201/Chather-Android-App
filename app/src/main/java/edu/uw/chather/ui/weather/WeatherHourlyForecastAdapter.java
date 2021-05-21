@@ -1,5 +1,8 @@
-package edu.uw.chather.ui.weather;
+/*
 
+ */
+
+package edu.uw.chather.ui.weather;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
