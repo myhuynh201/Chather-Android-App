@@ -17,16 +17,34 @@ import edu.uw.chather.databinding.FragmentChatBinding;
 import edu.uw.chather.ui.model.UserInfoViewModel;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Chat Fragment represents a fragment of a Chat.
+ * @author Alec Mac
  */
 public class ChatFragment extends Fragment {
 
+    /**
+     * id for chat
+     */
     private int mChatId;
 
+    /**
+     * view model to store chat information
+     */
     private ChatViewModel mChatModel;
+
+    /**
+     * view model to store user information
+     */
     private UserInfoViewModel mUserModel;
+
+    /**
+     * view model to store information about sent chat
+     */
     private ChatSendViewModel mSendModel;
 
+    /**
+     * required constructores
+     */
     public ChatFragment() {
         // Required empty public constructor
     }

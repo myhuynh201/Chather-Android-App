@@ -8,15 +8,32 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 /**
- * Encapsulate chat message details.
+ * Encapsulate chat message details
+ * @author Alec Mac
  */
 public final class ChatMessage implements Serializable {
 
+    /**
+     * id of message
+     */
     private final int mMessageId;
+    /**
+     * content of message
+     */
     private final String mMessage;
     private final String mSender;
+    /**
+     * timestamp of message
+     */
     private final String mTimeStamp;
 
+    /**
+     * Generates a chat message
+     * @param messageId id for message
+     * @param message the message content
+     * @param sender sender information
+     * @param timeStamp time the message was sent
+     */
     public ChatMessage(int messageId, String message, String sender, String timeStamp) {
         mMessageId = messageId;
         mMessage = message;

@@ -22,14 +22,25 @@ import edu.uw.chather.databinding.FragmentChatListBinding;
 import edu.uw.chather.ui.model.UserInfoViewModel;
 
 /**
- * A simple {@link Fragment} subclass.
+ * ChatListFragment is a fragment used to represent a list of chatrooms.
+ * @author Alec Mac
  */
 public class ChatListFragment extends Fragment {
 
+    /**
+     * view model to store list of chatrooms
+     */
     private ChatListViewModel mChatListModel;
+
+    /**
+     * view model to store user info
+     */
     private UserInfoViewModel mUserModel;
 
 
+    /**
+     * constructor for chat list
+     */
     public ChatListFragment() {
         // Required empty public constructor
     }
@@ -58,9 +69,6 @@ public class ChatListFragment extends Fragment {
         FragmentChatListBinding binding = FragmentChatListBinding.bind(getView());
 
         binding.swipeContainer.setRefreshing(true);
-
-
-
 
         final RecyclerView rv = binding.recyclerChatroom;
         Log.d("JWT HERE", "onViewCreated: " + jwt);

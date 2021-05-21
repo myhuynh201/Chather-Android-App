@@ -25,9 +25,21 @@ import edu.uw.chather.ui.model.UserInfoViewModel;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * ChatListRecyclerViewAdapter creates recycler views for chatrooms
+ * @author Alec Mac
+ */
 public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRecyclerViewAdapter.ChatroomViewHolder> {
+
+    /**
+     * list of chatrooms
+     */
     private final List<Chatroom> mChatrooms;
 
+    /**
+     * constructor, initializing list of chatrooms
+     * @param chatrooms list of chatrooms
+     */
     public ChatListRecyclerViewAdapter(List<Chatroom> chatrooms) {
         this.mChatrooms = chatrooms;
     }
@@ -50,12 +62,26 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
         return mChatrooms.size();
     }
 
+    /**
+     * Viewholder for a chatroom
+     */
     public class ChatroomViewHolder extends RecyclerView.ViewHolder {
 
         //    public class ChatroomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        /**
+         * the view associated with this viewholder
+         */
         private final View mView;
+
+        /**
+         * binding stores the chatroom information
+         */
         private FragmentChatroomBinding binding;
 
+        /**
+         * constructs a chatroom view holder
+         * @param itemView the view created for this viewholder
+         */
         public ChatroomViewHolder(@NonNull View itemView) {
             super(itemView);
             mView = itemView;
@@ -70,6 +96,10 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
 //            Navigation.findNavController(v).navigate(directions);
 //        }
 
+        /**
+         * Set the preview for the chatroom
+         * @param chatroom stores information about the chatroom
+         */
         void setPreview(final Chatroom chatroom) {
             final Resources res = mView.getContext().getResources();
             final MaterialCardView card = binding.cardRoot;

@@ -15,8 +15,8 @@ import edu.uw.chather.ui.signin.SignInFragmentDirections;
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
+ * View adapter for hard coded chat view
+ * @author Alec Mac
  */
 public class MyTempChatRecyclerViewAdapter extends RecyclerView.Adapter<MyTempChatRecyclerViewAdapter.ViewHolder> {
 

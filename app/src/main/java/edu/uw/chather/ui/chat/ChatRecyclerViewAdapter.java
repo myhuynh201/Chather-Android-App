@@ -21,11 +21,26 @@ import java.util.List;
 import edu.uw.chather.R;
 import edu.uw.chather.databinding.FragmentChatMessageBinding;
 
+/**
+ * Recycler View adapter for chat messages
+ * @author Alec Mac
+ */
 public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.MessageViewHolder> {
 
+    /**
+     * List of messages
+     */
     private final List<ChatMessage> mMessages;
+    /**
+     * Email string
+     */
     private final String mEmail;
 
+    /**
+     * Constructor for view adapter
+     * @param messages messages for the chatroom
+     * @param email sender email of the chat
+     */
     public ChatRecyclerViewAdapter(List<ChatMessage> messages, String email) {
         this.mMessages = messages;
         mEmail = email;
@@ -50,16 +65,33 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         return mMessages.size();
     }
 
+    /**
+     * Viewholder for message
+     */
     class MessageViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * View associated with this viewhlder
+         */
         private final View mView;
+        /**
+         * Binding for the chatmessage fragment
+         */
         private FragmentChatMessageBinding binding;
 
+        /**
+         * Constructs a message viewholder
+         * @param view current view
+         */
         public MessageViewHolder(@NonNull View view) {
             super(view);
             mView = view;
             binding = FragmentChatMessageBinding.bind(view);
         }
 
+        /**
+         * sets chat message
+         * @param message message content
+         */
         void setMessage(final ChatMessage message) {
             final Resources res = mView.getContext().getResources();
             final MaterialCardView card = binding.cardRoot;

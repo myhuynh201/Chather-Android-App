@@ -28,6 +28,10 @@ import java.util.Objects;
 import edu.uw.chather.R;
 import edu.uw.chather.io.RequestQueueSingleton;
 
+/**
+ * ChatViewModel is viewmodel for a chat
+ * @author Alec Mac
+ */
 public class ChatViewModel extends AndroidViewModel {
 
     /**
@@ -37,6 +41,10 @@ public class ChatViewModel extends AndroidViewModel {
      */
     private Map<Integer, MutableLiveData<List<ChatMessage>>> mMessages;
 
+    /**
+     * Viewmodel for the chat
+     * @param application
+     */
     public ChatViewModel(@NonNull Application application) {
         super(application);
         mMessages = new HashMap<>();

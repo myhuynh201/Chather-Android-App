@@ -29,10 +29,21 @@ import edu.uw.chather.R;
 import edu.uw.chather.io.RequestQueueSingleton;
 import edu.uw.chather.ui.model.UserInfoViewModel;
 
+/**
+ * ChatListViewModel Stores information for the chat list
+ * @author Alec Mac
+ */
 public class ChatListViewModel extends AndroidViewModel {
 
+    /**
+     * Map of chatrooms
+     */
     private Map<String, MutableLiveData<List<Chatroom>>> mChatrooms;
 
+    /**
+     * constructor for view model
+     * @param application the current application
+     */
     public ChatListViewModel(@NonNull Application application) {
         super(application);
         mChatrooms = new HashMap<>();
@@ -66,6 +77,11 @@ public class ChatListViewModel extends AndroidViewModel {
         return getOrCreateMapEntry(jwt).getValue();
     }
 
+    /**
+     * Gets or creates map entry if does not exist
+     * @param jwt the JWT for the current user
+     * @return live data for chatrooms
+     */
     private MutableLiveData<List<Chatroom>> getOrCreateMapEntry(final String jwt) {
         if (!mChatrooms.containsKey(jwt)) {
             mChatrooms.put(jwt, new MutableLiveData<>(new ArrayList<>()));
@@ -114,12 +130,6 @@ public class ChatListViewModel extends AndroidViewModel {
                 .addToRequestQueue(request);
 
     }
-    /**
-     *
-     *
-     * UMMM
-     */
-
 
     /**
      * When a chat message is received externally to this ViewModel, add it
@@ -169,6 +179,10 @@ public class ChatListViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * handles error
+     * @param error error from response
+     */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             Log.e("NETWORK ERROR", error.getMessage());
