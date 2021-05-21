@@ -14,12 +14,14 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:autofillHints=""
         android:ems="10"
+        android:hint="@string/text_chat_hint"
         android:inputType="textPersonName"
+        android:textColor="?colorOnSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_send"
-        app:layout_constraintStart_toStartOf="parent"
-        android:autofillHints="" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/button_send"
@@ -29,6 +31,7 @@
         android:layout_marginBottom="16dp"
         android:contentDescription="TODO"
         android:tint="?colorPrimary"
+        android:background="?android:windowBackground"
         android:src="@drawable/ic_send_blue_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

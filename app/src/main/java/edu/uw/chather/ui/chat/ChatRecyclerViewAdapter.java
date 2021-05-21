@@ -1,12 +1,14 @@
 package edu.uw.chather.ui.chat;
 
 import android.content.res.Resources;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +25,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
     private final List<ChatMessage> mMessages;
     private final String mEmail;
+
     public ChatRecyclerViewAdapter(List<ChatMessage> messages, String email) {
         this.mMessages = messages;
         mEmail = email;
@@ -61,6 +64,14 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             final Resources res = mView.getContext().getResources();
             final MaterialCardView card = binding.cardRoot;
 
+            TypedValue typedValue = new TypedValue();
+            Resources.Theme theme = mView.getContext().getTheme();
+            theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+            @ColorInt int primaryColor = typedValue.data;
+
+            theme.resolveAttribute(R.attr.colorOnSecondary, typedValue, true);
+            @ColorInt int textColor = typedValue.data;
+
             int standard = (int) res.getDimension(R.dimen.chat_margin);
             int extended = (int) res.getDimension(R.dimen.chat_margin_sided);
 
@@ -77,22 +88,22 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
                 card.setCardBackgroundColor(
                         ColorUtils.setAlphaComponent(
-                            res.getColor(R.color.grey, null),
-                            16));
+                                primaryColor,
+                                16));
                 binding.textMessage.setTextColor(
-                        res.getColor(R.color.colorPrimary, null));
+                        textColor);
 
                 card.setStrokeWidth(standard / 5);
                 card.setStrokeColor(ColorUtils.setAlphaComponent(
-                        res.getColor(R.color.colorPrimaryDark, null),
+                        primaryColor,
                         200));
 
                 //Round the corners on the left side
                 card.setShapeAppearanceModel(
                         card.getShapeAppearanceModel()
                                 .toBuilder()
-                                .setTopLeftCorner(CornerFamily.ROUNDED,standard * 2)
-                                .setBottomLeftCorner(CornerFamily.ROUNDED,standard * 2)
+                                .setTopLeftCorner(CornerFamily.ROUNDED, standard * 2)
+                                .setBottomLeftCorner(CornerFamily.ROUNDED, standard * 2)
                                 .setBottomRightCornerSize(0)
                                 .setTopRightCornerSize(0)
                                 .build());
@@ -111,17 +122,25 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 ((FrameLayout.LayoutParams) card.getLayoutParams()).gravity =
                         Gravity.START;
 
-
+                card.setCardBackgroundColor(
+                        ColorUtils.setAlphaComponent(
+                                primaryColor,
+                                16));
 
                 card.setStrokeWidth(standard / 5);
+                card.setStrokeColor(ColorUtils.setAlphaComponent(
+                        primaryColor,
+                        200));
 
+                binding.textMessage.setTextColor(
+                        textColor);
 
                 //Round the corners on the right side
                 card.setShapeAppearanceModel(
                         card.getShapeAppearanceModel()
                                 .toBuilder()
-                                .setTopRightCorner(CornerFamily.ROUNDED,standard * 2)
-                                .setBottomRightCorner(CornerFamily.ROUNDED,standard * 2)
+                                .setTopRightCorner(CornerFamily.ROUNDED, standard * 2)
+                                .setBottomRightCorner(CornerFamily.ROUNDED, standard * 2)
                                 .setBottomLeftCornerSize(0)
                                 .setTopLeftCornerSize(0)
                                 .build());
