@@ -17,11 +17,18 @@ import edu.uw.chather.utils.Utils;
 
 /**
  * A simple {@link Fragment} subclass.
+ * @author Charles Bryan, Duy Nguyen, Demarco Best, Alec Mac, Alejandro Olono, My Duyen Huynh
  */
 public class ChangeThemeFragment extends Fragment {
 
+    /**
+     * Binding for changing the theme.
+     */
     FragmentChangeThemeBinding binding;
 
+    /**
+     * An empty constructor.
+     */
     public ChangeThemeFragment() {
         // Required empty public constructor
     }
@@ -55,5 +62,5 @@ public class ChangeThemeFragment extends Fragment {
                 new SharedPreferencesManager(getContext()).retrieveInt("theme", Utils.PURPLE_THEME)));
         binding.darkThemeButton.setOnClickListener(button -> Utils.changeToTheme(getActivity(),
                 new SharedPreferencesManager(getContext()).retrieveInt("theme", Utils.DARK_THEME)));
-    }
+        }
 }

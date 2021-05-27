@@ -1,7 +1,11 @@
+/*
+  WeatherFragment.java
+
+  TCSS 450 - Spring 2021
+  Chather Project
+ */
 package edu.uw.chather.ui.weather;
 
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,44 +19,61 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
 import edu.uw.chather.databinding.FragmentWeatherBinding;
 
-
+/**
+ * The Weatherfragment is where all of the weather components are housed and displayed
+ * @author Alejandro Cossio Olono
+ */
 public class WeatherFragment extends Fragment {
 
-    //Creating a binding for the weather
+    /**
+     * The WeatherFragment binding.
+     */
     private FragmentWeatherBinding binding;
 
-    //Holds a reference to the WeatherViewModel.
+    /**
+     * Holds the WeatherViewModel
+     */
     private WeatherViewModel mViewModel;
 
-
-
-    //Current weather pic
-    //ImageView mImgWeather;
-
+    /**
+     * The various text components that will accept data from the API.
+     */
     private TextView txt_city_name,txt_humidity,txt_sunrise,txt_sunset,txt_pressure,txt_temperature,
             txt_description,txt_date_time,txt_wind,txt_geo_coord;
 
+    /**
+     * The RecyclerView holding the WeatherForecast display
+     */
     private RecyclerView recycler_forecast;
+
+    /**
+     * The RecyclerView holding the 24 hour forecast
+     */
     private RecyclerView recycler_hourly_forecast;
+
+    /**
+     * The linear layout holding the weather panel
+     */
     private LinearLayout weather_panel;
+
+    /**
+     * The progressBar which runs when pulling up the WeatherFragment
+     */
     private ProgressBar loading;
 
+    /**
+     * A static instance of the WeatherFragment
+     */
     static WeatherFragment instance;
 
 
@@ -61,8 +82,6 @@ public class WeatherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentWeatherBinding.inflate(inflater, container, false);
-
-        //mImgWeather = (ImageView) binding.imgWeather;
         txt_city_name = (TextView) binding.txtCityName;
         txt_humidity = (TextView) binding.txtHumidity;
         txt_sunrise = (TextView) binding.txtSunrise;
@@ -93,18 +112,22 @@ public class WeatherFragment extends Fragment {
                 .get(WeatherViewModel.class);
     }
 
+    /**
+     * Empty Constructor of the Fragment
+     */
     public WeatherFragment() {
-
     }
 
+    /**
+     * Retrieves the static instance of the Fragment
+     * @return the static instance
+     */
     public static WeatherFragment getInstance() {
         if(instance == null){
             instance = new WeatherFragment();
         }
         return instance;
     }
-    //        mViewModel.connect(String.format("%.2f",location.getLatitude()),
-    //                String.format("%.2f",location.getLongitude()));
 
 
     @Override
@@ -124,7 +147,10 @@ public class WeatherFragment extends Fragment {
                 this::observeResponse);
     }
 
-
+    /**
+     * Displays the Weather components
+     * @param response The API response from the API
+     */
     public void displayWeather(JSONObject response) {
 
         //Loading the information
@@ -149,6 +175,7 @@ public class WeatherFragment extends Fragment {
             WeatherHourlyForecastAdapter madapter = new WeatherHourlyForecastAdapter(getContext(), response);
             recycler_hourly_forecast.setAdapter(madapter);
             recycler_forecast.setAdapter(adapter);
+
             //Displaying the panel
             weather_panel.setVisibility(View.VISIBLE);
             loading.setVisibility(View.GONE);

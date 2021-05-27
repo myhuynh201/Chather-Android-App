@@ -70,8 +70,8 @@ public class SuccessFragment extends Fragment {
                 this::observeResponse);
         mBinding.success.setText("Hello " + model.getEmail().toString());
         boolean isClick = false;
-        mBinding.buttonDarkMode.setOnClickListener(button -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES));
-        mBinding.buttonLightMode.setOnClickListener(button -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO));
+//        mBinding.buttonDarkMode.setOnClickListener(button -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES));
+//        mBinding.buttonLightMode.setOnClickListener(button -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO));
 //        mBinding.switchMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
 //            if(isChecked == true) {
 //                Toast.makeText(getContext(), "Dark Mode On", Toast.LENGTH_LONG);

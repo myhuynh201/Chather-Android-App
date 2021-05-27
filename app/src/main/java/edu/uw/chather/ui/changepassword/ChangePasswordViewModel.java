@@ -21,14 +21,18 @@ import org.json.JSONObject;
 import java.nio.charset.Charset;
 import java.util.Objects;
 
+/**
+ * A view model class of the change password fragment that detects changes in data from sign in.
+ * @author Charles Bryan, Duy Nguyen, Demarco Best, Alec Mac, Alejandro Olono, My Duyen Huynh
+ */
 public class ChangePasswordViewModel extends AndroidViewModel {
-    /*
-   A mutable live data that is able to change certain register properties from response.
+    /**
+     A mutable live data that is able to change certain register properties from response.
    */
     private MutableLiveData<JSONObject> mResponse;
 
     /**
-     * Contructor for the register view model class.
+     * Contructor for the change password view model class.
      * @param application The application.
      */
     public ChangePasswordViewModel(@NonNull Application application) {

@@ -2,8 +2,7 @@
 <resources>
     <string name="keys_json_blogs_response">response</string>
     <string name="keys_json_blogs_data">data</string>
-    <string name="keys_json_blogs_pubdate">pubdate</string>
-    <string name="keys_json_blogs_title">title</string>
-    <string name="keys_json_blogs_teaser">teaser</string>
-    <string name="keys_json_blogs_url">url</string>
+    <string name="keys_json_chat_timestamp">timestamp</string>
+    <string name="keys_json_chat_email">email</string>
+    <string name="keys_json_chat_message">message</string>
 </resources>

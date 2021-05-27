@@ -1,5 +1,10 @@
-package edu.uw.chather.ui.weather;
+/*
+  WeatherHourlyForecastAdapter.java
 
+  TCSS 450 - Spring 2021
+  Chather Project
+ */
+package edu.uw.chather.ui.weather;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,19 +21,47 @@ import java.util.Date;
 
 import edu.uw.chather.R;
 
+/**
+ * The adapter for the WeatherHourlyForecast
+ * @author Alejandro Cossio Olono
+ */
 public class WeatherHourlyForecastAdapter extends RecyclerView.Adapter<WeatherHourlyForecastAdapter.MyViewHolder> {
 
+    /**
+     * The context to be observed
+     */
     private Context context;
+
+    /**
+     * The API response
+     */
     private JSONObject response;
 
+    /**
+     * Constructor for the WeatherHourlyForecastAdapter
+     * @param context The context to be observed
+     * @param response The Web Service Response
+     */
     public WeatherHourlyForecastAdapter(Context context, JSONObject response) {
         this.context = context;
         this.response = response;
     }
 
+    /**
+     * An encompassing class for the object holding the cards
+     */
     public class MyViewHolder extends RecyclerView.ViewHolder{
+
+        /**
+         * The TextViews which will display relevant information
+         * regarding date, description, and temperature.
+         */
         TextView txt_date, txt_description, txt_temperature_high;
 
+        /**
+         * Constructor for the MyViewHolder
+         * @param itemView The card item holding the 24-hour Forecast weather information
+         */
         public MyViewHolder(View itemView){
             super(itemView);
             txt_date = (TextView) itemView.findViewById(R.id.txt_date);
@@ -38,6 +71,12 @@ public class WeatherHourlyForecastAdapter extends RecyclerView.Adapter<WeatherHo
         }
     }
 
+    /**
+     * The oncreate method for the ViewHolder
+     * @param parent The ViewGroup that the ViewHolder is a part of.
+     * @param viewType The variety of the view.
+     * @return The view to reference.
+     */
     @NonNull
     @Override
     public WeatherHourlyForecastAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -45,6 +84,11 @@ public class WeatherHourlyForecastAdapter extends RecyclerView.Adapter<WeatherHo
         return new MyViewHolder(itemView);
     }
 
+    /**
+     * Sets the TextViews with their relevant data.
+     * @param holder The ViewHolder
+     * @param position The current place in the Weather week list.
+     */
     @Override
     public void onBindViewHolder(@NonNull WeatherHourlyForecastAdapter.MyViewHolder holder, int position) {
         try {
@@ -62,6 +106,10 @@ public class WeatherHourlyForecastAdapter extends RecyclerView.Adapter<WeatherHo
         }
     }
 
+    /**
+     * Retrieves the number of hours to record data for.
+     * @return The number of hours of data to analyze.
+     */
     @Override
     public int getItemCount() {
         int itemCnt = 0;

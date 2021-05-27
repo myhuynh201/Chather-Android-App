@@ -31,15 +31,20 @@ import edu.uw.chather.ui.signin.SignInFragmentArgs;
 import edu.uw.chather.ui.signin.SignInFragmentDirections;
 import edu.uw.chather.ui.signin.SignInViewModel;
 
-
+/**
+ * A simple {@link Fragment} subclass.
+ * @author Charles Bryan, Duy Nguyen, Demarco Best, Alec Mac, Alejandro Olono, My Duyen Huynh
+ */
 public class PasswordResetFragment extends Fragment {
 
-
+    /**
+     * Binding for the password reset fragment.
+     */
     private FragmentPasswordResetBinding binding;
 
-    /*
-     A view model to allow changes in the sign in fragment.
-    */
+    /**
+     * The password reset view model.
+     */
     private PasswordResetViewModel mPasswordResetModel;
 
 

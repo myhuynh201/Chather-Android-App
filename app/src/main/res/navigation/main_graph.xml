@@ -9,28 +9,12 @@
         android:name="edu.uw.chather.ui.SuccessFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_success" />
+
     <fragment
-        android:id="@+id/navigation_chats"
-        android:name="edu.uw.chather.ui.chat.ChatListFragment"
-        android:label="@string/title_chats"
-        tools:layout="@layout/fragment_chat_list" >
-        <action
-            android:id="@+id/action_navigation_chats_to_chatRoomFragment"
-            app:destination="@id/chatRoomFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/chatRoomFragment"
-        android:name="edu.uw.chather.ui.chat.ChatRoomFragment"
-        android:label="@string/title_chats" >
-        <argument
-            android:name="chatRoom"
-            app:argType="edu.uw.chather.ui.chat.ChatRoom" />
-    </fragment>
-    <fragment
-        android:id="@+id/navigation_connections"
-        android:name="edu.uw.chather.ui.connections.ConnectionFragment"
-        android:label="@string/title_connections"
-        tools:layout="@layout/fragment_connection_list" />
+        android:id="@+id/navigation_contact"
+        android:name="edu.uw.chather.ui.contact.ContactFragment"
+        android:label="@string/title_contact"
+        tools:layout="@layout/fragment_contact_list" />
     <fragment
         android:id="@+id/weatherFragment"
         android:name="edu.uw.chather.ui.weather.WeatherFragment"
@@ -49,5 +33,26 @@
         <action
             android:id="@+id/action_changePasswordFragment_to_success"
             app:destination="@id/success" />
+    </fragment>
+    <fragment
+        android:id="@+id/tempChatFragment"
+        android:name="edu.uw.chather.ui.chat.TempChatFragment"
+        android:label="@string/title_chats"
+        tools:layout="@layout/fragment_tempchat_list" >
+        <action
+            android:id="@+id/action_tempChatFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="edu.uw.chather.ui.chat.ChatFragment"
+        android:label="Chat"
+        tools:layout="@layout/fragment_chat" >
+        <argument
+            android:name="chatid"
+            app:argType="integer" />
+        <argument
+            android:name="names"
+            app:argType="string" />
     </fragment>
 </navigation>

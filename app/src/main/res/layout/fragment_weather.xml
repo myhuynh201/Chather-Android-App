@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/txt_city_name"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?colorPrimary"
             android:textSize="24sp"
             android:textStyle="bold"
             android:text="Weather in London, GB"
@@ -38,7 +38,7 @@
 
             <TextView
                 android:id="@+id/txt_temperature"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?colorPrimary"
                 android:textSize="50sp"
                 android:textStyle="bold"
                 android:layout_marginLeft="8dp"
@@ -49,7 +49,7 @@
 
         <TextView
             android:id="@+id/txt_description"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?colorPrimary"
             android:textSize="18sp"
             android:textStyle="bold"
             android:text="The conditions are "
@@ -58,7 +58,7 @@
 
         <TextView
             android:id="@+id/txt_date_time"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?colorPrimary"
             android:textSize="18sp"
             android:textStyle="bold"
             android:text="It is seven o'clock"
@@ -186,7 +186,7 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginTop="5dp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?colorPrimary"
             android:text="7 Day Weather forecast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -205,7 +205,7 @@
         android:textStyle="bold"
         android:layout_marginTop="5dp"
         android:layout_below="@id/recycler_forecast"
-        android:textColor="@color/colorPrimary"
+        android:textColor="?colorPrimary"
         android:id="@+id/hourly_forecast"
         android:text="24 Hour Weather forecast"
         android:layout_width="wrap_content"

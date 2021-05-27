@@ -2,9 +2,15 @@ package edu.uw.chather.utils;
 
 import android.app.Activity;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import edu.uw.chather.MainActivity;
 import edu.uw.chather.R;
 
+/**
+ * A class to set the them of the activity
+ * @author Duy Nguyen, Demarco Best, Alec Mac, Alejandro Olono, My Duyen Huynh
+ */
 public class Utils {
     private static int sTheme;
     public final static int BLUE_THEME = 0;
@@ -45,6 +51,7 @@ public class Utils {
                 activity.getTheme().applyStyle(R.style.PurpleTheme, true);
                 break;
             case DARK_THEME:
+               // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 activity.getTheme().applyStyle(R.style.DarkTheme, true);
                 break;
         }
