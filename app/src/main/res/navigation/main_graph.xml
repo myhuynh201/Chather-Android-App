@@ -55,4 +55,9 @@
             android:name="names"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="edu.uw.chather.ui.location.LocationFragment"
+        android:label="Current Location"
+        tools:layout="@layout/fragment_location" />
 </navigation>
