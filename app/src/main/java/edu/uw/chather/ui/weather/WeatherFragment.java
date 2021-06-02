@@ -6,6 +6,7 @@
  */
 package edu.uw.chather.ui.weather;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -48,7 +51,7 @@ public class WeatherFragment extends Fragment {
     /**
      * The various text components that will accept data from the API.
      */
-    private TextView txt_city_name,txt_humidity,txt_sunrise,txt_sunset,txt_pressure,txt_temperature,
+    private TextView txt_city_name,txt_temperature,
             txt_description,txt_date_time,txt_wind,txt_geo_coord;
 
     /**
@@ -62,33 +65,26 @@ public class WeatherFragment extends Fragment {
     private RecyclerView recycler_hourly_forecast;
 
     /**
-     * The linear layout holding the weather panel
-     */
-    private LinearLayout weather_panel;
-
-    /**
-     * The progressBar which runs when pulling up the WeatherFragment
-     */
-    private ProgressBar loading;
-
-    /**
      * A static instance of the WeatherFragment
      */
     static WeatherFragment instance;
 
+    private static boolean mFirst = true;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentWeatherBinding.inflate(inflater, container, false);
+
+        //Making the first call, this should be calling the default call
+        if(mFirst) {
+            mViewModel.connect();
+            mFirst = false;
+        }
         txt_city_name = (TextView) binding.txtCityName;
-        txt_humidity = (TextView) binding.txtHumidity;
-        txt_sunrise = (TextView) binding.txtSunrise;
-        txt_sunset = (TextView) binding.txtSunset;
-        txt_pressure = (TextView) binding.txtPressure;
         txt_temperature = (TextView) binding.txtTemperature;
-        txt_description = (TextView) binding.txtDescription;
+        //txt_description = (TextView) binding.txtDescription;
         txt_date_time = (TextView) binding.txtDateTime;
         txt_wind = (TextView) binding.txtWind;
         txt_geo_coord = (TextView) binding.txtGeoCoord;
@@ -98,9 +94,6 @@ public class WeatherFragment extends Fragment {
         recycler_hourly_forecast.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         recycler_forecast.setHasFixedSize(true);
         recycler_forecast.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false));
-
-        weather_panel = (LinearLayout) binding.weatherPanel;
-        loading = (ProgressBar) binding.loading;
         return binding.getRoot();
     }
 
@@ -110,6 +103,7 @@ public class WeatherFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mViewModel = new ViewModelProvider(getActivity())
                 .get(WeatherViewModel.class);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
     }
 
     /**
@@ -139,69 +133,46 @@ public class WeatherFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        //Send the Chicago hard-coded location coordinates
-        mViewModel.connect();
+        FragmentWeatherBinding binding = FragmentWeatherBinding.bind(getView());
+        binding.buttonSearch.setOnClickListener(this::searchZip);
+        //WeatherFragmentArgs args = WeatherFragmentArgs.fromBundle(getArguments());
+        //Send the Tacoma hard-coded location coordinates
+        //mViewModel.connect();
         //This should provide an observer to the view model, to check responses
-        mViewModel.addResponseObserver(getViewLifecycleOwner(),
-                this::observeResponse);
-    }
-
-    /**
-     * Displays the Weather components
-     * @param response The API response from the API
-     */
-    public void displayWeather(JSONObject response) {
-
-        //Loading the information
-        try{
-            txt_city_name.setText("Tacoma, WA");
-            txt_description.setText(new StringBuilder("Weather in Tacoma, WA"));
-            txt_temperature.setText(response.getJSONObject("current").getString("temp") + "°F");
-            Date date = new Date(Integer.parseInt(response.getJSONObject("current").getString("dt")) * 1000L);
-            SimpleDateFormat sdf = new SimpleDateFormat("hh:mma EEE MM/d/yyyy");
-            txt_date_time.setText(sdf.format(date));
-            txt_pressure.setText(response.getJSONObject("current").getString("pressure") + " hPa");
-            txt_humidity.setText(response.getJSONObject("current").getString("humidity") + " %");
-            date = new Date(Integer.parseInt(response.getJSONObject("current").getString("sunrise")) * 1000L);
-            sdf = new SimpleDateFormat("hh:mma ");
-            txt_sunrise.setText(sdf.format(date));
-            date = new Date(Integer.parseInt(response.getJSONObject("current").getString("sunset")) * 1000L);
-            sdf = new SimpleDateFormat("hh:mma ");
-            txt_sunset.setText(sdf.format(date));
-            txt_geo_coord.setText("[" + response.getString("lat") + "," +
-                    response.getString("lon") + "]");
-            WeatherForecastAdapter adapter = new WeatherForecastAdapter(getContext(), response);
-            WeatherHourlyForecastAdapter madapter = new WeatherHourlyForecastAdapter(getContext(), response);
-            recycler_hourly_forecast.setAdapter(madapter);
-            recycler_forecast.setAdapter(adapter);
-
-            //Displaying the panel
-            weather_panel.setVisibility(View.VISIBLE);
-            loading.setVisibility(View.GONE);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * An observer on the HTTP Response from the web server. This observer should be
-     * attached to SignInViewModel.
-     *
-     * @param response the Response from the server
-     */
-    private void observeResponse(final JSONObject response) {
-        if (response.length() > 0) {
-            if (response.has("code")) {
-
-                Log.e("JSON Parse Error", "the response has failed");
-
-            } else {
-                displayWeather(response); //i should work with the response JSONObject here.
-                //kinda like response.getString("current.temp")
+//        mViewModel.addResponseObserver(getViewLifecycleOwner(),
+//                this::observeResponse);
+        //Location should be the map that we make in the web-service.
+        mViewModel.addLocationObserver(getViewLifecycleOwner(), location -> {
+            if(!location.isEmpty()) {
+                binding.textviewZipData.setText(location.get("zip"));
+                binding.txtCityName.setText(location.get("city"));
             }
-        } else {
-            Log.d("JSON Response", "No Response");
+        });
+        mViewModel.addResponseObserver(getViewLifecycleOwner(), response -> {
+            if (response.length() > 0) {
+                try {
+                    //binding.txtDescription.setText(new StringBuilder("Weather in " + binding.txtCityName));
+                    binding.txtTemperature.setText(response.getJSONObject("current").getString("temp").substring(0, 2) + "°F");
+                    Date date = new Date(Integer.parseInt(response.getJSONObject("current").getString("dt")) * 1000L);
+                    SimpleDateFormat sdf = new SimpleDateFormat("hh:mma EEE MM/d/yyyy");
+                    binding.txtDateTime.setText(sdf.format(date));
+                    binding.txtGeoCoord.setText("[" + response.getString("lat") + "," +
+                            response.getString("lon") + "]");
+                    binding.recyclerForecast.setAdapter(new WeatherForecastAdapter(getContext(), response));
+                    binding.recyclerHourlyForecast.setAdapter(new WeatherHourlyForecastAdapter(getContext(), response));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+    private void searchZip(View view) {
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+        mViewModel.connect(binding.textviewZipData.getText().toString());
     }
 }

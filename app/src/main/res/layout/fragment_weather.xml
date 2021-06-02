@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/weather_display"
@@ -9,219 +9,178 @@
     android:padding="16dp"
     tools:context=".ui.weather.WeatherFragment">
 
-    <LinearLayout
-        android:id="@+id/weather_panel"
-        android:orientation="vertical"
+    <ImageButton
+        android:id="@+id/button_map"
+        android:layout_width="39dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="4dp"
+        android:layout_x="275dp"
+        android:layout_y="11dp"
+        android:background="#00FFFFFF"
+        android:src="@android:drawable/ic_dialog_map"
+        android:tint="#000000" />
+
+    <ImageButton
+        android:id="@+id/button_search"
+        android:layout_width="38dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="16dp"
+        android:layout_x="230dp"
+        android:layout_y="11dp"
+        android:background="#00FFFFFF"
+        android:src="@android:drawable/ic_search_category_default"
+        android:tint="#000000"
+        tools:src="@drawable/ic_search_black_24dp" />
+
+    <EditText
+        android:id="@+id/textview_zipData"
+        android:layout_width="118dp"
+        android:layout_height="48dp"
+        android:layout_x="110dp"
+        android:layout_y="2dp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txt_city_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="13dp"
+        android:layout_y="55dp"
+        android:text="Weather in London, GB"
+        android:textColor="?colorPrimary"
+        android:textSize="34sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/txt_date_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="20dp"
+        android:layout_y="115dp"
+        android:text="It is seven o'clock"
+        android:textColor="?colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_x="12dp"
+        android:layout_y="224dp"
+        android:background="@drawable/border"
+        android:padding="16dp"
+        android:stretchColumns="45dp">
 
-        <TextView
-            android:id="@+id/txt_city_name"
-            android:textColor="?colorPrimary"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:text="Weather in London, GB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <LinearLayout
-            android:orientation="horizontal"
+        <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/img_weather"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@mipmap/ic__my_sun_cloud_foreground"
-                android:text="Weather in London, GB" />
 
             <TextView
-                android:id="@+id/txt_temperature"
-                android:textColor="?colorPrimary"
-                android:textSize="50sp"
-                android:textStyle="bold"
-                android:layout_marginLeft="8dp"
-                android:text="14 F"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:background="@drawable/cell"
+                android:text="Wind" />
 
-        <TextView
-            android:id="@+id/txt_description"
-            android:textColor="?colorPrimary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:text="The conditions are "
+            <TextView
+                android:id="@+id/txt_wind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_marginLeft="8dp"
+                android:text="Speed:  1 Deg  1" />
+        </TableRow>
+
+        <TableRow
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/txt_date_time"
-            android:textColor="?colorPrimary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:text="It is seven o'clock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TableLayout
-            android:background="@drawable/border"
-            android:layout_marginTop="10dp"
-            android:stretchColumns="45dp"
-            android:padding="16dp"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TableRow
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@drawable/cell"
+                android:text="Geo coords " />
 
-                <TextView
-                    android:background="@drawable/cell"
-                    android:text="Wind"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/txt_wind"
-                    android:layout_marginLeft="8dp"
-                    android:layout_column="1"
-                    android:text="Speed:  1 Deg  1"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"/>
-            </TableRow>
-            <TableRow
+            <TextView
+                android:id="@+id/txt_geo_coord"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_marginLeft="8dp"
+                android:text="[32.0, -81.0]" />
 
-                <TextView
-                    android:background="@drawable/cell"
-                    android:text="Pressure"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"/>
+        </TableRow>
+    </TableLayout>
 
-                <TextView
-                    android:id="@+id/txt_pressure"
-                    android:layout_marginLeft="8dp"
-                    android:layout_column="1"
-                    android:text="1013.75 hpa"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"/>
-            </TableRow>
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:background="@drawable/cell"
-                    android:text="humidity"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/txt_humidity"
-                    android:layout_marginLeft="8dp"
-                    android:layout_column="1"
-                    android:text="100%"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"/>
-            </TableRow>
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:background="@drawable/cell"
-                    android:text="Sunrise"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/txt_sunrise"
-                    android:layout_marginLeft="8dp"
-                    android:layout_column="1"
-                    android:text="11:00"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"/>
-            </TableRow>
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:background="@drawable/cell"
-                    android:text="Sunset"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/txt_sunset"
-                    android:layout_marginLeft="8dp"
-                    android:layout_column="1"
-                    android:text="18:00"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"/>
-            </TableRow>
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:background="@drawable/cell"
-                    android:text="Geo coords"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/txt_geo_coord"
-                    android:layout_marginLeft="8dp"
-                    android:layout_column="1"
-                    android:text="[32.0, -81.0]"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"/>
-            </TableRow>
-        </TableLayout>
-        <TextView
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginTop="5dp"
-            android:textColor="?colorPrimary"
-            android:text="7 Day Weather forecast"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_x="14dp"
+        android:layout_y="302dp"
+        android:text="7 Day Weather forecast"
+        android:textColor="?colorPrimary"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_forecast"
-        android:layout_below="@id/weather_panel"
+        android:layout_width="338dp"
+        android:layout_height="153dp"
         android:layout_marginTop="0dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_x="5dp"
+        android:layout_y="320dp" />
 
     <TextView
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginTop="5dp"
-        android:layout_below="@id/recycler_forecast"
-        android:textColor="?colorPrimary"
         android:id="@+id/hourly_forecast"
-        android:text="24 Hour Weather forecast"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_x="21dp"
+        android:layout_y="460dp"
+        android:text="24 Hour Weather forecast"
+        android:textColor="?colorPrimary"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_hourly_forecast"
-        android:layout_below="@id/hourly_forecast"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_width="382dp"
+        android:layout_height="152dp"
+        android:layout_marginTop="40dp"
+        android:layout_x="5dp"
+        android:layout_y="492dp" />
 
-    <ProgressBar
-        android:id="@+id/loading"
-        android:indeterminate="true"
-        android:layout_centerInParent="true"
+    <TextView
+        android:id="@+id/txt_temperature"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_x="85dp"
+        android:layout_y="152dp"
+        android:text="14 F"
+        android:textColor="?colorPrimary"
+        android:textSize="50sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/img_weather"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_x="9dp"
+        android:layout_y="141dp"
+        android:src="@mipmap/ic__my_sun_cloud_foreground"
+        android:text="Weather in London, GB" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="20dp"
+        android:layout_y="20dp"
+        android:text="Enter Zip:"
+        android:textColor="?colorPrimary"
+        android:textSize="18sp" />
+
+</AbsoluteLayout>

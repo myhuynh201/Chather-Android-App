@@ -97,7 +97,7 @@ public class WeatherHourlyForecastAdapter extends RecyclerView.Adapter<WeatherHo
                     getJSONObject(position).getString("dt")) * 1000L);
             holder.txt_date.setText(sdf.format(date));
             holder.txt_temperature_high.setText(response.getJSONArray("hourly").
-                    getJSONObject(position).getString("temp") + "°F");
+                    getJSONObject(position).getString("temp").substring(0, 2) + "°F");
             holder.txt_description.setText(response.getJSONArray("hourly").
                     getJSONObject(position).getJSONArray("weather").
                     getJSONObject(0).getString("description"));
