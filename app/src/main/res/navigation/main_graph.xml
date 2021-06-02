@@ -35,15 +35,6 @@
             app:destination="@id/success" />
     </fragment>
     <fragment
-        android:id="@+id/tempChatFragment"
-        android:name="edu.uw.chather.ui.chat.TempChatFragment"
-        android:label="@string/title_chats"
-        tools:layout="@layout/fragment_tempchat_list" >
-        <action
-            android:id="@+id/action_tempChatFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/chatFragment"
         android:name="edu.uw.chather.ui.chat.ChatFragment"
         android:label="Chat"
@@ -54,5 +45,14 @@
         <argument
             android:name="names"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatListFragment"
+        android:name="edu.uw.chather.ui.chat.ChatListFragment"
+        android:label="@string/title_chats"
+        tools:layout="@layout/fragment_chat_list" >
+        <action
+            android:id="@+id/action_chatListFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
 </navigation>

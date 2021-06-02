@@ -18,7 +18,7 @@
         android:title="@string/title_add_contact"/>
 
     <item
-        android:id="@+id/tempChatFragment"
+        android:id="@+id/chatListFragment"
         android:icon="@drawable/ic_chat_black_24dp"
         android:title="@string/title_chats" />
 

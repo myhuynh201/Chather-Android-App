@@ -2,7 +2,7 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content">
     <!--
         Nest the card inside of a frame. Programmatically set the
@@ -14,12 +14,12 @@
     <!--  MaterialCardView instead of androidx.CardView  -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_root"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="start"
         android:layout_margin="@dimen/chat_margin"
         app:cardCornerRadius="5dp"
-        app:cardElevation="0dp"
-        android:layout_gravity="end">
+        app:cardElevation="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_inner"
@@ -30,14 +30,28 @@
 
             <TextView
                 android:id="@+id/text_chatroom"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
+                android:text="evanfrost320@gmail.com, asdf@a.c, alec, dhuynh, alejandrocossio1@gmail.com"
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageView5"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_right_arrow_24" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

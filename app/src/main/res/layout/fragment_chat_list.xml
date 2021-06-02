@@ -7,16 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.chat.ChatListFragment">
 
-    <!--  Used for loading new messages  -->
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_container"
+        android:id="@+id/swipe_list_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -29,7 +27,6 @@
             android:layout_marginEnd="8dp"
             android:orientation="vertical"
             app:layoutManager="LinearLayoutManager"
-            tools:context="edu.uw.chather.ui.chat.ChatListFragment"
-            tools:listitem="@layout/fragment_chatroom"/>
+            tools:listitem="@layout/fragment_chatroom" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

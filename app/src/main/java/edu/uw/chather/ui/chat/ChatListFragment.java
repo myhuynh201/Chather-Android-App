@@ -68,22 +68,22 @@ public class ChatListFragment extends Fragment {
         String jwt = UserInfoViewModel.getmJwt();
         FragmentChatListBinding binding = FragmentChatListBinding.bind(getView());
 
-        binding.swipeContainer.setRefreshing(true);
+        binding.swipeListContainer.setRefreshing(true);
 
         final RecyclerView rv = binding.recyclerChatroom;
         Log.d("JWT HERE", "onViewCreated: " + jwt);
         rv.setAdapter(new ChatListRecyclerViewAdapter(
-                mChatListModel.getChatroomListByMemberId(jwt)
+                mChatListModel.getChatroomList()
         ));
 
-        binding.swipeContainer.setOnRefreshListener(() -> {
-            mChatListModel.getChatroomListByMemberId(jwt);
+        binding.swipeListContainer.setOnRefreshListener(() -> {
+            mChatListModel.getChatroomList();
         });
 
         mChatListModel.addChatroomObserver(jwt, getViewLifecycleOwner(), list -> {
             rv.getAdapter().notifyDataSetChanged();
 //            rv.scrollToPosition(rv.getAdapter().getItemCount() - 1);
-            binding.swipeContainer.setRefreshing(false);
+            binding.swipeListContainer.setRefreshing(false);
         });
     }
 }
