@@ -21,7 +21,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import edu.uw.chather.R;
-import edu.uw.chather.databinding.FragmentLocationBinding;
+//import edu.uw.chather.databinding.FragmentLocationBinding;
 
 public class LocationFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
@@ -65,11 +65,11 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FragmentLocationBinding binding = FragmentLocationBinding.bind(getView());
+        //FragmentLocationBinding binding = FragmentLocationBinding.bind(getView());
         mModel = new ViewModelProvider(getActivity())
                 .get(LocationViewModel.class);
-        mModel.addLocationObserver(getViewLifecycleOwner(), location ->
-                binding.textLatLong.setText(location.toString()));
+        //mModel.addLocationObserver(getViewLifecycleOwner(), location ->
+                //binding.textLatLong.setText(location.toString()));
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment =
