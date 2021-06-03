@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     //The ViewModel that will store the current location
     private LocationViewModel mLocationModel;
 
+
     private AppBarConfiguration mAppBarConfiguration;
 
     private NavController navController;
@@ -305,11 +306,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+
         if (id == R.id.navigate_change_password) {
             navController.navigate(R.id.changePasswordFragment);
         }
 
-        if (id == R.id.navigate_button_theme) {
+        if (id == R.id.navigate_change_theme) {
             navController.navigate(R.id.changeThemeFragment);
         }
 

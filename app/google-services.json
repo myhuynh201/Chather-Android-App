@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "944862442413",
+    "project_id": "delta-repeater-314120",
+    "storage_bucket": "delta-repeater-314120.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944862442413:android:4952c192fd4cb1e8282724",
+        "android_client_info": {
+          "package_name": "edu.uw.chather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "944862442413-pm7gl73luc8pdnprrmrndnfan8c78100.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfrdOst2Sxyvmwy93dfSQdwFQH5pdNQHA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "944862442413-pm7gl73luc8pdnprrmrndnfan8c78100.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
