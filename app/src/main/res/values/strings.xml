@@ -63,5 +63,7 @@
     <!-- Map related strings -->
     <string name="label_location">Current location:</string>
     <string name="title_activity_maps">Map</string>
+    <string name="Change_Style">Change Style</string>
+
 
 </resources>
