@@ -52,7 +52,6 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         FragmentLocationBinding binding = FragmentLocationBinding.bind(getView());
 
         mMap = googleMap;
-        FragmentLocationBinding binding = FragmentLocationBinding.bind(getView());
         LocationViewModel model = new ViewModelProvider(getActivity())
                 .get(LocationViewModel.class);
         model.addLocationObserver(getViewLifecycleOwner(), location -> {
