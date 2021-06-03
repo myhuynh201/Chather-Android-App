@@ -10,7 +10,7 @@ public class Chatroom {
     /**
      * ID of the chat
      */
-    private int mChatId;
+    private final int mChatId;
     /**
      * Stores ID of chat members
      */

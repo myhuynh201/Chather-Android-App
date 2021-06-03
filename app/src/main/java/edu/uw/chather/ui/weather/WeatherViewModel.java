@@ -42,7 +42,7 @@ public class WeatherViewModel extends AndroidViewModel {
     /**
     A mutable live data that is able to change certain weather properties from response.
      */
-    private MutableLiveData<JSONObject> mResponse;
+    private final MutableLiveData<JSONObject> mResponse;
 
     /**
      * Constructor for the weather view model.
@@ -114,8 +114,8 @@ public class WeatherViewModel extends AndroidViewModel {
         try {
 //            body.put("lat", latitude);
 //            body.put("lon", longitude);
-            body.put("exclude", new String("minutely, alerts"));
-            body.put("units", new String("imperial"));
+            body.put("exclude", "minutely, alerts");
+            body.put("units", "imperial");
         } catch (JSONException e) {
             e.printStackTrace();
         }

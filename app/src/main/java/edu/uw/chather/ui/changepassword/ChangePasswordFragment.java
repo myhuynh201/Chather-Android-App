@@ -48,7 +48,7 @@ public class ChangePasswordFragment extends Fragment {
     /**
      * Method to validate the old password.
      */
-    private PasswordValidator mOldPasswordValidator = checkPwdLength(7)
+    private final PasswordValidator mOldPasswordValidator = checkPwdLength(7)
             .and(checkPwdSpecialChar())
             .and(checkExcludeWhiteSpace())
             .and(checkPwdDigit())
@@ -57,7 +57,7 @@ public class ChangePasswordFragment extends Fragment {
     /**
      * Method to validate the new password.
      */
-    private PasswordValidator mNewPassWordValidator =
+    private final PasswordValidator mNewPassWordValidator =
             checkClientPredicate(pwd -> pwd.equals(binding.etNewPass.getText().toString()))
                     .and(checkPwdLength(7))
                     .and(checkPwdSpecialChar())
@@ -105,7 +105,7 @@ public class ChangePasswordFragment extends Fragment {
         binding = FragmentChangePasswordBinding.inflate(inflater, container,false);
         UserInfoViewModel model = new ViewModelProvider(getActivity()).get(UserInfoViewModel.class);
         mEmail = model.getEmail();
-        Log.d("EMAIL", mEmail.toString());
+        Log.d("EMAIL", mEmail);
         return binding.getRoot();
     }
 

@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private class MainPushMessageReceiver extends BroadcastReceiver {
 
-        private ChatViewModel mModel =
+        private final ChatViewModel mModel =
                 new ViewModelProvider(MainActivity.this).get(ChatViewModel.class);
 
         @Override

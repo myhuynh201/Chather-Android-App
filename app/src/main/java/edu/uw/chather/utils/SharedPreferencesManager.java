@@ -13,12 +13,12 @@ public class SharedPreferencesManager {
     /**
      * SharedPreferences to store the settings.
      */
-    private SharedPreferences sPreferences;
+    private final SharedPreferences sPreferences;
 
     /**
      * The context class
      */
-    private Context context;
+    private final Context context;
 
     /**
      * An SharedPreferencesManager constructor.

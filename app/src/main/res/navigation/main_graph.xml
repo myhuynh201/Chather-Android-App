@@ -55,4 +55,8 @@
             android:name="names"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_add"
+        android:name="edu.uw.chather.ui.contact.ContactAddFragment"
+        android:label="ContactAddFragment" />
 </navigation>
