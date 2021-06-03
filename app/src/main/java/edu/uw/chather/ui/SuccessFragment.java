@@ -67,7 +67,7 @@ public class SuccessFragment extends Fragment {
         //This should provide an observer to the view model, to check responses
         wModel.addResponseObserver(getViewLifecycleOwner(),
                 this::observeResponse);
-        mBinding.success.setText("Hello " + model.getEmail().toString());
+        mBinding.success.setText("Hello " + model.getEmail());
         boolean isClick = false;
 
 

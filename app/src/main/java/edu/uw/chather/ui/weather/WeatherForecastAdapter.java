@@ -31,12 +31,12 @@ public class WeatherForecastAdapter extends RecyclerView.Adapter<WeatherForecast
     /**
      * The context to be observed
      */
-    private Context context;
+    private final Context context;
 
     /**
      * The API response
      */
-    private JSONObject response;
+    private final JSONObject response;
 
     /**
      * Constructor for the WeatherForecastAdapter

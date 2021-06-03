@@ -38,7 +38,7 @@ public class ChatListViewModel extends AndroidViewModel {
     /**
      * Map of chatrooms
      */
-    private Map<String, MutableLiveData<List<Chatroom>>> mChatrooms;
+    private final Map<String, MutableLiveData<List<Chatroom>>> mChatrooms;
 
     /**
      * constructor for view model

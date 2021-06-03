@@ -247,18 +247,18 @@ public class RegisterFragment extends Fragment {
     /*
     Password validator for the email field in register.
      */
-    private PasswordValidator mNameValidator = checkPwdLength(1);
+    private final PasswordValidator mNameValidator = checkPwdLength(1);
 
     /*
     Password validator for the email field in register.
     */
-    private PasswordValidator mEmailValidator = checkPwdLength(2)
+    private final PasswordValidator mEmailValidator = checkPwdLength(2)
             .and(checkExcludeWhiteSpace())
             .and(checkPwdSpecialChar("@"));
     /*
     Password validator for the password field in register.
      */
-    private PasswordValidator mPassWordValidator =
+    private final PasswordValidator mPassWordValidator =
             checkClientPredicate(pwd -> pwd.equals(binding.Password.getText().toString()))
                     .and(checkPwdLength(7))
                     .and(checkPwdSpecialChar())

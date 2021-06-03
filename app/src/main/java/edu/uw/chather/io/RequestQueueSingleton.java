@@ -35,7 +35,7 @@ public class RequestQueueSingleton {
     /*
     An image loader.
      */
-    private ImageLoader mImageLoader;
+    private final ImageLoader mImageLoader;
 
     /**
      * A request quest based on the context of the application.

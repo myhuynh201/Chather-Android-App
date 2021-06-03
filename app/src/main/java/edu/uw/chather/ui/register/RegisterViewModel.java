@@ -30,7 +30,7 @@ public class RegisterViewModel extends AndroidViewModel {
     /*
     A mutable live data that is able to change certain register properties from response.
     */
-    private MutableLiveData<JSONObject> mResponse;
+    private final MutableLiveData<JSONObject> mResponse;
 
     /**
      * Contructor for the register view model class.
