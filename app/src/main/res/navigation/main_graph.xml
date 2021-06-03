@@ -54,5 +54,17 @@
         <action
             android:id="@+id/action_chatListFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_chatListFragment_to_chatNewRoomFragment"
+            app:destination="@id/chatNewRoomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatNewRoomFragment"
+        android:name="edu.uw.chather.ui.chat.ChatNewRoomFragment"
+        android:label="@string/title_new_chat"
+        tools:layout="@layout/chat_new_room_fragment" >
+        <action
+            android:id="@+id/action_chatNewRoomFragment_to_chatListFragment"
+            app:destination="@id/chatListFragment" />
     </fragment>
 </navigation>

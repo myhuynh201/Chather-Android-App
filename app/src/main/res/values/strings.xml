@@ -58,5 +58,8 @@
     <string name = "title_contact">Contacts</string>
     <string name="title_add_contact">Add Contact</string>
     <string name="title_add_contact_page">Add A Contact</string>
+    <string name="button_new_chat">New Chat</string>
+    <string name="title_new_chat">New Chat</string>
+    <string name="text_chat_new">Enter username to add to chat</string>
 
 </resources>
