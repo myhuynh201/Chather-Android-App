@@ -48,18 +48,27 @@
 
     <!-- JWT auto sign in and sign out -->
     <string name="switch_sign_in">Stay Signed in</string>
-    <string name="keys_shared_prefs">My Auth App Shared Prefs</string> <string name="keys_prefs_jwt">Sharded Prefs JWT</string>
+    <string name="keys_shared_prefs">My Auth App Shared Prefs</string>
+    <string name="keys_prefs_jwt">Sharded Prefs JWT</string>
     <string name="action_sign_out">Sign Out</string>
 
     <string name="base_url">https://tcss450-android-app.herokuapp.com/</string>
 
     <string name="contacts_add">Add</string>
     <string name="contacts_add_hint">Enter a username or email address.</string>
-    <string name = "title_contact">Contacts</string>
+    <string name="title_contact">Contacts</string>
     <string name="title_add_contact">Add Contact</string>
     <string name="title_add_contact_page">Add A Contact</string>
     <string name="button_new_chat">New Chat</string>
     <string name="title_new_chat">New Chat</string>
     <string name="text_chat_new">Enter username to add to chat</string>
+
+    <!-- Map related strings -->
+    <string name="label_location">Current location:</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="Change_Style">Change Style</string>
+
+    <string name="contact_add_title">Search for a Contact</string>
+    <string name="contact_request_title">Contact Requests</string>
 
 </resources>

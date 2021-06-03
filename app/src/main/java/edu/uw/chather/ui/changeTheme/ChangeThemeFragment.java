@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RadioGroup;
 
 import edu.uw.chather.R;
 import edu.uw.chather.databinding.FragmentChangeThemeBinding;
@@ -25,6 +27,8 @@ public class ChangeThemeFragment extends Fragment {
      * Binding for changing the theme.
      */
     FragmentChangeThemeBinding binding;
+    private RadioGroup radioGroup;
+    Button submit, clear;
 
     /**
      * An empty constructor.
@@ -36,6 +40,7 @@ public class ChangeThemeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
     }
 
@@ -51,6 +56,7 @@ public class ChangeThemeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
         binding.blueThemeButton.setOnClickListener(button -> Utils.changeToTheme(getActivity(),
                 new SharedPreferencesManager(getContext()).retrieveInt("theme", Utils.BLUE_THEME)));

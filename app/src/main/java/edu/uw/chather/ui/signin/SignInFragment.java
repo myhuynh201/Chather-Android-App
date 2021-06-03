@@ -50,14 +50,14 @@ public class SignInFragment extends Fragment {
     /*
     A validator to check the email field.
      */
-    private PasswordValidator mEmailValidator = checkPwdLength(2)
+    private final PasswordValidator mEmailValidator = checkPwdLength(2)
             .and(checkExcludeWhiteSpace())
             .and(checkPwdSpecialChar("@"));
 
     /*
     A validator to check the password field.
      */
-    private PasswordValidator mPassWordValidator = checkPwdLength(1)
+    private final PasswordValidator mPassWordValidator = checkPwdLength(1)
             .and(checkExcludeWhiteSpace());
 
     private PushyTokenViewModel mPushyTokenViewModel;
@@ -250,7 +250,7 @@ public class SignInFragment extends Fragment {
      * Helper to abstract the request to send the pushy token to the web service
      */
     private void sendPushyToken() {
-        mPushyTokenViewModel.sendTokenToWebservice(mUserViewModel.getmJwt());
+        mPushyTokenViewModel.sendTokenToWebservice(UserInfoViewModel.getmJwt());
     }
 
     /**
@@ -266,7 +266,7 @@ public class SignInFragment extends Fragment {
             } else {
                 navigateToSuccess(
                         binding.editEmail.getText().toString(),
-                        mUserViewModel.getmJwt(),
+                        UserInfoViewModel.getmJwt(),
                         mUserViewModel.getUsername()
                 );
             }

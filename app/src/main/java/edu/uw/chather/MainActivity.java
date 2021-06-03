@@ -4,6 +4,7 @@ package edu.uw.chather;
  */
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
@@ -11,13 +12,17 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +31,12 @@ import android.widget.TextView;
 
 
 import com.auth0.android.jwt.JWT;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -33,6 +44,7 @@ import edu.uw.chather.databinding.ActivityMainBinding;
 import edu.uw.chather.services.PushReceiver;
 import edu.uw.chather.ui.chat.ChatMessage;
 import edu.uw.chather.ui.chat.ChatViewModel;
+import edu.uw.chather.ui.location.LocationViewModel;
 import edu.uw.chather.ui.chat.Chatroom;
 import edu.uw.chather.ui.model.NewMessageCountViewModel;
 import edu.uw.chather.ui.model.PushyTokenViewModel;
@@ -43,8 +55,33 @@ import edu.uw.chather.utils.Utils;
 
 
 public class MainActivity extends AppCompatActivity {
+    /**
+     * The desired interval for location updates. Inexact. Updates may be more or less frequent.
+     */
+    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
+    /**
+     * The fastest rate for active location updates. Exact. Updates will never be more frequent
+     * than this value.
+     */
+    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS =
+            UPDATE_INTERVAL_IN_MILLISECONDS / 2;
+
+    // A constant int for the permissions request code. Must be a 16 bit number
+    private static final int MY_PERMISSIONS_LOCATIONS = 8414;
+
+    private LocationRequest mLocationRequest;
+
+    //Use a FusedLocationProviderClient to request the location
+    private FusedLocationProviderClient mFusedLocationClient;
+
+    // Will use this call back to decide what to do when a location change is detected
+    private LocationCallback mLocationCallback;
+
+    //The ViewModel that will store the current location
+    private LocationViewModel mLocationModel;
 
     private AppBarConfiguration mAppBarConfiguration;
+
     private NavController navController;
     /**
      * Creates our bottom navigation menu from the menu elements we've given it before.
@@ -125,7 +162,133 @@ public class MainActivity extends AppCompatActivity {
                 badge.setVisible(false);
             }
         });
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION
+                            , Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_LOCATIONS);
+        } else {
+            //The user has already allowed the use of Locations. Get the current location.
+            requestLocation();
+        }
+
+        mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    // Update UI with location data
+                    // ...
+                    Log.d("LOCATION UPDATE!", location.toString());
+                    if (mLocationModel == null) {
+                        mLocationModel = new ViewModelProvider(MainActivity.this)
+                                .get(LocationViewModel.class);
+                    }
+                    mLocationModel.setLocation(location);
+                }
+            };
+        };
+        createLocationRequest();
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_LOCATIONS: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // locations-related task you need to do.
+                    requestLocation();
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Log.d("PERMISSION DENIED", "Nothing to see or do here.");
+
+                    //Shut down the app. In production release, you would let the user
+                    //know why the app is shutting down...maybe ask for permission again?
+                    finishAndRemoveTask();
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
+    private void requestLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            Log.d("REQUEST LOCATION", "User did NOT allow permission to request location!");
+        } else {
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                Log.d("LOCATION", location.toString());
+                                if (mLocationModel == null) {
+                                    mLocationModel = new ViewModelProvider(MainActivity.this)
+                                            .get(LocationViewModel.class);
+                                }
+                                mLocationModel.setLocation(location);
+                            }
+                        }
+                    });
+        }
+    }
+
+    /**
+     * Create and configure a Location Request used when retrieving location updates
+     */
+    private void createLocationRequest() {
+        mLocationRequest = LocationRequest.create();
+        // Sets the desired interval for active location updates. This interval is
+        // inexact. You may not receive updates at all if no location sources are available, or
+        // you may receive them slower than requested. You may also receive updates faster than
+        // requested if other applications are requesting location at a faster interval.
+        mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
+        // Sets the fastest rate for active location updates. This interval is exact, and your
+        // application will never receive updates faster than this value.
+        mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    /**
+     * Requests location updates from the FusedLocationApi.
+     */
+    private void startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mFusedLocationClient.requestLocationUpdates(mLocationRequest,
+                    mLocationCallback,
+                    null /* Looper */);
+        }
+    }
+    /**
+     * Removes location updates from the FusedLocationApi.
+     */
+    private void stopLocationUpdates() {
+        // It is a good practice to remove location requests when the activity is in a paused or
+        // stopped state. Doing so helps battery performance and is especially
+        // recommended in applications that request frequent location updates.
+        mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+    }
+
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -147,10 +310,17 @@ public class MainActivity extends AppCompatActivity {
             navController.navigate(R.id.changePasswordFragment);
         }
 
-        if (id == R.id.navigate_button_theme) {
+        if(id == R.id.navigation_add){
+            navController.navigate(R.id.navigation_add);
+        }
+
+        if (id == R.id.navigate_change_theme) {
             navController.navigate(R.id.changeThemeFragment);
         }
 
+        if (id == R.id.navigate_contact_request){
+            navController.navigate(R.id.navigate_contact_request);
+        }
         if (id == R.id.navigate_sign_out) {
             signOut();
         }
@@ -202,7 +372,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private class MainPushMessageReceiver extends BroadcastReceiver {
 
-        private ChatViewModel mModel =
+        private final ChatViewModel mModel =
                 new ViewModelProvider(MainActivity.this).get(ChatViewModel.class);
 
         @Override

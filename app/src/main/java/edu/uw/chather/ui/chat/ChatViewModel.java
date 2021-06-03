@@ -39,7 +39,7 @@ public class ChatViewModel extends AndroidViewModel {
      * The Key represents the Chat ID
      * The value represents the List of (known) messages for that that room.
      */
-    private Map<Integer, MutableLiveData<List<ChatMessage>>> mMessages;
+    private final Map<Integer, MutableLiveData<List<ChatMessage>>> mMessages;
 
     /**
      * Viewmodel for the chat

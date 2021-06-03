@@ -8,11 +8,12 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:cardCornerRadius="3dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="48dp">
 
             <TextView
                 android:id="@+id/item_number"
@@ -20,38 +21,42 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:textAppearance="?attr/textAppearanceListItem"
-                app:layout_constraintBaseline_toBaselineOf="@+id/content"
+                app:layout_constraintBaseline_toBaselineOf="@+id/contact_username_text"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/content"
+                android:id="@+id/contact_username_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:textAppearance="?attr/textAppearanceListItem"
-                app:layout_constraintStart_toEndOf="@+id/item_number"
-                tools:layout_editor_absoluteY="20dp" />
-
-            <ImageButton
-                android:id="@+id/button_addContact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button_messageUser"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/ic_add_contact_24" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
-                android:id="@+id/button_messageUser"
+                android:id="@+id/contact_accept_request_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:tint="?colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/contact_delete_request_button"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_contact_chat" />
+
+            <ImageButton
+                android:id="@+id/contact_delete_request_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:tint="?colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_contact_chat" />
+                app:srcCompat="@drawable/ic_contact_delete" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

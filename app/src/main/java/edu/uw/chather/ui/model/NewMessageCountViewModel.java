@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 public class NewMessageCountViewModel extends ViewModel {
-    private MutableLiveData<Integer> mNewMessageCount;
+    private final MutableLiveData<Integer> mNewMessageCount;
 
     public NewMessageCountViewModel() {
         mNewMessageCount = new MutableLiveData<>();

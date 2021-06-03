@@ -71,7 +71,7 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
         /**
          * binding stores the chatroom information
          */
-        private FragmentChatroomBinding binding;
+        private final FragmentChatroomBinding binding;
 
         /**
          * constructs a chatroom view holder

@@ -4,11 +4,15 @@ import android.app.Activity;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.MapStyleOptions;
+
 import edu.uw.chather.MainActivity;
 import edu.uw.chather.R;
+import edu.uw.chather.ui.location.LocationFragment;
 
 /**
- * A class to set the them of the activity
+ * A class to set the theme of the activity
  * @author Duy Nguyen, Demarco Best, Alec Mac, Alejandro Olono, My Duyen Huynh
  */
 public class Utils {

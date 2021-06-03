@@ -13,14 +13,29 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/navigate_button_theme"
-        android:orderInCategory="100"
+        android:id="@+id/navigation_add"
+        android:icon="@drawable/ic_add_contact_white"
+        android:title="@string/contacts_add"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/navigate_contact_request"
+        android:icon="@drawable/ic_contact_notif"
+        android:title="@string/contacts_add"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/navigate_change_theme"
+        android:orderInCategory="200"
         android:title="@string/button_change_theme"
         app:showAsAction="never" />
 
+
     <item
         android:id="@+id/navigate_change_password"
-        android:orderInCategory="200"
+        android:orderInCategory="300"
         android:title="@string/button_change_password"
         app:showAsAction="never" />
 
@@ -29,6 +44,5 @@
         android:orderInCategory="300"
         android:title="@string/button_sign_out"
         app:showAsAction="never" />
-
 
 </menu>

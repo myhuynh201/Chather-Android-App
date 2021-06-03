@@ -33,7 +33,7 @@ public class SignInViewModel extends AndroidViewModel {
     /*
     A mutable live data that is able to change certain sign in properties from response.
      */
-    private MutableLiveData<JSONObject> mResponse;
+    private final MutableLiveData<JSONObject> mResponse;
 
     /**
      * Constructor for the sign in view model.

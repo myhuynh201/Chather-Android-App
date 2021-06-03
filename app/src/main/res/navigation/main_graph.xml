@@ -19,7 +19,19 @@
         android:id="@+id/weatherFragment"
         android:name="edu.uw.chather.ui.weather.WeatherFragment"
         android:label="@string/title_weather"
-        tools:layout="@layout/fragment_weather" />
+        tools:layout="@layout/fragment_weather" >
+        <action
+            android:id="@+id/action_weatherFragment_to_locationFragment"
+            app:destination="@id/locationFragment" />
+        <argument
+            android:name="lat"
+            app:argType="string"
+            android:defaultValue="default" />
+        <argument
+            android:name="lng"
+            app:argType="string"
+            android:defaultValue="default" />
+    </fragment>
     <fragment
         android:id="@+id/changeThemeFragment"
         android:name="edu.uw.chather.ui.changeTheme.ChangeThemeFragment"
@@ -67,4 +79,22 @@
             android:id="@+id/action_chatNewRoomFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_add"
+        android:name="edu.uw.chather.ui.contact.ContactAddFragment"
+        android:label="@string/contact_add_title" />
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="edu.uw.chather.ui.location.LocationFragment"
+        android:label="Current Location"
+        tools:layout="@layout/fragment_location" >
+        <action
+            android:id="@+id/action_locationFragment_to_weatherFragment"
+            app:destination="@id/weatherFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigate_contact_request"
+        android:name="edu.uw.chather.ui.contact.ContactRequestFragment"
+        android:label="@string/contact_request_title" />
 </navigation>

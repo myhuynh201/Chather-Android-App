@@ -76,7 +76,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         /**
          * Binding for the chatmessage fragment
          */
-        private FragmentChatMessageBinding binding;
+        private final FragmentChatMessageBinding binding;
 
         /**
          * Constructs a message viewholder

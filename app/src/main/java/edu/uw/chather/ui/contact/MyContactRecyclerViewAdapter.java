@@ -1,6 +1,5 @@
 package edu.uw.chather.ui.contact;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -11,9 +10,7 @@ import android.widget.TextView;
 import edu.uw.chather.R;
 import edu.uw.chather.ui.contact.dummy.ContactContent.ConnectionItem;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link ConnectionItem}.
@@ -26,14 +23,17 @@ public class MyContactRecyclerViewAdapter extends RecyclerView.Adapter<MyContact
      */
     private final ArrayList<Contact> mValues;
 
+    private ContactListViewModel mModel;
+
 
 
     /**
      * Constructs the View Adapter for the connections
      * @param items list of Connections
      */
-    public MyContactRecyclerViewAdapter(ArrayList<Contact> items) {
-        mValues = items;
+    public MyContactRecyclerViewAdapter(ContactListViewModel model) {
+        mValues = (ArrayList<Contact>) model.getContactList();
+        mModel = model;
     }
 
     /**
@@ -45,7 +45,7 @@ public class MyContactRecyclerViewAdapter extends RecyclerView.Adapter<MyContact
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_contact, parent, false);
+                .inflate(R.layout.fragment_contact_card, parent, false);
         return new ViewHolder(view);
     }
 
@@ -89,7 +89,15 @@ public class MyContactRecyclerViewAdapter extends RecyclerView.Adapter<MyContact
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mContentView = (TextView) view.findViewById(R.id.contact_username_text);
+            mView.findViewById(R.id.contact_delete_request_button).setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mModel.contactDelete(mItem.getmMemberId());
+                        }
+                    }
+            );
         }
 
         /**
@@ -101,4 +109,5 @@ public class MyContactRecyclerViewAdapter extends RecyclerView.Adapter<MyContact
             return super.toString() + " '" + mContentView.getText() + "'";
         }
     }
+
 }

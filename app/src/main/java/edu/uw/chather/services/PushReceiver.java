@@ -88,7 +88,7 @@ public class PushReceiver extends BroadcastReceiver {
 
             // Get an instance of the NotificationManager service
             NotificationManager notificationManager =
-                    (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
             // Build the notification and display it
             notificationManager.notify(1, builder.build());
