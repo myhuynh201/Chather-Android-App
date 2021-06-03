@@ -2,6 +2,7 @@ package edu.uw.chather.ui.contact;
 
 import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -13,8 +14,6 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,17 +23,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.IntFunction;
 
-import edu.uw.chather.R;
 import edu.uw.chather.io.RequestQueueSingleton;
 import edu.uw.chather.ui.model.UserInfoViewModel;
 
-public class ContactListViewModel extends AndroidViewModel {
+public class ContactSearchViewModel extends AndroidViewModel {
 
     private final MutableLiveData<List<Contact>> mContactList;
 
-    public ContactListViewModel(@NonNull Application application) {
+    public ContactSearchViewModel(@NonNull Application application) {
         super(application);
         mContactList = new MutableLiveData<>();
         mContactList.setValue(new ArrayList<>());
@@ -49,7 +46,7 @@ public class ContactListViewModel extends AndroidViewModel {
         //you should add much better error handling in a production release.
         //i.e. YOUR PROJECT
 
-        Log.e("CONNECTION ERROR", "What now");
+        Log.e("CONNECTION ERROR", "Block fatal error");
         error.getMessage();
     }
 
@@ -61,7 +58,7 @@ public class ContactListViewModel extends AndroidViewModel {
 
         try{
             //Stops issue where the contact list would duplicate itself on load.
-            mContactList.getValue().clear();
+
             //Extracts the SQL query results from the result set as a JSONArray
             JSONArray jsonstring = result.getJSONArray("rows");
             int length = jsonstring.length();
@@ -80,9 +77,12 @@ public class ContactListViewModel extends AndroidViewModel {
 
     }
 
-    public void connectGet() {
+    public void connectGet(String searchParam) {
+        mContactList.getValue().clear();
         String url =
-                "https://tcss450-android-app.herokuapp.com/contacts/get";
+                "https://tcss450-android-app.herokuapp.com/contacts/search";
+
+
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
@@ -93,14 +93,11 @@ public class ContactListViewModel extends AndroidViewModel {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-//                headers.put("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJl" +
-//                        "bWFpbCI6ImNmYjMxQGZha2UuZW1haWwuY29tIiwibWVtYmVyaWQiOjMsImlhdCI6MTY" +
-//                        "xODI2ODY2OSwiZXhwIjoxNjIzNDUyNjY5fQ.Y5t-1ibUMChZPe9eiavwCA3XbHhGdiM" +
-//                        "NEdpSmCxI1Ow");
                 headers.put("Authorization", UserInfoViewModel.getmJwt());
-                Log.d("Check JWT",UserInfoViewModel.getmJwt());
+                headers.put("searchP", searchParam);
                 return headers;
             } };
+
         request.setRetryPolicy(new DefaultRetryPolicy(
                 10_000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
@@ -110,27 +107,29 @@ public class ContactListViewModel extends AndroidViewModel {
                 .addToRequestQueue(request);
     }
 
-    public void contactDelete(int memberID){
+    public void handleSend(final JSONObject object){
+        Toast.makeText(getApplication(), "Contact request sent", Toast.LENGTH_LONG);
+        mContactList.getValue().clear();
+        mContactList.setValue(mContactList.getValue());
+
+    }
+
+    public void sendRequest(int memberID){
         String url =
-                "https://tcss450-android-app.herokuapp.com/contacts/delete?memberid="
-                +memberID;
+                "https://tcss450-android-app.herokuapp.com/contacts/create";
+
         Request request = new JsonObjectRequest(
                 Request.Method.POST,
                 url,
                 null, //no body for this get request
-                this::handleDelete,
+                this::handleSend,
                 this::handleError) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-//                headers.put("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJl" +
-//                        "bWFpbCI6ImNmYjMxQGZha2UuZW1haWwuY29tIiwibWVtYmVyaWQiOjMsImlhdCI6MTY" +
-//                        "xODI2ODY2OSwiZXhwIjoxNjIzNDUyNjY5fQ.Y5t-1ibUMChZPe9eiavwCA3XbHhGdiM" +
-//                        "NEdpSmCxI1Ow");
                 headers.put("Authorization", UserInfoViewModel.getmJwt());
                 headers.put("memberid", memberID +"");
-                Log.d("Check JWT",UserInfoViewModel.getmJwt());
                 return headers;
             } };
         request.setRetryPolicy(new DefaultRetryPolicy(
@@ -142,9 +141,8 @@ public class ContactListViewModel extends AndroidViewModel {
                 .addToRequestQueue(request);
     }
 
-    public void handleDelete(JSONObject object){
-        connectGet();
-    }
+
+
 
 
     public List<Contact> getContactList(){

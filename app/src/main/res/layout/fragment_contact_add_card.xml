@@ -13,19 +13,10 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="48dp">
 
             <TextView
-                android:id="@+id/item_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:textAppearance="?attr/textAppearanceListItem"
-                app:layout_constraintBaseline_toBaselineOf="@+id/content"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/content"
+                android:id="@+id/contact_username_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -35,27 +26,17 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
-                android:id="@+id/imageButton3"
+                android:id="@+id/contact_accept_request_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:tint="?colorPrimary"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageButton"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/ic_contact_chat" />
-
-            <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:tint="?colorPrimary"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                android:background="@null"
+                android:tint="@color/colorPrimary_GREEN"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_contact_delete" />
+                app:layout_constraintVertical_bias="0.541"
+                app:srcCompat="@drawable/ic_send_request" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

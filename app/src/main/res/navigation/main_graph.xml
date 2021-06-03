@@ -68,14 +68,21 @@
             app:argType="string" />
     </fragment>
     <fragment
+        android:id="@+id/navigation_add"
+        android:name="edu.uw.chather.ui.contact.ContactAddFragment"
+        android:label="@string/contact_add_title" />
+    <fragment
         android:id="@+id/locationFragment"
         android:name="edu.uw.chather.ui.location.LocationFragment"
         android:label="Current Location"
-        tools:layout="@layout/fragment_location">
-
+        tools:layout="@layout/fragment_location" >
         <action
             android:id="@+id/action_locationFragment_to_weatherFragment"
             app:destination="@id/weatherFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/navigate_contact_request"
+        android:name="edu.uw.chather.ui.contact.ContactRequestFragment"
+        android:label="@string/contact_request_title" />
 </navigation>
