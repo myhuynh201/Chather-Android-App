@@ -7,29 +7,28 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:padding="16dp"
-    tools:context=".ui.weather.WeatherFragment">
+    tools:context=".ui.weather.WeatherFragment"
+    tools:ignore="Deprecated">
 
     <ImageButton
         android:id="@+id/button_map"
         android:layout_width="39dp"
-        android:layout_height="40dp"
+        android:layout_height="43dp"
         android:layout_marginTop="4dp"
-        android:layout_x="275dp"
-        android:layout_y="11dp"
+        android:layout_x="282dp"
+        android:layout_y="8dp"
         android:background="#00FFFFFF"
-        android:src="@android:drawable/ic_dialog_map"
-        android:tint="#000000" />
+        android:src="@drawable/ic_map" />
 
     <ImageButton
         android:id="@+id/button_search"
-        android:layout_width="38dp"
-        android:layout_height="35dp"
+        android:layout_width="40dp"
+        android:layout_height="45dp"
         android:layout_marginTop="16dp"
         android:layout_x="230dp"
-        android:layout_y="11dp"
+        android:layout_y="7dp"
         android:background="#00FFFFFF"
-        android:src="@android:drawable/ic_search_category_default"
-        android:tint="#000000"
+        android:src="@drawable/ic_search_black_24dp"
         tools:src="@drawable/ic_search_black_24dp" />
 
     <EditText
@@ -38,6 +37,7 @@
         android:layout_height="48dp"
         android:layout_x="110dp"
         android:layout_y="2dp"
+        android:textColor="?colorPrimary"
         android:textSize="20sp" />
 
     <TextView

@@ -13,11 +13,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -26,11 +29,13 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import edu.uw.chather.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import edu.uw.chather.databinding.FragmentWeatherBinding;
+import edu.uw.chather.ui.location.LocationViewModel;
 
 /**
  * The Weatherfragment is where all of the weather components are housed and displayed
@@ -64,6 +69,8 @@ public class WeatherFragment extends Fragment {
      */
     private RecyclerView recycler_hourly_forecast;
 
+    private LocationViewModel mLocationModel;
+
     /**
      * A static instance of the WeatherFragment
      */
@@ -78,13 +85,9 @@ public class WeatherFragment extends Fragment {
         binding = FragmentWeatherBinding.inflate(inflater, container, false);
 
         //Making the first call, this should be calling the default call
-        if(mFirst) {
-            mViewModel.connect();
-            mFirst = false;
-        }
+
         txt_city_name = (TextView) binding.txtCityName;
         txt_temperature = (TextView) binding.txtTemperature;
-        //txt_description = (TextView) binding.txtDescription;
         txt_date_time = (TextView) binding.txtDateTime;
         txt_wind = (TextView) binding.txtWind;
         txt_geo_coord = (TextView) binding.txtGeoCoord;
@@ -103,6 +106,8 @@ public class WeatherFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mViewModel = new ViewModelProvider(getActivity())
                 .get(WeatherViewModel.class);
+        mLocationModel = new  ViewModelProvider(getActivity())
+                .get(LocationViewModel.class);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
     }
 
@@ -135,13 +140,23 @@ public class WeatherFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         FragmentWeatherBinding binding = FragmentWeatherBinding.bind(getView());
         binding.buttonSearch.setOnClickListener(this::searchZip);
-        //WeatherFragmentArgs args = WeatherFragmentArgs.fromBundle(getArguments());
-        //Send the Tacoma hard-coded location coordinates
-        //mViewModel.connect();
-        //This should provide an observer to the view model, to check responses
-//        mViewModel.addResponseObserver(getViewLifecycleOwner(),
-//                this::observeResponse);
-        //Location should be the map that we make in the web-service.
+        binding.buttonMap.setOnClickListener(this::getMap);
+        WeatherFragmentArgs args = WeatherFragmentArgs.fromBundle(getArguments());
+
+        if (!args.getLat().equals("default") && !args.getLng().equals("default")) {
+            mViewModel.connect(args.getLat(), args.getLng());
+        }
+
+        mLocationModel.addLocationObserver(getViewLifecycleOwner(), location -> {
+            if(mFirst) {
+                mViewModel.connect(Double.toString(location.getLatitude()),
+                        Double.toString(location.getLongitude()));
+                mFirst = false;
+            }
+//            mViewModel.connect(Double.toString(location.getLatitude()),
+//                    Double.toString(location.getLongitude()));
+        });
+
         mViewModel.addLocationObserver(getViewLifecycleOwner(), location -> {
             if(!location.isEmpty()) {
                 binding.textviewZipData.setText(location.get("zip"));
@@ -174,5 +189,9 @@ public class WeatherFragment extends Fragment {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         mViewModel.connect(binding.textviewZipData.getText().toString());
+    }
+
+    private void getMap(View view) {
+        Navigation.findNavController(getView()).navigate(WeatherFragmentDirections.actionWeatherFragmentToLocationFragment());
     }
 }
