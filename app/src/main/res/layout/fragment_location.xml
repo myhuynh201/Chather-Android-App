@@ -45,4 +45,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_label" />
+
+
+    <Button
+        android:id="@+id/btn_change_style"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="183dp"
+        android:layout_height="47dp"
+        android:background="@drawable/round_button"
+        android:text="@string/Change_Style"
+        android:textColor="@color/colorOffWhite"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:layout_constraintVertical_bias="0.964" />
 </androidx.constraintlayout.widget.ConstraintLayout>
