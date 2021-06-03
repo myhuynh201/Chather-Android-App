@@ -9,6 +9,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -20,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.Charset;
+import java.security.Provider;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +29,7 @@ import java.util.Objects;
 
 import edu.uw.chather.R;
 import edu.uw.chather.io.RequestQueueSingleton;
+import edu.uw.chather.ui.model.UserInfoViewModel;
 
 public class ChatNewRoomViewModel extends AndroidViewModel {
 
@@ -43,7 +46,7 @@ public class ChatNewRoomViewModel extends AndroidViewModel {
     public ChatNewRoomViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>();
-        mResponse.setValue(new JSONObject());
+//        mResponse.setValue(new JSONObject());
     }
 
     /**
@@ -59,22 +62,24 @@ public class ChatNewRoomViewModel extends AndroidViewModel {
     /**
      * Create new chat
      * @param jwt jwt token for user
-     * @param otherMembers members to be added
+     * @param members members to be added
      */
-    public void createNewChat(final String jwt, final List<String> otherMembers) {
+    public void createNewChat(final String jwt, final List<String> members) {
         String url = getApplication().getResources().getString(R.string.base_url) +
-                "chats/startChat";
-
+                "chats/startChat/usernames";
         JSONObject body = new JSONObject();
-
+        JSONArray arr = new JSONArray();
+        for (String member : members) {
+            arr.put(member);
+        }
         try {
-            body.put("otherMembers", otherMembers);
+            body.put("members", arr);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         Request request = new JsonObjectRequest(
-                Request.Method.POST,
+                Request.Method.PUT,
                 url,
                 body, //push token found in the JSONObject body
                 mResponse::setValue, // we get a response but do nothing with it

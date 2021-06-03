@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         //}
 
         new ViewModelProvider(this,
-                new UserInfoViewModel.UserInfoViewModelFactory(args.getEmail(), args.getJwt())
+                new UserInfoViewModel.UserInfoViewModelFactory(args.getEmail(), args.getJwt(), args.getUsername())
         ).get(UserInfoViewModel.class);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -154,6 +154,10 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.navigate_sign_out) {
             signOut();
         }
+        if (id == R.id.navigate_button_new_chat) {
+            navController.navigate(R.id.chatNewRoomFragment);
+        }
+
         return super.onOptionsItemSelected(item);
     }
     @Override

@@ -79,9 +79,9 @@ public class ChatFragment extends Fragment {
         try {
             mChatId = Integer.parseInt(getArguments().toString());
         } catch (NumberFormatException e) {
-            Log.wtf("HCHATID ISR WORNG", "WHYY");
+            Log.d("Chat", "ChatID is not valid");
         }
-        Log.d("CHATID GOTTEN THANK", "onCreate: " + mChatId);
+        Log.d("Chat", "ChatID Found: " + mChatId);
 
 
         FragmentChatBinding binding = FragmentChatBinding.bind(getView());
