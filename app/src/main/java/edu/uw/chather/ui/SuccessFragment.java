@@ -18,7 +18,9 @@ import androidx.lifecycle.ViewModelProvider;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import edu.uw.chather.MainActivity;
 import edu.uw.chather.databinding.FragmentSuccessBinding;
+import edu.uw.chather.ui.location.LocationViewModel;
 import edu.uw.chather.ui.model.UserInfoViewModel;
 import edu.uw.chather.ui.weather.WeatherViewModel;
 
@@ -33,6 +35,13 @@ public class SuccessFragment extends Fragment {
     A binding for things in the success fragment.
      */
     private FragmentSuccessBinding binding;
+
+    private WeatherViewModel mWeatherModel;
+
+    //The ViewModel that will store the current location
+    private LocationViewModel mLocationModel;
+
+    private static boolean mFirst = true;
 
     /*
     A test field for user's email address.
@@ -50,6 +59,13 @@ public class SuccessFragment extends Fragment {
         return binding.getRoot();
     }
 
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //mWeatherModel = new ViewModelProvider(getActivity()).get(WeatherViewModel.class);
+        mLocationModel = new ViewModelProvider(getActivity()).get(LocationViewModel.class);
+
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -61,42 +77,28 @@ public class SuccessFragment extends Fragment {
         //SuccessFragmentArgs args = SuccessFragmentArgs.fromBundle(getArguments());
         FragmentSuccessBinding mBinding = FragmentSuccessBinding.bind(getView());
         UserInfoViewModel model = new ViewModelProvider(getActivity()).get(UserInfoViewModel.class);
-        WeatherViewModel wModel = new ViewModelProvider(getActivity()).get(WeatherViewModel.class);
-
-        wModel.connect();
-        //This should provide an observer to the view model, to check responses
-        wModel.addResponseObserver(getViewLifecycleOwner(),
-                this::observeResponse);
-        mBinding.success.setText("Hello " + model.getEmail());
-        boolean isClick = false;
-
-
-    }
-    /**
-     * An observer on the HTTP Response from the web server. This observer should be
-     * attached to SignInViewModel.
-     *
-     * @param response the Response from the server
-     */
-    private void observeResponse(final JSONObject response){
-        if (response.length() > 0) {
-            if (response.has("code")) {
-
-                Log.e("JSON Parse Error", "the response has failed");
-
-            } else {
-                try {
-                    binding.txtWelcome.setText("Welcome!");
-                    binding.txtTemperature.setText(response.getJSONObject("current").getString("temp") + "°F");
-                } catch (JSONException e){
-                    e.printStackTrace();
-                }
-
-                //displayWeather(response); //i should work with the response JSONObject here.
-                //kinda like response.getString("current.temp")
+        mWeatherModel = new ViewModelProvider(getActivity()).get(WeatherViewModel.class);
+        if (getActivity() instanceof MainActivity) {
+            if(mFirst) {
+                mWeatherModel.connect();
+                mFirst = false;
             }
-        } else {
-            Log.d("JSON Response", "No Response");
+            //mWeatherModel.connect();//Double.toString(mLocationModel.getCurrentLocation().getLatitude()), Double.toString(mLocationModel.getCurrentLocation().getLongitude()));
         }
+        mLocationModel.addLocationObserver(getViewLifecycleOwner(), location -> {
+            //mWeatherModel.connect(Double.toString(location.getLatitude()), Double.toString(location.getLongitude()));
+        });
+        //This should provide an observer to the view model, to check responses
+        mWeatherModel.addResponseObserver(getViewLifecycleOwner(), response -> {
+            try {
+                binding.txtTemperature.setText(response.getJSONObject("current").getString("temp").substring(0, 2) + "°F");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        });
+
+        mBinding.success.setText("Hello " + model.getEmail().toString());
+        boolean isClick = false;
     }
 }

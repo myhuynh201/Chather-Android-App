@@ -17,6 +17,7 @@ import me.pushy.sdk.Pushy;
  */
 public class AuthActivity extends AppCompatActivity {
 
+
     private static final String TAG = "MyActivity";
 
     @Override

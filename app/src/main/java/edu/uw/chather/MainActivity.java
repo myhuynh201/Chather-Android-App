@@ -312,7 +312,8 @@ public class MainActivity extends AppCompatActivity {
         if(id == R.id.navigation_add){
             navController.navigate(R.id.navigation_add);
         }
-        if (id == R.id.navigate_button_theme) {
+
+        if (id == R.id.navigate_change_theme) {
             navController.navigate(R.id.changeThemeFragment);
         }
 
