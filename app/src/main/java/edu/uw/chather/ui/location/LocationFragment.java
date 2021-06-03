@@ -139,6 +139,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
                         latLng, mMap.getCameraPosition().zoom));
         //binding.textLatLong.setText("Latitude:" + Double.toString(latLng.latitude) +
         //        "\nLongitude:" + Double.toString(latLng.longitude));
+        mMap.addMarker(markerOptions);
         mLatLng = latLng;
     }
 }
