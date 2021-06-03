@@ -63,5 +63,7 @@
     <!-- Map related strings -->
     <string name="label_location">Current location:</string>
     <string name="title_activity_maps">Map</string>
+    <string name="contact_add_title">Search for a Contact</string>
+    <string name="contact_request_title">Contact Requests</string>
 
 </resources>

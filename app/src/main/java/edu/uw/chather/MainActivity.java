@@ -309,10 +309,16 @@ public class MainActivity extends AppCompatActivity {
             navController.navigate(R.id.changePasswordFragment);
         }
 
+        if(id == R.id.navigation_add){
+            navController.navigate(R.id.navigation_add);
+        }
         if (id == R.id.navigate_button_theme) {
             navController.navigate(R.id.changeThemeFragment);
         }
 
+        if (id == R.id.navigate_contact_request){
+            navController.navigate(R.id.navigate_contact_request);
+        }
         if (id == R.id.navigate_sign_out) {
             signOut();
         }
