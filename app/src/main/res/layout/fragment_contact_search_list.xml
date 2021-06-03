@@ -22,13 +22,14 @@
             android:layout_height="wrap_content">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/contact_search_display"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dividerLine"
-                tools:layout_editor_absoluteY="143dp" />
+                tools:listitem="@layout/fragment_contact_add_card" />
             <View
                 android:id="@+id/dividerLine"
                 app:layout_constraintTop_toBottomOf="@id/search_bar"

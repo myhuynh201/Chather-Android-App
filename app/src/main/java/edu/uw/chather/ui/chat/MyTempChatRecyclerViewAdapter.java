@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import edu.uw.chather.R;
 import edu.uw.chather.ui.chat.dummy.DummyContent.DummyItem;
-import edu.uw.chather.ui.signin.SignInFragmentDirections;
 
 import java.util.List;
 
@@ -59,7 +58,7 @@ public class MyTempChatRecyclerViewAdapter extends RecyclerView.Adapter<MyTempCh
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mContentView = (TextView) view.findViewById(R.id.contact_username_text);
         }
 
         @Override

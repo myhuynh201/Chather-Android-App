@@ -10,4 +10,4 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".ui.contact.ContactFragment"
-    tools:listitem="@layout/fragment_contact_card" />
+    tools:listitem="@layout/fragment_contact_request_card" />

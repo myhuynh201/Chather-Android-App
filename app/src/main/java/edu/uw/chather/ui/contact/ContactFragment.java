@@ -62,7 +62,7 @@ public class ContactFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mModel = new ViewModelProvider(getActivity()).get(ContactListViewModel.class);
-
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -98,7 +98,7 @@ public class ContactFragment extends Fragment {
         }
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
-        recyclerView.setAdapter(new MyContactRecyclerViewAdapter ((ArrayList<Contact>) mModel.getContactList()));
+        recyclerView.setAdapter(new MyContactRecyclerViewAdapter (mModel));
         mModel.addContactListObserver(getViewLifecycleOwner(), list -> {
             recyclerView.getAdapter().notifyDataSetChanged();
         });
@@ -107,6 +107,7 @@ public class ContactFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater){
         menu.findItem(R.id.navigation_add).setVisible(true);
+        menu.findItem(R.id.navigate_contact_request).setVisible(true);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
