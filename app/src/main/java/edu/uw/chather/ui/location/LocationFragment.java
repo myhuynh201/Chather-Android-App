@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,6 +23,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import edu.uw.chather.R;
+import edu.uw.chather.databinding.FragmentLocationBinding;
 import edu.uw.chather.databinding.FragmentChangeThemeBinding;
 import edu.uw.chather.databinding.FragmentLocationBinding;
 import edu.uw.chather.utils.Utils;
@@ -36,6 +38,8 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
 
     private GoogleMap mMap;
 
+    private LatLng mLatLng;
+
     public LocationFragment() {
         // Required empty public constructor
     }
@@ -48,6 +52,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         FragmentLocationBinding binding = FragmentLocationBinding.bind(getView());
 
         mMap = googleMap;
+        FragmentLocationBinding binding = FragmentLocationBinding.bind(getView());
         LocationViewModel model = new ViewModelProvider(getActivity())
                 .get(LocationViewModel.class);
         model.addLocationObserver(getViewLifecycleOwner(), location -> {
@@ -55,8 +60,11 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
                 googleMap.getUiSettings().setZoomControlsEnabled(true);
                 googleMap.setMyLocationEnabled(true);
                 final LatLng c = new LatLng(location.getLatitude(), location.getLongitude());
+                mLatLng = c;
                 //Zoom levels are from 2.0f (zoomed out) to 21.f (zoomed in)
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(c, 15.0f));
+//                binding.textLatLong.setText("Latitude:" + Double.toString(c.latitude) +
+//                        "\nLongitude:" + Double.toString(c.longitude));
             }
         });
 
@@ -90,18 +98,26 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //FragmentLocationBinding binding = FragmentLocationBinding.bind(getView());
+        FragmentLocationBinding binding = FragmentLocationBinding.bind(getView());
         mModel = new ViewModelProvider(getActivity())
                 .get(LocationViewModel.class);
         //mModel.addLocationObserver(getViewLifecycleOwner(), location ->
-                //binding.textLatLong.setText(location.toString()));
-
+        //        binding.textLatLong.setText(location.toString()));
+        binding.buttonSearch.setOnClickListener(this::searchLatLong);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         //add this fragment as the OnMapReadyCallback -> See onMapReady()
         mapFragment.getMapAsync(this);
 
+    }
+
+    private void searchLatLong(View view) {
+        LocationFragmentDirections.ActionLocationFragmentToWeatherFragment directions =
+                LocationFragmentDirections.actionLocationFragmentToWeatherFragment();
+        directions.setLat(Double.toString(mLatLng.latitude));
+        directions.setLng(Double.toString(mLatLng.longitude));
+        Navigation.findNavController(getView()).navigate(directions);
     }
 
     @Override
@@ -122,11 +138,8 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         mMap.animateCamera(
                 CameraUpdateFactory.newLatLngZoom(
                         latLng, mMap.getCameraPosition().zoom));
-
-//        mMap.animateCamera(
-//                CameraUpdateFactory.newLatLngZoom(
-//                        latLng, 10));
-
-        mMap.addMarker(markerOptions);
+        //binding.textLatLong.setText("Latitude:" + Double.toString(latLng.latitude) +
+        //        "\nLongitude:" + Double.toString(latLng.longitude));
+        mLatLng = latLng;
     }
 }

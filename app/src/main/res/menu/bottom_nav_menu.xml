@@ -22,14 +22,14 @@
         android:icon="@drawable/ic_chat_black_24dp"
         android:title="@string/title_chats" />
 
-<!--    <item-->
-<!--        android:id="@+id/weatherFragment"-->
-<!--        android:icon="@drawable/ic_weather_black_24dp"-->
-<!--        android:title="@string/title_weather" />-->
-
     <item
-        android:id="@+id/locationFragment"
-        android:icon="@drawable/ic_map"
-        android:title="@string/title_activity_maps" />
+        android:id="@+id/weatherFragment"
+        android:icon="@drawable/ic_weather_black_24dp"
+        android:title="@string/title_weather" />
+
+<!--    <item-->
+<!--        android:id="@+id/locationFragment"-->
+<!--        android:icon="@drawable/ic_map"-->
+<!--        android:title="@string/title_activity_maps" />-->
 
 </menu>

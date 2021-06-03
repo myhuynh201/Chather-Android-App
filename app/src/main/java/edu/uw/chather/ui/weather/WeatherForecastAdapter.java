@@ -57,7 +57,7 @@ public class WeatherForecastAdapter extends RecyclerView.Adapter<WeatherForecast
          * The TextViews which will display relevant information
          * regarding date, description, and temperature.
          */
-        TextView txt_date, txt_descriptions, txt_temperature;
+        TextView txt_date, txt_descriptions, txt_temperature, txt_temperature_low;
 
         /**
          * Constructor for the MyViewHolder
@@ -68,7 +68,7 @@ public class WeatherForecastAdapter extends RecyclerView.Adapter<WeatherForecast
             txt_date = (TextView) itemView.findViewById(R.id.txt_date);
             txt_descriptions = (TextView) itemView.findViewById(R.id.txt_descriptions);
             txt_temperature = (TextView) itemView.findViewById(R.id.txt_temperature);
-
+            txt_temperature_low = (TextView) itemView.findViewById(R.id.txt_temperature_low);
         }
     }
 
@@ -101,7 +101,9 @@ public class WeatherForecastAdapter extends RecyclerView.Adapter<WeatherForecast
                     getJSONObject(position).getJSONArray("weather").
                     getJSONObject(0).getString("description"));
             holder.txt_temperature.setText(response.getJSONArray("daily").
-                    getJSONObject(position).getJSONObject("temp").getString("day") + "°F");
+                    getJSONObject(position).getJSONObject("temp").getString("max").substring(0, 2) + "°F ");
+            holder.txt_temperature_low.setText(response.getJSONArray("daily").
+                    getJSONObject(position).getJSONObject("temp").getString("min").substring(0, 2) + "°F ");
         } catch (JSONException e) {
             e.printStackTrace();
         }
