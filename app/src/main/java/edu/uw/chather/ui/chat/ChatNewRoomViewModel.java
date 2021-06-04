@@ -37,7 +37,9 @@ public class ChatNewRoomViewModel extends AndroidViewModel {
     /**
      * mutable live data for response
      */
-    private final MutableLiveData<JSONObject> mResponse;
+    private final SingleLiveData<JSONObject> mResponse;
+
+    private boolean dataSent = false;
 
     /**
      * Constructor for sent chat viewmodel
@@ -45,8 +47,23 @@ public class ChatNewRoomViewModel extends AndroidViewModel {
      */
     public ChatNewRoomViewModel(@NonNull Application application) {
         super(application);
-        mResponse = new MutableLiveData<>();
+        mResponse = new SingleLiveData<>();
 //        mResponse.setValue(new JSONObject());
+    }
+
+
+
+    public class SingleLiveData<T> extends MutableLiveData<T> {
+
+        @Override
+        public void observe(@NonNull LifecycleOwner owner, @NonNull Observer<? super T> observer) {
+            super.observe(owner, (t) -> {
+                if (t != null) {
+                    observer.onChanged(t);
+                    postValue(null);
+                }
+            });
+        }
     }
 
     /**
@@ -57,6 +74,10 @@ public class ChatNewRoomViewModel extends AndroidViewModel {
     public void addResponseObserver(@NonNull LifecycleOwner owner,
                                     @NonNull Observer<? super JSONObject> observer) {
         mResponse.observe(owner, observer);
+    }
+
+    public void removeResponseObserver(@NonNull LifecycleOwner owner) {
+        mResponse.removeObservers(owner);
     }
 
     /**
