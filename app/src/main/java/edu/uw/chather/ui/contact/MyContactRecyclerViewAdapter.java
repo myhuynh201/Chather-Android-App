@@ -115,8 +115,8 @@ public class MyContactRecyclerViewAdapter extends RecyclerView.Adapter<MyContact
                         @Override
                         public void onClick(View v) {
                             List<String> memberList = new ArrayList<>();
-                            memberList.add(userModel.getUsername());
                             memberList.add(mItem.getmUsername());
+                            memberList.add(userModel.getUsername());
                             mNewChatModel.createNewChat(UserInfoViewModel.getmJwt(), memberList);
 
                         }

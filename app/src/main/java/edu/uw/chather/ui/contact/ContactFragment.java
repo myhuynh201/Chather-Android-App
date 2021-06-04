@@ -114,8 +114,11 @@ public class ContactFragment extends Fragment {
         });
         mNewMessageModel.addResponseObserver(getViewLifecycleOwner(), response -> {
             try {
-                    Navigation.findNavController(view).navigate(ContactFragmentDirections
-                            .actionNavigationContactToChatFragment(response.getInt("chatID"), response.getJSONArray("members").toString()));
+                String memberString = response.getJSONArray("members").toString();
+                memberString = memberString.substring(1, memberString.length()-1).replace('"','\0');
+
+                Navigation.findNavController(view).navigate(ContactFragmentDirections
+                            .actionNavigationContactToChatFragment(response.getInt("chatID"), memberString));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -87,6 +87,7 @@ public class ChatNewRoomFragment extends Fragment {
             try {
                 int chatid = response.getInt("chatID");
                 String memberString = response.getJSONArray("members").toString();
+                memberString = memberString.substring(1, memberString.length()-1).replace('"','\0');
                 Log.d("New Chat", chatid + " " + memberString);
                 Navigation.findNavController(view)
                         .navigate(ChatNewRoomFragmentDirections.actionChatNewRoomFragmentToChatFragment(
@@ -95,6 +96,11 @@ public class ChatNewRoomFragment extends Fragment {
                 e.printStackTrace();
                 mMembers.clear();
                 binding.textMemberName.setText("");
+                try {
+                    binding.editAddUsername.setError(response.getString("message"));
+                } catch (JSONException jsonException) {
+                    jsonException.printStackTrace();
+                }
             }
         });
 
