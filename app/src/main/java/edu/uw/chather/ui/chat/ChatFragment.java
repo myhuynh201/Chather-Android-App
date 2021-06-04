@@ -8,10 +8,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import edu.uw.chather.MainActivity;
 import edu.uw.chather.R;
 import edu.uw.chather.databinding.FragmentChatBinding;
 import edu.uw.chather.ui.model.UserInfoViewModel;
@@ -75,13 +77,13 @@ public class ChatFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        getActionBar().setTitle(getArguments().getString("names"));
         try {
             mChatId = Integer.parseInt(getArguments().toString());
         } catch (NumberFormatException e) {
-            Log.wtf("HCHATID ISR WORNG", "WHYY");
+            Log.d("Chat", "ChatID is not valid");
         }
-        Log.d("CHATID GOTTEN THANK", "onCreate: " + mChatId);
+        Log.d("Chat", "ChatID Found: " + mChatId);
 
 
         FragmentChatBinding binding = FragmentChatBinding.bind(getView());
@@ -125,5 +127,9 @@ public class ChatFragment extends Fragment {
         });
         // when we get the response back from the server, clear the edittext
         mSendModel.addResponseObserver(getViewLifecycleOwner(), response -> binding.editMessage.setText(""));
+    }
+
+    private ActionBar getActionBar() {
+        return ((MainActivity) getActivity()).getSupportActionBar();
     }
 }

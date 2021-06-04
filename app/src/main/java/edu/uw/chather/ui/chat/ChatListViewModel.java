@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ import edu.uw.chather.ui.model.UserInfoViewModel;
 
 /**
  * ChatListViewModel Stores information for the chat list
+ *
  * @author Alec Mac
  */
 public class ChatListViewModel extends AndroidViewModel {
@@ -38,64 +40,74 @@ public class ChatListViewModel extends AndroidViewModel {
     /**
      * Map of chatrooms
      */
-    private final Map<String, MutableLiveData<List<Chatroom>>> mChatrooms;
+//    private Map<Integer, MutableLiveData<List<Chatroom>>> mChatrooms;
+
+    /**
+     * List of chatrooms
+     */
+    private MutableLiveData<List<Chatroom>> mList;
 
     /**
      * constructor for view model
+     *
      * @param application the current application
      */
     public ChatListViewModel(@NonNull Application application) {
         super(application);
-        mChatrooms = new HashMap<>();
+        mList = new MutableLiveData<>(new ArrayList<Chatroom>());
 
     }
 
     /**
      * Register as an observer to listen to a specific chat room's list of messages.
-     * @param jwt the jwt of the user
-     * @param owner the fragments lifecycle owner
+     *
+     * @param jwt      the jwt of the user
+     * @param owner    the fragments lifecycle owner
      * @param observer the observer
      */
     public void addChatroomObserver(String jwt,
-                                   @NonNull LifecycleOwner owner,
-                                   @NonNull Observer<? super List<Chatroom>> observer) {
-        getOrCreateMapEntry(jwt).observe(owner, observer);
+                                    @NonNull LifecycleOwner owner,
+                                    @NonNull Observer<? super List<Chatroom>> observer) {
+        mList.observe(owner, observer);
     }
+
+//    /**
+//     * Return a reference to the List<> associated with the chat room. If the View Model does
+//     * not have a mapping for this chatID, it will be created.
+//     *
+//     * WARNING: While this method returns a reference to a mutable list, it should not be
+//     * mutated externally in client code. Use public methods available in this class as
+//     * needed.
+//     *
+//     * @param jwt the id of the member to retrieve chats for
+//     * @return a reference to the list of chatrooms
+//     */
+//    public List<Chatroom> getChatroomListByMemberId(final String jwt) {
+//        return getOrCreateMapEntry(jwt).getValue();
+//    }
 
     /**
-     * Return a reference to the List<> associated with the chat room. If the View Model does
-     * not have a mapping for this chatID, it will be created.
-     *
-     * WARNING: While this method returns a reference to a mutable list, it should not be
-     * mutated externally in client code. Use public methods available in this class as
-     * needed.
-     *
-     * @param jwt the id of the member to retrieve chats for
-     * @return a reference to the list of chatrooms
+     * //     * Gets or creates map entry if does not exist
+     * //     * @param jwt the JWT for the current user
+     * //     * @return live data for chatrooms
+     * //
      */
-    public List<Chatroom> getChatroomListByMemberId(final String jwt) {
-        return getOrCreateMapEntry(jwt).getValue();
+//    private MutableLiveData<List<Chatroom>> getOrCreateMapEntry(final String jwt) {
+//        if (!mChatrooms.containsKey(jwt)) {
+//            mChatrooms.put(jwt, new MutableLiveData<>(new ArrayList<>()));
+//        }
+//        return mChatrooms.get(jwt);
+//    }
+    public List<Chatroom> getChatroomList() {
+        return mList.getValue();
     }
-
-    /**
-     * Gets or creates map entry if does not exist
-     * @param jwt the JWT for the current user
-     * @return live data for chatrooms
-     */
-    private MutableLiveData<List<Chatroom>> getOrCreateMapEntry(final String jwt) {
-        if (!mChatrooms.containsKey(jwt)) {
-            mChatrooms.put(jwt, new MutableLiveData<>(new ArrayList<>()));
-        }
-        return mChatrooms.get(jwt);
-    }
-
 
 
     /**
      * Makes a request to the web service to get the first batch of messages for a given Chat Room.
      * Parses the response and adds the ChatMessage object to the List associated with the
      * ChatRoom. Informs observers of the update.
-     *
+     * <p>
      * Subsequent requests to the web service for a given chat room should be made from
      * getNextMessages()
      *
@@ -134,13 +146,14 @@ public class ChatListViewModel extends AndroidViewModel {
     /**
      * When a chat message is received externally to this ViewModel, add it
      * with this method.
+     *
      * @param jwt
      * @param chatroom
      */
     public void addChatroom(final String jwt, final Chatroom chatroom) {
-        List<Chatroom> list = getChatroomListByMemberId(jwt);
+        List<Chatroom> list = getChatroomList();
         list.add(chatroom);
-        getOrCreateMapEntry(jwt).setValue(list);
+        mList.setValue(list);
     }
 
     private void handleSuccess(final JSONObject response) {
@@ -151,29 +164,30 @@ public class ChatListViewModel extends AndroidViewModel {
         Log.d("RESPONSE LOOKS LIKE", "handleSuccess: " + response);
         try {
 
-            list = getChatroomListByMemberId(UserInfoViewModel.getmJwt());
+            list = getChatroomList();
             JSONArray chatrooms = response.getJSONArray("rows");
-            for(int i = 0; i < chatrooms.length(); i++) {
+            for (int i = 0; i < chatrooms.length(); i++) {
                 JSONObject chatroom = chatrooms.getJSONObject(i);
-                Chatroom cChatroom = new Chatroom(
-                        chatroom.getInt("chatid")
-
-                );
-                if (!list.contains(cChatroom)) {
-                    // don't add a duplicate
-                    list.add(0, cChatroom);
-                } else {
-                    // this shouldn't happen but could with the asynchronous
-                    // nature of the application
-                    Log.wtf("Chat message already received",
-                            "Or duplicate id:" + cChatroom.getChatId());
+                int chatid = chatroom.getInt("chatid");
+                String username = chatroom.getString("username");
+                boolean containsChatId = false;
+                for (Chatroom room : list) {
+                    if (room.getChatId() == chatid) {
+                        containsChatId = true;
+                        if (!room.containsMember(username)) {
+                            room.addChatMember(username);
+                        }
+                    }
                 }
-
+                if (!containsChatId) {
+                    Chatroom newRoom = new Chatroom(chatid, new ArrayList<>(Arrays.asList(username)));
+                    list.add(newRoom);
+                }
             }
             //inform observers of the change (setValue)
-            getOrCreateMapEntry(UserInfoViewModel.getmJwt()).setValue(list);
+            mList.setValue(list);
 
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             Log.e("JSON PARSE ERROR", "Found in handle Success ChatViewModel");
             Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
         }
@@ -181,13 +195,13 @@ public class ChatListViewModel extends AndroidViewModel {
 
     /**
      * handles error
+     *
      * @param error error from response
      */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             Log.e("NETWORK ERROR", error.getMessage());
-        }
-        else {
+        } else {
             String data = new String(error.networkResponse.data, Charset.defaultCharset());
             Log.e("CLIENT ERROR",
                     error.networkResponse.statusCode +

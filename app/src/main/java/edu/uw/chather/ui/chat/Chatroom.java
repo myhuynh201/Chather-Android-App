@@ -10,18 +10,35 @@ public class Chatroom {
     /**
      * ID of the chat
      */
-    private final int mChatId;
+    private int mChatId;
+
+    public List<String> getChatMembers() {
+        return mChatMembers;
+    }
+
+    public void setmChatMembers(List<String> mChatMembers) {
+        this.mChatMembers = mChatMembers;
+    }
+
+    public void addChatMember(String member) {
+        mChatMembers.add(member);
+    }
+
+    public boolean containsMember(String member) {
+        return mChatMembers.contains(member);
+    }
     /**
      * Stores ID of chat members
      */
-    private List<Integer> mChatMembers;
+    private List<String> mChatMembers;
 
     /**
      * Generates a chatroom
      * @param chatid id for the chatroom
      */
-    public Chatroom(int chatid) {
+    public Chatroom(int chatid, List<String> chatMembers) {
         mChatId = chatid;
+        mChatMembers = chatMembers;
     }
 
     /**
@@ -32,5 +49,15 @@ public class Chatroom {
         return mChatId;
     }
 
-
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (String username : mChatMembers) {
+            if (sb.length() != 0) {
+                sb.append(", ");
+            }
+            sb.append(username);
+        }
+        return sb.toString();
+    }
 }
