@@ -90,7 +90,7 @@ public class ContactSearchRecyclerViewAdapter extends RecyclerView.Adapter<Conta
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.item_number);
             mContentView = (TextView) view.findViewById(R.id.contact_username_text);
-            mView.findViewById(R.id.contact_accept_request_button).setOnClickListener(
+            mView.findViewById(R.id.contact_start_chat_button).setOnClickListener(
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

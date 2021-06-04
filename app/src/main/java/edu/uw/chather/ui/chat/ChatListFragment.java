@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -53,6 +55,7 @@ public class ChatListFragment extends Fragment {
         mChatListModel = provider.get(ChatListViewModel.class);
         mChatListModel.getChatrooms(UserInfoViewModel.getmJwt());
         Log.d("CHATLIST MODEL", "onCreate: " + mChatListModel);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -63,27 +66,33 @@ public class ChatListFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        menu.findItem(R.id.navigate_button_new_chat).setVisible(true);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         String jwt = UserInfoViewModel.getmJwt();
         FragmentChatListBinding binding = FragmentChatListBinding.bind(getView());
 
-        binding.swipeContainer.setRefreshing(true);
+        binding.swipeListContainer.setRefreshing(true);
 
         final RecyclerView rv = binding.recyclerChatroom;
         Log.d("JWT HERE", "onViewCreated: " + jwt);
         rv.setAdapter(new ChatListRecyclerViewAdapter(
-                mChatListModel.getChatroomListByMemberId(jwt)
+                mChatListModel.getChatroomList()
         ));
 
-        binding.swipeContainer.setOnRefreshListener(() -> {
-            mChatListModel.getChatroomListByMemberId(jwt);
+        binding.swipeListContainer.setOnRefreshListener(() -> {
+            mChatListModel.getChatroomList();
         });
 
         mChatListModel.addChatroomObserver(jwt, getViewLifecycleOwner(), list -> {
             rv.getAdapter().notifyDataSetChanged();
 //            rv.scrollToPosition(rv.getAdapter().getItemCount() - 1);
-            binding.swipeContainer.setRefreshing(false);
+            binding.swipeListContainer.setRefreshing(false);
         });
     }
 }

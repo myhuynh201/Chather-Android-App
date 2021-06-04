@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,15 +20,22 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 
 import edu.uw.chather.R;
+import edu.uw.chather.ui.chat.ChatNewRoomFragmentDirections;
+import edu.uw.chather.ui.chat.ChatNewRoomViewModel;
+import edu.uw.chather.ui.model.UserInfoViewModel;
 
 /**
  * A fragment representing a list of Connections.
  */
 public class ContactFragment extends Fragment {
     ContactListViewModel mModel;
+    ChatNewRoomViewModel mNewMessageModel;
+
     /**
      * Number of columns
       */
@@ -62,6 +70,8 @@ public class ContactFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mModel = new ViewModelProvider(getActivity()).get(ContactListViewModel.class);
+        mNewMessageModel = new ViewModelProvider(getActivity()).get(ChatNewRoomViewModel.class);
+
         setHasOptionsMenu(true);
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -98,11 +108,24 @@ public class ContactFragment extends Fragment {
         }
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
-        recyclerView.setAdapter(new MyContactRecyclerViewAdapter (mModel));
+        recyclerView.setAdapter(new MyContactRecyclerViewAdapter(mModel, getActivity()));
         mModel.addContactListObserver(getViewLifecycleOwner(), list -> {
             recyclerView.getAdapter().notifyDataSetChanged();
         });
+        mNewMessageModel.addResponseObserver(getViewLifecycleOwner(), response -> {
+            try {
+                String memberString = response.getJSONArray("members").toString();
+                memberString = memberString.substring(1, memberString.length()-1).replace('"','\0');
+
+                Navigation.findNavController(view).navigate(ContactFragmentDirections
+                            .actionNavigationContactToChatFragment(response.getInt("chatID"), memberString));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        });
     }
+
+
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater){

@@ -172,7 +172,7 @@ public class SignInFragment extends Fragment {
      * @param email users email
      * @param jwt   the JSON Web Token supplied by the server
      */
-    private void navigateToSuccess(final String email, final String jwt) {
+    private void navigateToSuccess(final String email, final String jwt, final String username) {
         if (binding.switchSignin.isChecked()) {
             SharedPreferences prefs =
                 getActivity().getSharedPreferences(
@@ -184,7 +184,7 @@ public class SignInFragment extends Fragment {
 
         Navigation.findNavController(getView())
                 .navigate(SignInFragmentDirections
-                        .actionSignInFragmentToMainActivity(email, jwt));
+                        .actionSignInFragmentToMainActivity(email, jwt, username));
 
         //Remove THIS activity from the Task list. Pops off the backstack
         getActivity().finish();
@@ -205,7 +205,8 @@ public class SignInFragment extends Fragment {
             // created on the web service.
             if(!jwt.isExpired(0)) {
                 String email = jwt.getClaim("email").asString();
-                navigateToSuccess(email, token);
+                String username = jwt.getClaim("username").asString();
+                navigateToSuccess(email, token, username);
                 return;
             }
         }
@@ -232,7 +233,8 @@ public class SignInFragment extends Fragment {
                     mUserViewModel = new ViewModelProvider(getActivity(),
                             new UserInfoViewModel.UserInfoViewModelFactory(
                                     binding.editEmail.getText().toString(),
-                                    response.getString("token")
+                                    response.getString("token"),
+                                    response.getString("username")
                             )).get(UserInfoViewModel.class);
                     sendPushyToken();
                 } catch (JSONException e) {
@@ -264,7 +266,8 @@ public class SignInFragment extends Fragment {
             } else {
                 navigateToSuccess(
                         binding.editEmail.getText().toString(),
-                        UserInfoViewModel.getmJwt()
+                        UserInfoViewModel.getmJwt(),
+                        mUserViewModel.getUsername()
                 );
             }
         }

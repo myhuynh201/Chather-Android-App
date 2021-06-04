@@ -2,45 +2,60 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-<!--
+    android:layout_height="wrap_content"
+    android:textDirection="ltr">
+    <!--
     Nest the card inside of a frame. Programmatically set the
     gravity of the Card inside to the start (left) or
     end (right) while the Frame extends the width of the
     screen.
 -->
 
-<!--  MaterialCardView instead of androidx.CardView  -->
+    <!--  MaterialCardView instead of androidx.CardView  -->
 
-<com.google.android.material.card.MaterialCardView
-    android:id="@+id/card_root"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/chat_margin"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="0dp"
-    android:layout_gravity="end">
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_root"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="@dimen/chat_margin"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="0dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_inner"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@+id/text_title"
-        app:layout_constraintTop_toTopOf="@+id/text_title">
-
-        <TextView
-            android:id="@+id/text_message"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_inner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:textAppearance="?attr/textAppearanceListItem"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toTopOf="@+id/text_title"
+            app:layout_constraintTop_toTopOf="@+id/text_title">
+
+            <TextView
+                android:id="@+id/text_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha=".5"
+                android:padding="8dp"
+                android:paddingBottom="0dp"
+                android:text="username"
+                android:textColor="?colorOnSecondary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="hey! how are you!"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_username" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </FrameLayout>

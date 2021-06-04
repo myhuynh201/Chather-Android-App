@@ -48,6 +48,9 @@
         <argument
             android:name="jwt"
             app:argType="string" />
+        <argument
+            android:name="username"
+            app:argType="string" />
     </activity>
     <fragment
         android:id="@+id/passwordResetFragment"

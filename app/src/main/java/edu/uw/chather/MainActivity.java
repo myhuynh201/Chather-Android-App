@@ -47,6 +47,7 @@ import edu.uw.chather.ui.chat.ChatViewModel;
 import edu.uw.chather.ui.contact.Contact;
 import edu.uw.chather.ui.contact.ContactRequestViewModel;
 import edu.uw.chather.ui.location.LocationViewModel;
+import edu.uw.chather.ui.chat.Chatroom;
 import edu.uw.chather.ui.model.NewContactCountViewModel;
 import edu.uw.chather.ui.model.NewMessageCountViewModel;
 import edu.uw.chather.ui.model.PushyTokenViewModel;
@@ -128,14 +129,14 @@ public class MainActivity extends AppCompatActivity {
         //}
 
         new ViewModelProvider(this,
-                new UserInfoViewModel.UserInfoViewModelFactory(args.getEmail(), args.getJwt())
+                new UserInfoViewModel.UserInfoViewModelFactory(args.getEmail(), args.getJwt(), args.getUsername())
         ).get(UserInfoViewModel.class);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.success, R.id.navigation_contact, R.id.tempChatFragment, R.id.weatherFragment)
+                R.id.success, R.id.navigation_contact, R.id.chatListFragment, R.id.weatherFragment)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -145,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         mNewContactModel = new ViewModelProvider(this).get(NewContactCountViewModel.class);
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.tempChatFragment) {
+            if (destination.getId() == R.id.chatListFragment) {
                 // When the user navigates to the chats page, reset the new message count.
                 // This will need some extra logic for your project as it should have
                 // multiple chatrooms.
@@ -154,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mNewMessageModel.addMessageCountObserver(this, count -> {
-            BadgeDrawable badge = binding.navView.getOrCreateBadge(R.id.tempChatFragment);
+            BadgeDrawable badge = binding.navView.getOrCreateBadge(R.id.chatListFragment);
             badge.setMaxCharacterCount(2);
             if (count > 0) {
                 // new messages! update and show the notification badge.
@@ -342,6 +343,10 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.navigate_sign_out) {
             signOut();
         }
+        if (id == R.id.navigate_button_new_chat) {
+            navController.navigate(R.id.chatNewRoomFragment);
+        }
+
         return super.onOptionsItemSelected(item);
     }
     @Override
@@ -400,12 +405,16 @@ public class MainActivity extends AppCompatActivity {
 
                 // If the user is not on the chat screen, update the
                 // NewMessageCountView Model
-                if (nd.getId() != R.id.tempChatFragment) {
+                if (nd.getId() != R.id.chatListFragment) {
                     mNewMessageModel.increment();
                 }
 
                 // Inform the view model holding chatroom messages of the new message.
                 mModel.addMessage(intent.getIntExtra("chatid", -1), cm);
+            } else if (intent.hasExtra("chatroom")) {
+                Chatroom cr = (Chatroom) intent.getSerializableExtra("chatroom");
+                // if the user is not on the chat screen, update the New chatroom view model
+                // TODO TODO
             }
             else {
 
@@ -417,7 +426,5 @@ public class MainActivity extends AppCompatActivity {
                 mRequestModel.connectGet();
             }
         }
-
-
     }
 }
