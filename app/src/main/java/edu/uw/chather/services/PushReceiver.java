@@ -1,20 +1,25 @@
 package edu.uw.chather.services;
 
 import android.app.ActivityManager;
+import android.app.Application;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import org.json.JSONException;
 
 import edu.uw.chather.AuthActivity;
 import edu.uw.chather.R;
 import edu.uw.chather.ui.chat.ChatMessage;
+import edu.uw.chather.ui.contact.Contact;
+import edu.uw.chather.ui.contact.ContactRequestViewModel;
 import me.pushy.sdk.Pushy;
 
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
@@ -38,6 +43,19 @@ public class PushReceiver extends BroadcastReceiver {
         //So perform logic/routing based on the "type"
         //feel free to change the key or type of values.
         String typeOfMessage = intent.getStringExtra("type");
+        if (typeOfMessage.equals("chat")){
+            chatNotification(context, intent);
+        }
+        else{
+            Log.d("Test", "onRecieve was called.");
+            contactNotification(context, intent);
+
+        }
+
+
+    }
+
+    public void chatNotification(Context context, Intent intent){
         ChatMessage message = null;
         int chatId = -1;
         try{
@@ -93,6 +111,56 @@ public class PushReceiver extends BroadcastReceiver {
             // Build the notification and display it
             notificationManager.notify(1, builder.build());
         }
+    }
 
+    public void contactNotification(Context context, Intent intent){
+
+
+        ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo();
+        ActivityManager.getMyMemoryState(appProcessInfo);
+
+        /* if (appProcessInfo.importance == IMPORTANCE_FOREGROUND || appProcessInfo.importance == IMPORTANCE_VISIBLE) {
+            //app is in the foreground so send the message to the active Activities
+            Log.d("PUSHY", "Contact request received in foreground: " + contact.getmUsername());
+
+            //create an Intent to broadcast a message to other parts of the app.
+            Intent i = new Intent(RECEIVED_NEW_MESSAGE);
+            i.putExtra("contact", contact.getmUsername());
+            i.putExtra("contactString", intent.getStringExtra("contact"));
+            i.putExtras(intent.getExtras());
+
+            context.sendBroadcast(i);
+
+        }*/
+       // else {
+            //app is in the background so create and post a notification
+            Log.d("PUSHY", "Contact request received in background");
+
+            Intent i = new Intent(context, AuthActivity.class);
+            i.putExtras(intent.getExtras());
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
+                    i, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            //research more on notifications the how to display them
+            //https://developer.android.com/guide/topics/ui/notifiers/notifications
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                    .setAutoCancel(true)
+                    .setSmallIcon(R.mipmap.ic_launcher_round)
+                    .setContentTitle("Contact Request!")
+                    .setContentText("You have a new contact request!")
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setContentIntent(pendingIntent);
+
+            // Automatically configure a ChatMessageNotification Channel for devices running Android O+
+            Pushy.setNotificationChannel(builder, context);
+
+            // Get an instance of the NotificationManager service
+            NotificationManager notificationManager =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+            // Build the notification and display it
+            notificationManager.notify(1, builder.build());
+       // }
     }
 }
