@@ -1,5 +1,12 @@
 package edu.uw.chather.ui.contact;
 
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import edu.uw.chather.ui.chat.ChatMessage;
+
 /** A useful helper class that gives contacts a convenient way to be stored, used, and manipulated.
  * @author DeMarco Best II
  */
@@ -68,5 +75,12 @@ public class Contact {
      */
     public void setmNickname(String mNickname) {
         this.mNickname = mNickname;
+    }
+
+    public static Contact createFromJsonString(final String contact) throws JSONException {
+        Log.d("Test", contact);
+        final JSONObject c = new JSONObject(contact);
+        return new Contact(c.getString("firstname"), c.getString("lastname"),
+                c.getString("username"), c.getInt("memberid"));
     }
 }
