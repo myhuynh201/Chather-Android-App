@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -22,6 +24,7 @@ import java.util.List;
 import edu.uw.chather.R;
 import edu.uw.chather.databinding.FragmentChatListBinding;
 import edu.uw.chather.ui.model.UserInfoViewModel;
+import edu.uw.chather.utils.SwipeToDeleteCallback;
 
 /**
  * ChatListFragment is a fragment used to represent a list of chatrooms.
@@ -81,9 +84,15 @@ public class ChatListFragment extends Fragment {
 
         final RecyclerView rv = binding.recyclerChatroom;
         Log.d("JWT HERE", "onViewCreated: " + jwt);
-        rv.setAdapter(new ChatListRecyclerViewAdapter(
-                mChatListModel.getChatroomList()
-        ));
+        ChatListRecyclerViewAdapter adapter = new ChatListRecyclerViewAdapter(
+                mChatListModel.getChatroomList(), view.getContext());
+
+        rv.setAdapter(adapter);
+
+        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ItemTouchHelper itemTouchHelper = new
+                ItemTouchHelper(new SwipeToDeleteCallback(adapter));
+        itemTouchHelper.attachToRecyclerView(rv);
 
         binding.swipeListContainer.setOnRefreshListener(() -> {
             mChatListModel.getChatroomList();
@@ -94,5 +103,15 @@ public class ChatListFragment extends Fragment {
 //            rv.scrollToPosition(rv.getAdapter().getItemCount() - 1);
             binding.swipeListContainer.setRefreshing(false);
         });
+    }
+
+    private void setUpRecyclerView(ChatListRecyclerViewAdapter mAdapter) {
+        FragmentChatListBinding binding = FragmentChatListBinding.bind(getView());
+        RecyclerView recyclerView = binding.recyclerChatroom;
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ItemTouchHelper itemTouchHelper = new
+                ItemTouchHelper(new SwipeToDeleteCallback(mAdapter));
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 }

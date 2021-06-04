@@ -156,6 +156,9 @@ public class ChatListViewModel extends AndroidViewModel {
         mList.setValue(list);
     }
 
+
+
+
     private void handleSuccess(final JSONObject response) {
         List<Chatroom> list;
         if (!response.has("rows")) {

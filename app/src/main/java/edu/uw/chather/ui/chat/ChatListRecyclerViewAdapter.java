@@ -1,6 +1,8 @@
 package edu.uw.chather.ui.chat;
 
+import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +11,23 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.material.card.MaterialCardView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.uw.chather.R;
 import edu.uw.chather.databinding.FragmentChatroomBinding;
+import edu.uw.chather.io.RequestQueueSingleton;
+import edu.uw.chather.ui.model.UserInfoViewModel;
 
 /**
  * ChatListRecyclerViewAdapter creates recycler views for chatrooms
@@ -22,17 +35,24 @@ import edu.uw.chather.databinding.FragmentChatroomBinding;
  */
 public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRecyclerViewAdapter.ChatroomViewHolder> {
 
+
+    private Context mContext;
+
     /**
      * list of chatrooms
      */
     private final List<Chatroom> mChatrooms;
 
+    private int lastDeletedPosition;
+
     /**
      * constructor, initializing list of chatrooms
      * @param chatrooms list of chatrooms
      */
-    public ChatListRecyclerViewAdapter(List<Chatroom> chatrooms) {
+    public ChatListRecyclerViewAdapter(List<Chatroom> chatrooms, Context context) {
         this.mChatrooms = chatrooms;
+        this.mContext = context;
+        lastDeletedPosition = 0;
     }
 
     @NonNull
@@ -57,6 +77,60 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
         return mChatrooms.size();
     }
 
+
+    public Context getContext() {
+        return mContext;
+    }
+
+    public void deleteItem(int position) {
+        int chatid = mChatrooms.get(position).getChatId();
+        lastDeletedPosition = position;
+        String url = "https://tcss450-android-app.herokuapp.com/chats/delete";
+        JSONObject body = new JSONObject();
+        try {
+            body.put("chatid", chatid);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Request request = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                body,
+                this::handleDeleteSuccess,
+                this::handleDeleteError) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                headers.put("Authorization", UserInfoViewModel.getmJwt());
+                return headers;
+            }
+        };
+
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        RequestQueueSingleton.getInstance(getContext())
+                .addToRequestQueue(request);
+    }
+
+    private void handleDeleteSuccess(JSONObject jsonObject) {
+        Log.d("CHAT DELETE", "SUCCESS" + jsonObject);
+        mChatrooms.remove(lastDeletedPosition);
+        notifyItemRemoved(lastDeletedPosition);
+    }
+
+    private void handleDeleteError(VolleyError volleyError) {
+        Log.d("CHAT DELETE", "ERROR" + volleyError);
+    }
+
+
+
+
+
     /**
      * Viewholder for a chatroom
      */
@@ -73,6 +147,7 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
          */
         private final FragmentChatroomBinding binding;
 
+
         /**
          * constructs a chatroom view holder
          * @param itemView the view created for this viewholder
@@ -81,6 +156,7 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
             super(itemView);
             mView = itemView;
             binding = FragmentChatroomBinding.bind(itemView);
+            mContext = mView.getContext();
         }
 
 //        @Override
@@ -112,5 +188,7 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
             card.requestLayout();
 
         }
+
+
     }
 }
