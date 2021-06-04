@@ -44,8 +44,11 @@ import edu.uw.chather.databinding.ActivityMainBinding;
 import edu.uw.chather.services.PushReceiver;
 import edu.uw.chather.ui.chat.ChatMessage;
 import edu.uw.chather.ui.chat.ChatViewModel;
+import edu.uw.chather.ui.contact.Contact;
+import edu.uw.chather.ui.contact.ContactRequestViewModel;
 import edu.uw.chather.ui.location.LocationViewModel;
 import edu.uw.chather.ui.chat.Chatroom;
+import edu.uw.chather.ui.model.NewContactCountViewModel;
 import edu.uw.chather.ui.model.NewMessageCountViewModel;
 import edu.uw.chather.ui.model.PushyTokenViewModel;
 import edu.uw.chather.ui.model.UserInfoViewModel;
@@ -88,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private MainPushMessageReceiver mPushMessageReceiver;
     private NewMessageCountViewModel mNewMessageModel;
+    private NewContactCountViewModel mNewContactModel;
     private ActivityMainBinding binding;
 
 
@@ -139,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         mNewMessageModel = new ViewModelProvider(this).get(NewMessageCountViewModel.class);
+        mNewContactModel = new ViewModelProvider(this).get(NewContactCountViewModel.class);
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             if (destination.getId() == R.id.chatListFragment) {
@@ -151,6 +156,20 @@ public class MainActivity extends AppCompatActivity {
 
         mNewMessageModel.addMessageCountObserver(this, count -> {
             BadgeDrawable badge = binding.navView.getOrCreateBadge(R.id.chatListFragment);
+            badge.setMaxCharacterCount(2);
+            if (count > 0) {
+                // new messages! update and show the notification badge.
+                badge.setNumber(count);
+                badge.setVisible(true);
+            } else {
+                // user did some action to clear the new messages, remove the badge
+                badge.clearNumber();
+                badge.setVisible(false);
+            }
+        });
+
+        mNewContactModel.addContactCountObserver(this, count -> {
+            BadgeDrawable badge = binding.navView.getOrCreateBadge(R.id.navigation_contact);
             badge.setMaxCharacterCount(2);
             if (count > 0) {
                 // new messages! update and show the notification badge.
@@ -374,6 +393,8 @@ public class MainActivity extends AppCompatActivity {
 
         private final ChatViewModel mModel =
                 new ViewModelProvider(MainActivity.this).get(ChatViewModel.class);
+        private final ContactRequestViewModel mRequestModel =
+                new ViewModelProvider(MainActivity.this).get(ContactRequestViewModel.class);
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -394,6 +415,15 @@ public class MainActivity extends AppCompatActivity {
                 Chatroom cr = (Chatroom) intent.getSerializableExtra("chatroom");
                 // if the user is not on the chat screen, update the New chatroom view model
                 // TODO TODO
+            }
+            else {
+
+                if (nd.getId() != R.id.navigate_contact_request) {
+                    mNewContactModel.increment();
+                }
+
+                // Inform the view model holding chatroom messages of the new message.
+                mRequestModel.connectGet();
             }
         }
     }

@@ -49,6 +49,9 @@ public class ContactRequestViewModel extends AndroidViewModel {
         error.getMessage();
     }
 
+    public void addContact(Contact theContact){
+        mContactList.getValue().add(theContact);
+    }
     /**Dismantles the JSONObject into its parts and builds a contact object from them.
      * Contact objects are placed in a list that is used elsewhere.
      * @param result The json result set returned from the network query.

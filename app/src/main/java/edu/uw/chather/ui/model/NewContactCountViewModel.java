@@ -14,7 +14,7 @@ public class NewContactCountViewModel extends ViewModel {
         mNewContactCount.setValue(0);
     }
 
-    public void addMessageCountObserver(@NonNull LifecycleOwner owner,
+    public void addContactCountObserver(@NonNull LifecycleOwner owner,
                                         @NonNull Observer<? super Integer> observer) {
         mNewContactCount.observe(owner, observer);
     }
