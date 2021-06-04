@@ -43,7 +43,7 @@ public class PushReceiver extends BroadcastReceiver {
         //So perform logic/routing based on the "type"
         //feel free to change the key or type of values.
         String typeOfMessage = intent.getStringExtra("type");
-        if (typeOfMessage.equals("chat")){
+        if (typeOfMessage.equals("msg")){
             chatNotification(context, intent);
         }
         else{
