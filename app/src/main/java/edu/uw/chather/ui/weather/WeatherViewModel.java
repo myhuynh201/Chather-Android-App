@@ -85,7 +85,6 @@ public class WeatherViewModel extends AndroidViewModel {
      */
 
     private void handleResult(final JSONObject result) {
-        //This will send the weather and location data to WeatherFragment
         try {
             Map<String, String> location = new HashMap<String, String>();
             JSONObject locationData = result.getJSONObject("location");
@@ -96,8 +95,6 @@ public class WeatherViewModel extends AndroidViewModel {
             mLocationData.setValue(location);
             JSONObject currentRes = result.getJSONObject("weatherData");
             mResponse.setValue(currentRes);
-
-            //The above will send the location info to WeatherFragment
             Log.d("Checkup", result.getString("lat"));
         } catch (JSONException e) {
             e.printStackTrace();
