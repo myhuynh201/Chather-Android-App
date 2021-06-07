@@ -55,6 +55,11 @@ public class PushReceiver extends BroadcastReceiver {
 
     }
 
+    /**
+     * chatNotification handles the broadcast of a chat push notification
+     * @param context the context of the activity receiving the notification
+     * @param intent the data storing the chat message information
+     */
     public void chatNotification(Context context, Intent intent){
         ChatMessage message = null;
         int chatId = -1;
