@@ -36,12 +36,6 @@ public class ChatNewRoomFragment extends Fragment {
      */
     private UserInfoViewModel mUserModel;
 
-
-    public static ChatNewRoomFragment newInstance() {
-        return new ChatNewRoomFragment();
-    }
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,10 +97,12 @@ public class ChatNewRoomFragment extends Fragment {
                 }
             }
         });
-
-
     }
 
+    /**
+     * Updates members with current list
+     * @param binding updates list of members added
+     */
     private void updateDisplayMembers(ChatNewRoomFragmentBinding binding) {
         binding.textMemberName.setText("");
         for (String member : mMembers) {

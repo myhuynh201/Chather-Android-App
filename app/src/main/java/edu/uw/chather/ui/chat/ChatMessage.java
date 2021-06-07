@@ -56,18 +56,34 @@ public final class ChatMessage implements Serializable {
                 msg.getString("timestamp"));
     }
 
+    /**
+     * Returns message
+     * @return message
+     */
     public String getMessage() {
         return mMessage;
     }
 
+    /**
+     * Gets sender email
+     * @return sender information
+     */
     public String getSender() {
         return mSender;
     }
 
+    /**
+     * Returns timestamp
+     * @return timestamp
+     */
     public String getTimeStamp() {
         return mTimeStamp;
     }
 
+    /**
+     * Returns message ID
+     * @return message ID
+     */
     public int getMessageId() {
         return mMessageId;
     }

@@ -14,13 +14,30 @@ import androidx.recyclerview.widget.RecyclerView;
 import edu.uw.chather.R;
 import edu.uw.chather.ui.chat.ChatListRecyclerViewAdapter;
 
+/**
+ * Callback class to handle swipe to delete functionliaty
+ */
 public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
+    /**
+     * Recycler view adapter for chat list
+     */
     private ChatListRecyclerViewAdapter mAdapter;
 
+    /**
+     * Icon for swipe SnackBar
+     */
     private Drawable icon;
+
+    /**
+     * Background color for snackbar
+     */
     private final ColorDrawable background;
 
 
+    /**
+     * Constructs callback
+     * @param adapter the recyclerviewadapter for chat list
+     */
     public SwipeToDeleteCallback(ChatListRecyclerViewAdapter adapter) {
         super(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         mAdapter = adapter;

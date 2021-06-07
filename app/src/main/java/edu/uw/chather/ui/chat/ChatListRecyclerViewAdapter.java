@@ -82,6 +82,10 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
         return mContext;
     }
 
+    /**
+     * Deletes chatroom from chat list
+     * @param position position of current element
+     */
     public void deleteItem(int position) {
         int chatid = mChatrooms.get(position).getChatId();
         lastDeletedPosition = position;
@@ -117,12 +121,20 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
                 .addToRequestQueue(request);
     }
 
+    /**
+     * Handles the success removal
+     * @param jsonObject
+     */
     private void handleDeleteSuccess(JSONObject jsonObject) {
         Log.d("CHAT DELETE", "SUCCESS" + jsonObject);
         mChatrooms.remove(lastDeletedPosition);
         notifyItemRemoved(lastDeletedPosition);
     }
 
+    /**
+     * Handles error for deletion
+     * @param volleyError error message from web request
+     */
     private void handleDeleteError(VolleyError volleyError) {
         Log.d("CHAT DELETE", "ERROR" + volleyError);
     }
@@ -177,8 +189,7 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
 
 
 
-            binding.textChatroom.setText(chatroom.getChatId() +
-                    ": " + chatroom.toString());
+            binding.textChatroom.setText(chatroom.toString());
             ViewGroup.MarginLayoutParams layoutParams =
                     (ViewGroup.MarginLayoutParams) card.getLayoutParams();
 

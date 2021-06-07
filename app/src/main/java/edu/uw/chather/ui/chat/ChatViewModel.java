@@ -184,6 +184,10 @@ public class ChatViewModel extends AndroidViewModel {
         getOrCreateMapEntry(chatId).setValue(list);
     }
 
+    /**
+     * Callback to handle response from chat API
+     * @param response stores chat information
+     */
     private void handleSuccess(final JSONObject response) {
         List<ChatMessage> list;
         if (!response.has("chatId")) {
@@ -219,6 +223,10 @@ public class ChatViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * Handles error from web service
+     * @param error
+     */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             Log.e("NETWORK ERROR", error.getMessage());

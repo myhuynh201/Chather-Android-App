@@ -27,8 +27,14 @@ import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIB
 
 public class PushReceiver extends BroadcastReceiver {
 
+    /**
+     * String literal for chat messages
+     */
     public static final String RECEIVED_NEW_MESSAGE = "new message from pushy";
 
+    /**
+     * Channel ID for notifications
+     */
     private static final String CHANNEL_ID = "1";
 
     @Override
@@ -43,15 +49,13 @@ public class PushReceiver extends BroadcastReceiver {
         //So perform logic/routing based on the "type"
         //feel free to change the key or type of values.
         String typeOfMessage = intent.getStringExtra("type");
-        if (typeOfMessage.equals("msg")){
+        if (typeOfMessage.equals("msg")) {
             chatNotification(context, intent);
-        }
-        else if (typeOfMessage.equals("contactReq")){
+        } else if (typeOfMessage.equals("contactReq")) {
             Log.d("Test", "onRecieve was called.");
             contactNotification(context, intent);
 
-        }
-        else{
+        } else {
             contactReq(context, intent);
         }
 
@@ -59,11 +63,10 @@ public class PushReceiver extends BroadcastReceiver {
     }
 
     /**
-     *
      * @param context See onRecieve javadoc
-     * @param intent See onRecieve javadoc
+     * @param intent  See onRecieve javadoc
      */
-    public void contactReq(Context context, Intent intent){
+    public void contactReq(Context context, Intent intent) {
         ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo();
         ActivityManager.getMyMemoryState(appProcessInfo);
         //app is in the foreground so send the message to the active Activities
@@ -79,16 +82,17 @@ public class PushReceiver extends BroadcastReceiver {
     }
 
 
-    /** Creates an intent in the case that a pushy notification comes through
+    /**
+     * Creates an intent in the case that a pushy notification comes through
      * with a chat notification.
      *
      * @param context See onRecieve javadoc
-     * @param intent See onRecieve javadoc
+     * @param intent  See onRecieve javadoc
      */
-    public void chatNotification(Context context, Intent intent){
+    public void chatNotification(Context context, Intent intent) {
         ChatMessage message = null;
         int chatId = -1;
-        try{
+        try {
             message = ChatMessage.createFromJsonString(intent.getStringExtra("message"));
             chatId = intent.getIntExtra("chatid", -1);
         } catch (JSONException e) {
@@ -143,7 +147,7 @@ public class PushReceiver extends BroadcastReceiver {
         }
     }
 
-    public void contactNotification(Context context, Intent intent){
+    public void contactNotification(Context context, Intent intent) {
 
 
         ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo();
@@ -161,8 +165,7 @@ public class PushReceiver extends BroadcastReceiver {
 
             context.sendBroadcast(i);
 
-        }
-       else {
+        } else {
             //app is in the background so create and post a notification
             Log.d("PUSHY", "Contact request received in background");
 
@@ -191,6 +194,6 @@ public class PushReceiver extends BroadcastReceiver {
 
             // Build the notification and display it
             notificationManager.notify(1, builder.build());
-       }
+        }
     }
 }

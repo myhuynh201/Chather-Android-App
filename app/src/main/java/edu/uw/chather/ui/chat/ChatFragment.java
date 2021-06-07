@@ -45,7 +45,7 @@ public class ChatFragment extends Fragment {
     private ChatSendViewModel mSendModel;
 
     /**
-     * required constructores
+     * required constructors
      */
     public ChatFragment() {
         // Required empty public constructor
@@ -129,6 +129,10 @@ public class ChatFragment extends Fragment {
         mSendModel.addResponseObserver(getViewLifecycleOwner(), response -> binding.editMessage.setText(""));
     }
 
+    /**
+     * Gets action bar for the main activity
+     * @return actionbar
+     */
     private ActionBar getActionBar() {
         return ((MainActivity) getActivity()).getSupportActionBar();
     }

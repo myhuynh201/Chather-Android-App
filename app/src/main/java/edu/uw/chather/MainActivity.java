@@ -112,8 +112,6 @@ public class MainActivity extends AppCompatActivity {
         MainActivityArgs args = MainActivityArgs.fromBundle(getIntent().getExtras());
 
 
-
-
         //  AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 //        String email = args.getJwt();
 //        //Import com.auth0.android.jwt.JWT
@@ -308,6 +306,7 @@ public class MainActivity extends AppCompatActivity {
                     null /* Looper */);
         }
     }
+
     /**
      * Removes location updates from the FusedLocationApi.
      */
@@ -339,7 +338,7 @@ public class MainActivity extends AppCompatActivity {
             navController.navigate(R.id.changePasswordFragment);
         }
 
-        if(id == R.id.navigation_add){
+        if (id == R.id.navigation_add) {
             navController.navigate(R.id.navigation_add);
         }
 
@@ -347,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
             navController.navigate(R.id.changeThemeFragment);
         }
 
-        if (id == R.id.navigate_contact_request){
+        if (id == R.id.navigate_contact_request) {
             navController.navigate(R.id.navigate_contact_request);
         }
         if (id == R.id.navigate_sign_out) {
@@ -359,6 +358,7 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -417,8 +417,11 @@ public class MainActivity extends AppCompatActivity {
 
                 // If the user is not on the chat screen, update the
                 // NewMessageCountView Model
-                if (nd.getId() != R.id.chatListFragment) {
-                    mNewMessageModel.increment();
+                if (!cm.getSender().equals(MainActivityArgs.fromBundle(getIntent().getExtras()).getEmail())) {
+                    if (nd.getId() != R.id.chatListFragment) {
+                        Log.d("PUSH RECEIVE", cm.getSender() + " : " + MainActivityArgs.fromBundle(getIntent().getExtras()).getEmail());
+                        mNewMessageModel.increment();
+                    }
                 }
 
                 // Inform the view model holding chatroom messages of the new message.
