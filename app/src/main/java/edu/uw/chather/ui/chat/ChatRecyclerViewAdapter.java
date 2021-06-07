@@ -129,9 +129,6 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 card.setStrokeColor(ColorUtils.setAlphaComponent(
                         primaryColor,
                         200));
-
-
-
                 card.requestLayout();
             } else {
                 //This message is from another user. Format it as such
@@ -157,6 +154,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
                 binding.textMessage.setTextColor(
                         textColor);
+                binding.textUsername.setVisibility(View.VISIBLE);
                 binding.textUsername.setText(message.getSender());
                 binding.textMessage.setGravity(Gravity.START);
 
