@@ -45,6 +45,7 @@ import edu.uw.chather.services.PushReceiver;
 import edu.uw.chather.ui.chat.ChatMessage;
 import edu.uw.chather.ui.chat.ChatViewModel;
 import edu.uw.chather.ui.contact.Contact;
+import edu.uw.chather.ui.contact.ContactListViewModel;
 import edu.uw.chather.ui.contact.ContactRequestViewModel;
 import edu.uw.chather.ui.location.LocationViewModel;
 import edu.uw.chather.ui.chat.Chatroom;
@@ -152,6 +153,9 @@ public class MainActivity extends AppCompatActivity {
                 // multiple chatrooms.
                 mNewMessageModel.reset();
             }
+            else if(destination.getId() == R.id.navigate_contact_request){
+                mNewContactModel.reset();
+            }
         });
 
         mNewMessageModel.addMessageCountObserver(this, count -> {
@@ -170,13 +174,19 @@ public class MainActivity extends AppCompatActivity {
 
         mNewContactModel.addContactCountObserver(this, count -> {
             BadgeDrawable badge = binding.navView.getOrCreateBadge(R.id.navigation_contact);
+            BadgeDrawable bdge = binding.navView.getOrCreateBadge(R.id.navigate_contact_request);
             badge.setMaxCharacterCount(2);
+            bdge.setMaxCharacterCount(2);
             if (count > 0) {
                 // new messages! update and show the notification badge.
+                bdge.setNumber(count);
+                bdge.setVisible(true);
                 badge.setNumber(count);
                 badge.setVisible(true);
             } else {
                 // user did some action to clear the new messages, remove the badge
+                bdge.clearNumber();
+                bdge.setVisible(false);
                 badge.clearNumber();
                 badge.setVisible(false);
             }
@@ -395,6 +405,8 @@ public class MainActivity extends AppCompatActivity {
                 new ViewModelProvider(MainActivity.this).get(ChatViewModel.class);
         private final ContactRequestViewModel mRequestModel =
                 new ViewModelProvider(MainActivity.this).get(ContactRequestViewModel.class);
+        private final ContactListViewModel mContact =
+                new ViewModelProvider(MainActivity.this).get(ContactListViewModel.class);
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -416,7 +428,7 @@ public class MainActivity extends AppCompatActivity {
                 // if the user is not on the chat screen, update the New chatroom view model
                 // TODO TODO
             }
-            else {
+            else if (intent.hasExtra("contactString")){
 
                 if (nd.getId() != R.id.navigate_contact_request) {
                     mNewContactModel.increment();
@@ -424,6 +436,9 @@ public class MainActivity extends AppCompatActivity {
 
                 // Inform the view model holding chatroom messages of the new message.
                 mRequestModel.connectGet();
+            }
+            else{
+                mContact.connectGet();
             }
         }
     }
