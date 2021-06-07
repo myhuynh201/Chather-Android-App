@@ -46,6 +46,10 @@ SUCCESSFULLY IMPLEMENTED: <br />
     - If the room already exists, the user enters the existing room.<br />
 <br />
 5. Contacts: <br />
+- Search for contacts using their email or username through the icon on the top of the contacts page. <br />
+- Contact request will appear for the recipent where they can accept or deny them at will.<br />
+- Contacts can be deleted using the button on the contact card.<br />
+- Tapping the message button on a contact card will take you to a single participant chat with that contact. If one doesn't exist, a chatroom will be created.<br /> 
 <br />
 6. Weather: <br />
 - Search for weather conditions at a given zip code through the search function atop the weather page.<br />
@@ -60,7 +64,8 @@ SUCCESSFULLY IMPLEMENTED: <br />
 - to satellite or even hybrid through hitting the change style button. <br />
 <br />
 8. Notifications: <br />
-- Chat messages send push notifications to all members in the chatroom.
+- Chat messages send push notifications to all members in the chatroom.<br />
+- Sending a contact request will send a push notification to the recipient.<br />
 <br />
 9. Theme, Colors, Icons, Look and Feel: <br />
 - Option to select from 5 themes: blue, green, pink, purple, dark.<br />
@@ -68,8 +73,10 @@ SUCCESSFULLY IMPLEMENTED: <br />
 <br />
 _______________________________________________<br /><br />
 NOT IMPLEMENTED: <br />
-- Push notifications for chatroom being created/deleted<br />
-- Updating chatroom members (adding/removing)<br />
+- Push notifications for chatroom being created/deleted
+- Home screen notification reel (See all unread notifications in a single spot).<br />
+- Adding/removing individuals from chatrooms.<br />
+- Sending weather widget in chatrooms.<br />
 _______________________________________________<br /><br />
 GUEST ACCOUNTS:<br />
 1. Guest 1: <br />
