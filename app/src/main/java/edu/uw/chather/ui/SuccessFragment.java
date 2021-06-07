@@ -98,7 +98,7 @@ public class SuccessFragment extends Fragment {
 
         });
 
-        mBinding.success.setText("Hello " + model.getEmail().toString());
+        mBinding.success.setText("Hello " + model.getEmail());
         boolean isClick = false;
     }
 }

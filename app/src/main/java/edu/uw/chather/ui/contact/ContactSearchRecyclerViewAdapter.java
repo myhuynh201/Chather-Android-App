@@ -111,6 +111,4 @@ public class ContactSearchRecyclerViewAdapter extends RecyclerView.Adapter<Conta
             return super.toString() + " '" + mContentView.getText() + "'";
         }
     }
-
-
 }
