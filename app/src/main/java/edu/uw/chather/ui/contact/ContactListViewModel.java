@@ -46,9 +46,6 @@ public class ContactListViewModel extends AndroidViewModel {
     }
 
     private void handleError(final VolleyError error) {
-        //you should add much better error handling in a production release.
-        //i.e. YOUR PROJECT
-
         Log.e("CONNECTION ERROR", "What now");
         error.getMessage();
     }
@@ -80,6 +77,9 @@ public class ContactListViewModel extends AndroidViewModel {
 
     }
 
+    /**Contacts the webservice to get the contacts for the current user.
+     *
+     */
     public void connectGet() {
         String url =
                 "https://tcss450-android-app.herokuapp.com/contacts/get";
@@ -92,11 +92,6 @@ public class ContactListViewModel extends AndroidViewModel {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                // add headers <key,value>
-//                headers.put("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJl" +
-//                        "bWFpbCI6ImNmYjMxQGZha2UuZW1haWwuY29tIiwibWVtYmVyaWQiOjMsImlhdCI6MTY" +
-//                        "xODI2ODY2OSwiZXhwIjoxNjIzNDUyNjY5fQ.Y5t-1ibUMChZPe9eiavwCA3XbHhGdiM" +
-//                        "NEdpSmCxI1Ow");
                 headers.put("Authorization", UserInfoViewModel.getmJwt());
                 Log.d("Check JWT",UserInfoViewModel.getmJwt());
                 return headers;
@@ -110,6 +105,10 @@ public class ContactListViewModel extends AndroidViewModel {
                 .addToRequestQueue(request);
     }
 
+    /**Deletes a contact from the web service and re-requests an updated list of contacts from the web service.
+     *
+     * @param memberID The memberid of the contact that needs to get deleted.
+     */
     public void contactDelete(int memberID){
         String url =
                 "https://tcss450-android-app.herokuapp.com/contacts/delete?memberid="
@@ -142,11 +141,18 @@ public class ContactListViewModel extends AndroidViewModel {
                 .addToRequestQueue(request);
     }
 
+    /** Just requests a new list of contacts from the service.
+     *
+     * @param object A nothing reference to fulfill the requirements from new JSON object
+     */
     public void handleDelete(JSONObject object){
         connectGet();
     }
 
-
+    /**Gets contact lists
+     *
+     * @return Current list of contacts.
+     */
     public List<Contact> getContactList(){
         return mContactList.getValue();
     }

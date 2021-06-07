@@ -49,27 +49,50 @@ public class PushReceiver extends BroadcastReceiver {
         //So perform logic/routing based on the "type"
         //feel free to change the key or type of values.
         String typeOfMessage = intent.getStringExtra("type");
-        if (typeOfMessage.equals("msg")){
+        if (typeOfMessage.equals("msg")) {
             chatNotification(context, intent);
-        }
-        else{
+        } else if (typeOfMessage.equals("contactReq")) {
             Log.d("Test", "onRecieve was called.");
             contactNotification(context, intent);
 
+        } else {
+            contactReq(context, intent);
         }
 
 
     }
 
     /**
-     * chatNotification handles the broadcast of a chat push notification
-     * @param context the context of the activity receiving the notification
-     * @param intent the data storing the chat message information
+     * @param context See onRecieve javadoc
+     * @param intent  See onRecieve javadoc
      */
-    public void chatNotification(Context context, Intent intent){
+    public void contactReq(Context context, Intent intent) {
+        ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo();
+        ActivityManager.getMyMemoryState(appProcessInfo);
+        //app is in the foreground so send the message to the active Activities
+        Log.d("PUSHY", "Contact request received in foreground: ");
+
+        //create an Intent to broadcast a message to other parts of the app.
+        Intent i = new Intent(RECEIVED_NEW_MESSAGE);
+
+        i.putExtra("contactString", intent.getStringExtra("contact"));
+        i.putExtras(intent.getExtras());
+
+        context.sendBroadcast(i);
+    }
+
+
+    /**
+     * Creates an intent in the case that a pushy notification comes through
+     * with a chat notification.
+     *
+     * @param context See onRecieve javadoc
+     * @param intent  See onRecieve javadoc
+     */
+    public void chatNotification(Context context, Intent intent) {
         ChatMessage message = null;
         int chatId = -1;
-        try{
+        try {
             message = ChatMessage.createFromJsonString(intent.getStringExtra("message"));
             chatId = intent.getIntExtra("chatid", -1);
         } catch (JSONException e) {
@@ -124,26 +147,25 @@ public class PushReceiver extends BroadcastReceiver {
         }
     }
 
-    public void contactNotification(Context context, Intent intent){
+    public void contactNotification(Context context, Intent intent) {
 
 
         ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo();
         ActivityManager.getMyMemoryState(appProcessInfo);
 
-        /* if (appProcessInfo.importance == IMPORTANCE_FOREGROUND || appProcessInfo.importance == IMPORTANCE_VISIBLE) {
+        if (appProcessInfo.importance == IMPORTANCE_FOREGROUND || appProcessInfo.importance == IMPORTANCE_VISIBLE) {
             //app is in the foreground so send the message to the active Activities
-            Log.d("PUSHY", "Contact request received in foreground: " + contact.getmUsername());
+            Log.d("PUSHY", "Contact request received in foreground: ");
 
             //create an Intent to broadcast a message to other parts of the app.
             Intent i = new Intent(RECEIVED_NEW_MESSAGE);
-            i.putExtra("contact", contact.getmUsername());
+
             i.putExtra("contactString", intent.getStringExtra("contact"));
             i.putExtras(intent.getExtras());
 
             context.sendBroadcast(i);
 
-        }*/
-       // else {
+        } else {
             //app is in the background so create and post a notification
             Log.d("PUSHY", "Contact request received in background");
 
@@ -172,6 +194,6 @@ public class PushReceiver extends BroadcastReceiver {
 
             // Build the notification and display it
             notificationManager.notify(1, builder.build());
-       // }
+        }
     }
 }

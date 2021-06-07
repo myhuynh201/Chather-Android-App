@@ -29,15 +29,28 @@ import edu.uw.chather.databinding.FragmentLocationBinding;
 import edu.uw.chather.utils.Utils;
 //import edu.uw.chather.databinding.FragmentLocationBinding;
 
+/**
+ * A simple {@link Fragment} subclass.
+ *
+ * @author Charles Bryan, Duy Nguyen, Demarco Best, Alec Mac, Alejandro Olono, My Duyen Huynh
+ */
 public class LocationFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
-
+    /*
+    View model for the location fragment.
+     */
     private LocationViewModel mModel;
 
-    private FragmentChangeThemeBinding bindingTheme;
+    //private FragmentChangeThemeBinding bindingTheme;
 
+    /*
+    The entry point for managing the underlying map features and data.
+     */
     private GoogleMap mMap;
 
+    /*
+    Latitude and longitude coordinates
+     */
     private LatLng mLatLng;
 
     public LocationFragment() {
@@ -67,16 +80,17 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
             }
         });
 
-       // mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.mapstyledark));
-
         binding.btnChangeStyle.setOnClickListener(this::changeType);
         mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.mapstyledark));
-
         mMap.setOnMapClickListener(this);
 
     }
 
-    public void changeType(View view) {
+    /**
+     * Private helper method for changing styles of the map.
+     * @param view
+     */
+    private void changeType(View view) {
         if (mMap.getMapType() == GoogleMap.MAP_TYPE_NORMAL) {
             mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         } else if (mMap.getMapType() == GoogleMap.MAP_TYPE_SATELLITE) {
@@ -100,8 +114,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         FragmentLocationBinding binding = FragmentLocationBinding.bind(getView());
         mModel = new ViewModelProvider(getActivity())
                 .get(LocationViewModel.class);
-        //mModel.addLocationObserver(getViewLifecycleOwner(), location ->
-        //        binding.textLatLong.setText(location.toString()));
+
         binding.buttonSearch.setOnClickListener(this::searchLatLong);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment =
@@ -111,6 +124,10 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
 
     }
 
+    /**
+     * Private helper method for searching a location from longitude and latitude.
+     * @param view
+     */
     private void searchLatLong(View view) {
         LocationFragmentDirections.ActionLocationFragmentToWeatherFragment directions =
                 LocationFragmentDirections.actionLocationFragmentToWeatherFragment();
@@ -121,11 +138,6 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
 
     @Override
     public void onMapClick(LatLng latLng) {
-//        Log.d("LAT/LONG", latLng.toString());
-
-//        Marker marker = mMap.addMarker(new MarkerOptions()
-//                .position(latLng)
-//                .title("New Marker"));
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);

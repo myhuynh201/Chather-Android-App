@@ -69,6 +69,9 @@ public class WeatherFragment extends Fragment {
      */
     private RecyclerView recycler_hourly_forecast;
 
+    /**
+     * The location view model
+     */
     private LocationViewModel mLocationModel;
 
     /**
@@ -76,6 +79,9 @@ public class WeatherFragment extends Fragment {
      */
     static WeatherFragment instance;
 
+    /**
+     * A boolean determining whether the first run of the app.
+     */
     private static boolean mFirst = true;
 
 
@@ -83,9 +89,6 @@ public class WeatherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentWeatherBinding.inflate(inflater, container, false);
-
-        //Making the first call, this should be calling the default call
-
         txt_city_name = (TextView) binding.txtCityName;
         txt_temperature = (TextView) binding.txtTemperature;
         txt_date_time = (TextView) binding.txtDateTime;
@@ -153,8 +156,6 @@ public class WeatherFragment extends Fragment {
                         Double.toString(location.getLongitude()));
                 mFirst = false;
             }
-//            mViewModel.connect(Double.toString(location.getLatitude()),
-//                    Double.toString(location.getLongitude()));
         });
 
         mViewModel.addLocationObserver(getViewLifecycleOwner(), location -> {
@@ -166,7 +167,6 @@ public class WeatherFragment extends Fragment {
         mViewModel.addResponseObserver(getViewLifecycleOwner(), response -> {
             if (response.length() > 0) {
                 try {
-                    //binding.txtDescription.setText(new StringBuilder("Weather in " + binding.txtCityName));
                     binding.txtTemperature.setText(response.getJSONObject("current").getString("temp").substring(0, 2) + "°F");
                     Date date = new Date(Integer.parseInt(response.getJSONObject("current").getString("dt")) * 1000L);
                     SimpleDateFormat sdf = new SimpleDateFormat("hh:mma EEE MM/d/yyyy");
@@ -183,6 +183,10 @@ public class WeatherFragment extends Fragment {
 
     }
 
+    /**
+     * Sends the given zip code to the webservice to retrieve relevant weather data
+     * @param view The current view.
+     */
     private void searchZip(View view) {
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -191,6 +195,10 @@ public class WeatherFragment extends Fragment {
         mViewModel.connect(binding.textviewZipData.getText().toString());
     }
 
+    /**
+     * Navigates to the location fragment.
+     * @param view The current view.
+     */
     private void getMap(View view) {
         Navigation.findNavController(getView()).navigate(WeatherFragmentDirections.actionWeatherFragmentToLocationFragment());
     }

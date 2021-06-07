@@ -56,6 +56,12 @@ public class ContactAddFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mBinding.searchButton.setOnClickListener(this::searchForContact);
     }
+
+    /**Extracts text from the search bar, sends request to web service, then builds a
+     * recycler view from the result.
+     *
+     * @param view The view with the recycler view
+     */
     public void searchForContact(View view){
         String searchString = mBinding.searchBar.getText().toString();
         if(searchString.isEmpty()){
