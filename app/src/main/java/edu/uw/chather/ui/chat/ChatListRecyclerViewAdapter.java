@@ -189,8 +189,7 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
 
 
 
-            binding.textChatroom.setText(chatroom.getChatId() +
-                    ": " + chatroom.toString());
+            binding.textChatroom.setText(chatroom.toString());
             ViewGroup.MarginLayoutParams layoutParams =
                     (ViewGroup.MarginLayoutParams) card.getLayoutParams();
 
