@@ -27,8 +27,14 @@ import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIB
 
 public class PushReceiver extends BroadcastReceiver {
 
+    /**
+     * String literal for chat messages
+     */
     public static final String RECEIVED_NEW_MESSAGE = "new message from pushy";
 
+    /**
+     * Channel ID for notifications
+     */
     private static final String CHANNEL_ID = "1";
 
     @Override

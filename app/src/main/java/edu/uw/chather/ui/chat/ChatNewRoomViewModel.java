@@ -51,8 +51,10 @@ public class ChatNewRoomViewModel extends AndroidViewModel {
 //        mResponse.setValue(new JSONObject());
     }
 
-
-
+    /**
+     * Inner class to store LiveData to be used once
+     * @param <T> element to be stored in the live data
+     */
     public class SingleLiveData<T> extends MutableLiveData<T> {
 
         @Override
