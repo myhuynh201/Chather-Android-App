@@ -5,11 +5,12 @@ Chather is an Android-based application that allows the user to create an accoun
 create many different chatrooms for their added contacts, allowing them to communicate and connect with whoever they want. The users can also check out the current weather and location of the app. With the weather application provides a 7-day 24-hour forecast, the users can check out their current location via Google Maps and change the styles of that map to match their desire. <br />
 
 
-Back-end code for Chather <br />
+Front-end code for Chather <br />
 _______________________________________________<br /><br />
 LINKS: <br />
-Link to Server-side Github repository: https://github.com/myhuynh201/TCSS450-Web-Service <br />
+Link to Server-side Github repository: https://github.com/myhuynh201/Chather-Web-Service <br />
 Link to Client-side Android Github repository: https://github.com/EvanFrostone/TCSS450-Android-App <br />
+Link to Chather App Demo: https://www.youtube.com/watch?v=Dl3_zOyQMJ0 <br />
 Link to Heroku URL: https://tcss450-android-app.herokuapp.com <br />
 Link to Heroku Documentation: https://tcss450-android-app.herokuapp.com/doc <br />
 Link to Google drive meeting notes: https://drive.google.com/drive/u/2/folders/0AG0QjEWU1jr2Uk9PVA <br />
