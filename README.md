@@ -9,7 +9,7 @@ Front-end code for Chather <br />
 _______________________________________________<br /><br />
 LINKS: <br />
 Link to Server-side Github repository: https://github.com/myhuynh201/Chather-Web-Service <br />
-Link to Client-side Android Github repository: https://github.com/EvanFrostone/TCSS450-Android-App <br />
+Link to Client-side Android Github repository: https://github.com/myhuynh201/TCSS450-Android-App <br />
 Link to Chather App Demo: https://www.youtube.com/watch?v=Dl3_zOyQMJ0 <br />
 Link to Heroku URL: https://tcss450-android-app.herokuapp.com <br />
 Link to Heroku Documentation: https://tcss450-android-app.herokuapp.com/doc <br />
